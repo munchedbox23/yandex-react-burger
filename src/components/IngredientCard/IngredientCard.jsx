@@ -30,7 +30,7 @@ export default class IngredientCard extends React.Component {
           <span className="text text_type_main-medium">{this.price}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <h3 className="text text_type_main-default">{this.ingredientName}</h3>
+        <h3 style={{textAlign: 'center'}} className="text text_type_main-default">{this.ingredientName}</h3>
       </div>
     );
   }
