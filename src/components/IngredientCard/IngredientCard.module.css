@@ -18,3 +18,7 @@
   display: flex;
   gap: 5px;
 }
+
+.ingredientName {
+  text-align: center;
+}
