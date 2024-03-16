@@ -1,0 +1,12 @@
+.mainContainer {
+  width: 100%;
+  height: calc(100vh - 90px);
+}
+
+.contentContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  gap: 40px;
+}
