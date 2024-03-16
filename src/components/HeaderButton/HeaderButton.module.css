@@ -1,0 +1,11 @@
+.link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 40px;
+  transition: background 0.3s ease;
+}
+
+.link:hover {
+  background: var(--text-disabled);
+}
