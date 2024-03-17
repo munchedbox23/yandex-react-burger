@@ -1,0 +1,30 @@
+.burgerIngredients {
+  width: calc(50% - 20px);
+  height: 100%;
+}
+
+.tabContainer {
+  display: flex;
+  margin-bottom: 40px;
+}
+
+.ingredientsWrapper {
+  max-height: calc(80% - 40px);
+  overflow-y: auto;
+}
+
+.ingredientsWrapper::-webkit-scrollbar {
+  background-color: var(--interface-input);
+  border-radius: 20px;
+  width: 8px;
+}
+.ingredientsWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--text-dark-grey-secondary-text);
+  border-radius: 20px;
+}
+
+.ingredientsMenu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}

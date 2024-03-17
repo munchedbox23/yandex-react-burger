@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("./fonts/JetBrainsMono-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("./fonts/JetBrainsMono-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Iceland";
+  src: url("./fonts/iceland.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "IBMPlexSans";
+  src: url("./fonts/IBMPlexSans.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: "IBMPlexSans";
+  src: url("./fonts/IBMPlexSans-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --neon: #b5ff3d;
+  --interface-modal-bg: #1c1c21;
+  --interface-accent: #4c4cff;
+  --interface-active: #4c4cff;
+  --interface-input: #2f2f37;
+  --interface-success: #0cc;
+  --interface-error: #e52b1a;
+  --interface-bg: #131316;
+  ---interface-modal-edge: rgba(76, 76, 255, 0.2);
+  --text-primary-light-standart-text: #f2f2f3;
+  --text-dark-grey-secondary-text: #8585ad;
+  --text-disabled: #3a3a55;
+  --font-family: "JetBrainsMono", sans-serif;
+  --second-family: "Iceland", sans-serif;
+  --third-family: "IBMPlexSans", sans-serif;
+}
+
+body {
+  background: var(--interface-bg);
+  min-height: 100vh;
+}
