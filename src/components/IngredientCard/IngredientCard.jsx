@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ingredientStyle from "./IngredientCard.module.css";
 import {
   CurrencyIcon,
@@ -6,23 +5,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const IngredientCard = ({ image, price, ingredientName }) => {
-  const [counter, setCounter] = useState(0);
-
-  const increaseCounter = () => {
-    setCounter((prevState) => prevState + 1);
-  };
-
   return (
-    <div onClick={increaseCounter} className={ingredientStyle.ingredientCard}>
-      <Counter
-        count={counter}
-        size="default"
-        extraClass={ingredientStyle.counter}
-      />
-      <img src={image} alt={`Ингредиент: ${ingredientName}`} />
+    <div className={ingredientStyle.ingredientCard}>
+      <Counter count={0} size="default" extraClass={ingredientStyle.counter} />
+      <img src={image} alt={`Ингридиент: ${ingredientName}`} />
       <div className={ingredientStyle.ingredientPrice}>
         <span className="text text_type_digits-medium">{price}</span>
-        <CurrencyIcon />
+        <CurrencyIcon type="primary" />
       </div>
       <h3
         className={`${ingredientStyle.ingredientName} text text_type_main-default`}

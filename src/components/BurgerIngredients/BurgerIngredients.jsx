@@ -1,6 +1,6 @@
 import styles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
@@ -38,6 +38,7 @@ const BurgerIngredients = ({ ingredients }) => {
                 .map(({ _id, name, price, image }) => (
                   <IngredientCard
                     key={_id}
+                    ingredient={ingredients[0]}
                     image={image}
                     price={price}
                     ingredientName={name}
