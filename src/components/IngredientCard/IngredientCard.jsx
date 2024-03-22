@@ -1,45 +1,36 @@
-import React from "react";
-import styles from "./IngredientCard.module.css";
+import { useState } from "react";
+import ingredientStyle from "./IngredientCard.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-export default class IngredientCard extends React.Component {
-  constructor({ imageLink, price, ingredientName }) {
-    super();
-    this.imageLink = imageLink;
-    this.price = price;
-    this.ingredientName = ingredientName;
-    this.state = {
-      counter: 0,
-    };
-  }
-  render() {
-    const { counter } = this.state;
-    return (
-      <div className={styles.ingredientCard}>
-        <Counter size="default" count={counter} className={styles.counter} />
-        <img
-          className={`${styles.ingredientImg} ml-4 mr-4 mb-1`}
-          src={this.imageLink}
-          alt={this.ingredientName}
-        />
-        <div className={styles.ingredientPrice}>
-          <span className="text text_type_main-medium">{this.price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
-        <h3 className={`${styles.ingredientName} text text_type_main-default`}>
-          {this.ingredientName}
-        </h3>
+const IngredientCard = ({ image, price, ingredientName }) => {
+  const [counter, setCounter] = useState(0);
+
+  const increaseCounter = () => {
+    setCounter((prevState) => prevState + 1);
+  };
+
+  return (
+    <div onClick={increaseCounter} className={ingredientStyle.ingredientCard}>
+      <Counter
+        count={counter}
+        size="default"
+        extraClass={ingredientStyle.counter}
+      />
+      <img src={image} alt={`Ингредиент: ${ingredientName}`} />
+      <div className={ingredientStyle.ingredientPrice}>
+        <span className="text text_type_digits-medium">{price}</span>
+        <CurrencyIcon />
       </div>
-    );
-  }
-}
-
-IngredientCard.propTypes = {
-  imageLink: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  ingredientName: PropTypes.string.isRequired,
+      <h3
+        className={`${ingredientStyle.ingredientName} text text_type_main-default`}
+      >
+        {ingredientName}
+      </h3>
+    </div>
+  );
 };
+
+export default IngredientCard;
