@@ -1,4 +1,5 @@
 import styles from "./HeaderButton.module.css";
+import PropTypes from "prop-types";
 
 const HeaderButton = ({ link, icon, text, active }) => {
   const Icon = icon;
@@ -14,6 +15,13 @@ const HeaderButton = ({ link, icon, text, active }) => {
       </span>
     </a>
   );
+};
+
+HeaderButton.propTypes = {
+  link: PropTypes.string.isRequired,
+  icon: PropTypes.elementType.isRequired,
+  text: PropTypes.string.isRequired,
+  active: PropTypes.bool,
 };
 
 export default HeaderButton;

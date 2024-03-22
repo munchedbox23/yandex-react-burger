@@ -35,13 +35,13 @@ const BurgerIngredients = ({ ingredients }) => {
             <div className={`${styles.ingredientsMenu} pt-6 pb-10 pl-4 pb-4`}>
               {ingredients
                 .filter((card) => card.type === type)
-                .map(({ _id, name, price, image }) => (
+                .map((ingredient) => (
                   <IngredientCard
-                    key={_id}
-                    ingredient={ingredients[0]}
-                    image={image}
-                    price={price}
-                    ingredientName={name}
+                    data={ingredient}
+                    key={ingredient._id}
+                    image={ingredient.image}
+                    price={ingredient.price}
+                    ingredientName={ingredient.name}
                   />
                 ))}
             </div>
