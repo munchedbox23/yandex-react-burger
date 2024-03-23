@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import styles from "./IngredientDetails.module.css";
 import Modal from "../Modal/Modal";
 import IngredientDetail from "./IngredientDetail/IngredientDetail";
@@ -6,18 +7,22 @@ import IngredientDetail from "./IngredientDetail/IngredientDetail";
 const IngredientDetails = ({ item, onClose }) => {
   const detailsList = [
     {
+      id: 1,
       detailValue: item.calories,
       detailText: "Калории,ккал",
     },
     {
+      id: 2,
       detailValue: item.proteins,
       detailText: "Белки, г",
     },
     {
+      id: 3,
       detailValue: item.fat,
       detailText: "Жиры, г",
     },
     {
+      id: 4,
       detailValue: item.carbohydrates,
       detailText: "Углеводы, г",
     },
@@ -38,7 +43,7 @@ const IngredientDetails = ({ item, onClose }) => {
       <div className={styles.detailsWrapper}>
         <ul className={styles.detailsList}>
           {detailsList.map((detail) => (
-            <li>
+            <li key={detail.id}>
               <IngredientDetail
                 detailValue={detail.detailValue}
                 detailText={detail.detailText}
@@ -53,7 +58,7 @@ const IngredientDetails = ({ item, onClose }) => {
 
 IngredientDetails.propTypes = {
   onClose: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired,
+  item: ingredientsPropTypes.isRequired,
 };
 
 export default IngredientDetails;

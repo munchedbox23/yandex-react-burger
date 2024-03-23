@@ -6,6 +6,7 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 
 const IngredientCard = ({ data, image, price, ingredientName }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,9 +14,7 @@ const IngredientCard = ({ data, image, price, ingredientName }) => {
   return (
     <>
       <div
-        onClick={() => {
-          isOpen || setIsOpen(true);
-        }}
+        onClick={() => setIsOpen(true)}
         className={ingredientStyle.ingredientCard}
       >
         <Counter
@@ -45,7 +44,7 @@ const IngredientCard = ({ data, image, price, ingredientName }) => {
 };
 
 IngredientCard.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: ingredientsPropTypes.isRequired,
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   ingredientName: PropTypes.string.isRequired,
