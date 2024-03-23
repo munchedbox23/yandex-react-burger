@@ -3,8 +3,25 @@ import PropTypes from "prop-types";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from "react-dom";
+import { useCallback, useEffect } from "react";
 
 const Modal = ({ children, title, onClose }) => {
+  const closeByEscape = useCallback(
+    (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+  useEffect(() => {
+    document.addEventListener("keydown", closeByEscape);
+
+    return () => {
+      document.addEventListener("keydown", closeByEscape);
+    };
+  }, [onClose]);
+
   return createPortal(
     <div className={modalStyles.modal}>
       <div className={`${modalStyles.wrapper} pt-10 pb-15`}>
