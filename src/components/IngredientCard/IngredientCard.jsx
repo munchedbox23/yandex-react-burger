@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
+import Modal from "../Modal/Modal";
 
 const IngredientCard = ({ data, image, price, ingredientName }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,10 +35,12 @@ const IngredientCard = ({ data, image, price, ingredientName }) => {
         </h3>
       </div>
       {isOpen && (
-        <IngredientDetails
-          item={data}
+        <Modal
+          title="Детали ингредиента"
           onClose={() => isOpen && setIsOpen(false)}
-        />
+        >
+          <IngredientDetails item={data} />
+        </Modal>
       )}
     </>
   );

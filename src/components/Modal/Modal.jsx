@@ -44,7 +44,10 @@ const Modal = ({ children, title, onClose }) => {
 Modal.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element),
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.object,
+  ]),
 };
 
 export default Modal;

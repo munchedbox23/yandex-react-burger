@@ -1,11 +1,9 @@
 import styles from "./OrderDetails.module.css";
-import PropTypes from "prop-types";
 import doneImage from "../../images/done.png";
-import Modal from "../Modal/Modal";
 
-const OrderDetails = ({ onClose }) => {
+const OrderDetails = () => {
   return (
-    <Modal onClose={onClose}>
+    <div className={styles.orderDetailsWrapper}>
       <span
         className={`${styles.orderNum} text text_type_digits-large mt-10 mb-8`}
       >
@@ -21,12 +19,8 @@ const OrderDetails = ({ onClose }) => {
           Дождитесь готовности на орбитальной станции
         </p>
       </div>
-    </Modal>
+    </div>
   );
-};
-
-OrderDetails.propTypes = {
-  onClose: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

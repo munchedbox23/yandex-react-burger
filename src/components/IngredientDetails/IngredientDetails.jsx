@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import styles from "./IngredientDetails.module.css";
-import Modal from "../Modal/Modal";
 import IngredientDetail from "./IngredientDetail/IngredientDetail";
 
-const IngredientDetails = ({ item, onClose }) => {
+const IngredientDetails = ({ item }) => {
   const detailsList = [
     {
       id: 1,
@@ -29,7 +28,7 @@ const IngredientDetails = ({ item, onClose }) => {
   ];
 
   return (
-    <Modal title="Детали ингридиента" onClose={onClose}>
+    <div className={styles.detailsWrapper}>
       <img
         className={styles.image}
         src={item.image_large}
@@ -52,12 +51,11 @@ const IngredientDetails = ({ item, onClose }) => {
           ))}
         </ul>
       </div>
-    </Modal>
+    </div>
   );
 };
 
 IngredientDetails.propTypes = {
-  onClose: PropTypes.func.isRequired,
   item: ingredientsPropTypes.isRequired,
 };
 
