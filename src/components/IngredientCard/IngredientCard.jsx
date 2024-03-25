@@ -1,45 +1,56 @@
-import React from "react";
-import styles from "./IngredientCard.module.css";
+import ingredientStyle from "./IngredientCard.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import IngredientDetails from "../IngredientDetails/IngredientDetails";
+import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
+import Modal from "../Modal/Modal";
 
-export default class IngredientCard extends React.Component {
-  constructor({ imageLink, price, ingredientName }) {
-    super();
-    this.imageLink = imageLink;
-    this.price = price;
-    this.ingredientName = ingredientName;
-    this.state = {
-      counter: 0,
-    };
-  }
-  render() {
-    const { counter } = this.state;
-    return (
-      <div className={styles.ingredientCard}>
-        <Counter size="default" count={counter} className={styles.counter} />
-        <img
-          className={`${styles.ingredientImg} ml-4 mr-4 mb-1`}
-          src={this.imageLink}
-          alt={this.ingredientName}
+const IngredientCard = ({ data, image, price, ingredientName }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <div
+        onClick={() => setIsOpen(true)}
+        className={ingredientStyle.ingredientCard}
+      >
+        <Counter
+          count={0}
+          size="default"
+          extraClass={ingredientStyle.counter}
         />
-        <div className={styles.ingredientPrice}>
-          <span className="text text_type_main-medium">{this.price}</span>
+        <img src={image} alt={`Ингридиент: ${ingredientName}`} />
+        <div className={ingredientStyle.ingredientPrice}>
+          <span className="text text_type_digits-medium">{price}</span>
           <CurrencyIcon type="primary" />
         </div>
-        <h3 className={`${styles.ingredientName} text text_type_main-default`}>
-          {this.ingredientName}
+        <h3
+          className={`${ingredientStyle.ingredientName} text text_type_main-default`}
+        >
+          {ingredientName}
         </h3>
       </div>
-    );
-  }
-}
+      {isOpen && (
+        <Modal
+          title="Детали ингредиента"
+          onClose={() => isOpen && setIsOpen(false)}
+        >
+          <IngredientDetails item={data} />
+        </Modal>
+      )}
+    </>
+  );
+};
 
 IngredientCard.propTypes = {
-  imageLink: PropTypes.string.isRequired,
+  data: ingredientsPropTypes.isRequired,
+  image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   ingredientName: PropTypes.string.isRequired,
 };
+
+export default IngredientCard;

@@ -1,0 +1,37 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  display: flex;
+  z-index: 30;
+  flex-direction: column;
+  background: var(--interface-modal-bg);
+  border-radius: 40px;
+  align-items: center;
+  width: 720px;
+  text-align: center;
+}
+
+.heading {
+  width: calc(100% - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closeBtn {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.closeBtn:hover {
+  opacity: 0.5;
+}

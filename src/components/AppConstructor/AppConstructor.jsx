@@ -1,18 +1,22 @@
-import React from "react";
 import styles from "./AppConstructor.module.css";
-import ingredients from "../../utils/ingredients";
+import PropTypes from "prop-types";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 
-export default class AppConstructor extends React.Component {
-  render() {
-    return (
-      <main className={styles.mainContainer}>
-        <div className={`${styles.contentContainer} pb-10 pl-5`}>
-          <BurgerIngredients data={ingredients} />
-          <BurgerConstructor data={ingredients} />
-        </div>
-      </main>
-    );
-  }
-}
+const AppConstructor = ({ data }) => {
+  return (
+    <main className={styles.mainContainer}>
+      <div className={`${styles.contentWrapper} pb-10 pl-5`}>
+        <BurgerIngredients ingredients={data} />
+        <BurgerConstructor ingredients={data} />
+      </div>
+    </main>
+  );
+};
+
+AppConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
+};
+
+export default AppConstructor;

@@ -1,34 +1,35 @@
-import React from "react";
 import styles from "./BurgerConstructor.module.css";
 import {
-  CurrencyIcon,
-  Button,
   ConstructorElement,
+  CurrencyIcon,
   DragIcon,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { useState } from "react";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
+import Modal from "../Modal/Modal";
 
-export default class BurgerConstructor extends React.Component {
-  constructor({ data }) {
-    super();
-    this.data = data;
-  }
-  render() {
-    return (
+const BurgerConstructor = ({ ingredients }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
       <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
-        <div className={`${styles.constructorWrapper}`}>
+        <div className={styles.constructorWrapper}>
           <ConstructorElement
             type="top"
             isLocked={true}
             text="Краторная булка N-200i (верх)"
             price={200}
-            thumbnail={this.data[0].image}
+            thumbnail={ingredients.length && ingredients[0].image}
             extraClass="ml-8"
           />
           <ul className={`${styles.constructorList} mt-4 mb-4`}>
-            {this.data
-              .filter((item) => item.type === "main" || item.type === "sause")
-              .map(({ _id, name, price, image }) => (
+            {ingredients
+              .filter((item) => item.type === "main" || item.type === "sauce")
+              .map(({ _id, image, price, name }) => (
                 <li key={_id} className={`${styles.constructorItem} ml-2 mb-4`}>
                   <div className={styles.drag}>
                     <DragIcon type="primary" />
@@ -47,7 +48,7 @@ export default class BurgerConstructor extends React.Component {
             isLocked={true}
             text="Краторная булка N-200i (низ)"
             price={200}
-            thumbnail={this.data[0].image}
+            thumbnail={ingredients.length && ingredients[0].image}
             extraClass="ml-8"
           />
         </div>
@@ -56,15 +57,27 @@ export default class BurgerConstructor extends React.Component {
             <span className="text text_type_digits-medium">610</span>
             <CurrencyIcon type="primary" />
           </div>
-          <Button htmlType="button" type="primary" size="medium">
+          <Button
+            onClick={() => setIsOpen(true)}
+            htmlType="button"
+            type="primary"
+            size="medium"
+          >
             Офорить заказ
           </Button>
         </div>
       </section>
-    );
-  }
-}
+      {isOpen && (
+        <Modal onClose={() => setIsOpen(false)}>
+          <OrderDetails />
+        </Modal>
+      )}
+    </>
+  );
+};
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array.isRequired,
+  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
 };
+
+export default BurgerConstructor;
