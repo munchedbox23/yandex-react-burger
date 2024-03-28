@@ -6,13 +6,15 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
-const BurgerConstructor = ({ ingredients }) => {
+const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {ingredients} = useContext(IngredientsContext);
 
   return (
     <>

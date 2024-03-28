@@ -1,14 +1,15 @@
 import styles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
-const BurgerIngredients = ({ ingredients }) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
-
+  const { ingredients } = useContext(IngredientsContext);
   const tabsTitle = {
     one: useRef(),
     two: useRef(),

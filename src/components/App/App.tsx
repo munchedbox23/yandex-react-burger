@@ -1,6 +1,7 @@
 import AppHeader from "../AppHeader/AppHeader";
 import AppConstructor from "../AppConstructor/AppConstructor";
 import { useState, useEffect } from "react";
+import { IngredientsContext } from "../../services/ingredientsContext";
 
 function App() {
   const API_URL = "https://norma.nomoreparties.space/api/ingredients";
@@ -26,7 +27,9 @@ function App() {
   return (
     <>
       <AppHeader />
-      <AppConstructor data={ingredients} />
+      <IngredientsContext.Provider value={{ ingredients }}>
+        <AppConstructor />
+      </IngredientsContext.Provider>
     </>
   );
 }
