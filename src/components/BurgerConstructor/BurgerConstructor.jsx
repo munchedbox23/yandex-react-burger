@@ -8,30 +8,49 @@ import {
 import PropTypes from "prop-types";
 import { useContext, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
-import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
-import { IngredientsContext } from "../../services/ingredientsContext";
+import { SelectedIngredientsContext } from "../../services/ingredientsContext";
+import { postIngredients } from "../../services/services";
 
-const BurgerConstructor = () => {
+const POST_API = "https://norma.nomoreparties.space/api/orders";
+
+const BurgerConstructor = ({ totalPrice }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { ingredients } = useContext(IngredientsContext);
+  const { selectedIngredientsState } = useContext(SelectedIngredientsContext);
+  const [orderList, setOrder] = useState(null);
+  const { selectedBun, selectedIngredients } = selectedIngredientsState;
 
+  const handleAndPlaceOrder = () => {
+    const postOrder = [selectedBun, ...selectedIngredients];
+
+    postIngredients(POST_API, postOrder, setOrder);
+    setIsOpen(true);
+  };
   return (
     <>
       <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
         <div className={styles.constructorWrapper}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={ingredients.length && ingredients[0].image}
-            extraClass="ml-8"
-          />
-          <ul className={`${styles.constructorList} mt-4 mb-4`}>
-            {ingredients
-              .filter((item) => item.type === "main" || item.type === "sauce")
-              .map(({ _id, image, price, name }) => (
+          {selectedBun ? (
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={selectedBun?.name}
+              price={selectedBun?.price}
+              thumbnail={selectedBun?.image}
+              extraClass="ml-8"
+            />
+          ) : (
+            <div className="constructor-element constructor-element_pos_top ml-8">
+              <span className="constructor-element__row">
+                <span className="constructor-element__text">
+                  Перетащите булку
+                </span>
+              </span>
+            </div>
+          )}
+          {selectedIngredients.length ? (
+            <ul className={`${styles.constructorList} mt-4 mb-4`}>
+              {selectedIngredients.map(({ _id, image, price, name }) => (
                 <li key={_id} className={`${styles.constructorItem} ml-2 mb-4`}>
                   <div className={styles.drag}>
                     <DragIcon type="primary" />
@@ -44,34 +63,55 @@ const BurgerConstructor = () => {
                   />
                 </li>
               ))}
-          </ul>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={ingredients.length && ingredients[0].image}
-            extraClass="ml-8"
-          />
+            </ul>
+          ) : (
+            <div className="constructor-element constructor-element_pos_center ml-8 mt-4 mb-4">
+              <span className="constructor-element__row">
+                <span className="constructor-element__text">
+                  Перетащите булку
+                </span>
+              </span>
+            </div>
+          )}
+
+          {selectedBun ? (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={selectedBun?.name}
+              price={selectedBun?.price}
+              thumbnail={selectedBun?.image}
+              extraClass="ml-8"
+            />
+          ) : (
+            <div className="constructor-element constructor-element_pos_bottom ml-8">
+              <span className="constructor-element__row">
+                <span className="constructor-element__text">
+                  Перетащите булку
+                </span>
+              </span>
+            </div>
+          )}
         </div>
         <div className={`${styles.total} mt-10`}>
           <div className={styles.priceTotal}>
-            <span className="text text_type_digits-medium">610</span>
+            <span className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
           </div>
           <Button
-            onClick={() => setIsOpen(true)}
+            onClick={handleAndPlaceOrder}
             htmlType="button"
             type="primary"
             size="medium"
+            disabled={!selectedBun}
           >
             Офорить заказ
           </Button>
         </div>
       </section>
-      {isOpen && (
+      {isOpen && orderList && (
         <Modal onClose={() => setIsOpen(false)}>
-          <OrderDetails />
+          <OrderDetails orderNumber={orderList.order.number} />
         </Modal>
       )}
     </>
@@ -79,7 +119,7 @@ const BurgerConstructor = () => {
 };
 
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
+  totalPrice: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructor;
