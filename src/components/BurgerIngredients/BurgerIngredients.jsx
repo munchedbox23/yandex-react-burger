@@ -1,13 +1,14 @@
 import styles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useCallback } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import { IngredientsContext } from "../../services/ingredientsContext";
+import { SelectedIngredientsContext } from "../../services/ingredientsContext";
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ totalDispach }) => {
   const [current, setCurrent] = useState("one");
   const { ingredients } = useContext(IngredientsContext);
   const tabsTitle = {
@@ -15,6 +16,44 @@ const BurgerIngredients = () => {
     two: useRef(),
     three: useRef(),
   };
+  const { selectedIngredientsState, selectedIngredientsDispatch } = useContext(
+    SelectedIngredientsContext
+  );
+  const { selectedBun, selectedIngredients } = selectedIngredientsState;
+
+  const calcOrderCost = (type, price) => {
+    if (type !== "bun") {
+      return totalDispach({ type: "add", ingredientType: type, price: price });
+    } else {
+      if (selectedBun) {
+        totalDispach({
+          type: "subtract",
+          ingredientType: type,
+          price: price,
+        });
+      }
+      return totalDispach({ type: "add", ingredientType: type, price: price });
+    }
+  };
+
+  const addIngredientsToOrder = useCallback(
+    (_id, type, name, price, image) => {
+      const repiedIngredients = selectedIngredients.some(
+        (ingredient) => ingredient._id === _id
+      );
+      if (repiedIngredients) return;
+      selectedIngredientsDispatch({
+        type: "set",
+        ingredientType: type,
+        _id: _id,
+        price: price,
+        name: name,
+        image: image,
+      });
+      calcOrderCost(type, price);
+    },
+    [selectedBun, selectedIngredients, calcOrderCost]
+  );
 
   const handleTabClick = (value) => {
     setCurrent(value);
@@ -45,11 +84,9 @@ const BurgerIngredients = () => {
                 .filter((card) => card.type === type)
                 .map((ingredient) => (
                   <IngredientCard
-                    data={ingredient}
+                    ingredient={ingredient}
                     key={ingredient._id}
-                    image={ingredient.image}
-                    price={ingredient.price}
-                    ingredientName={ingredient.name}
+                    onClickToAdd={addIngredientsToOrder}
                   />
                 ))}
             </div>

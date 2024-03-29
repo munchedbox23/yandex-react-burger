@@ -4,26 +4,42 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useContext, useState, memo, useMemo } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
+import { SelectedIngredientsContext } from "../../services/ingredientsContext";
 
-const IngredientCard = ({ data, image, price, ingredientName }) => {
+const IngredientCard = memo(({ ingredient, onClickToAdd }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { _id, type, name, price, image } = ingredient;
+  const {
+    selectedIngredientsState: { selectedBun, selectedIngredients },
+  } = useContext(SelectedIngredientsContext);
+
+  const calcCounter = useMemo(() => {
+    if (selectedBun && type === "bun") {
+      return selectedBun._id === _id ? 2 : 0;
+    } else {
+      return selectedIngredients.filter((ingredient) => ingredient._id === _id)
+        .length;
+    }
+  }, [selectedBun, selectedIngredients]);
 
   return (
     <>
       <div
-        onClick={() => setIsOpen(true)}
+        onClick={() => onClickToAdd(_id, type, name, price, image)}
         className={ingredientStyle.ingredientCard}
       >
-        <Counter
-          count={0}
-          size="default"
-          extraClass={ingredientStyle.counter}
-        />
-        <img src={image} alt={`Ингридиент: ${ingredientName}`} />
+        {calcCounter > 0 && (
+          <Counter
+            count={calcCounter}
+            size="default"
+            extraClass={ingredientStyle.counter}
+          />
+        )}
+        <img src={image} alt={`Ингридиент: ${name}`} />
         <div className={ingredientStyle.ingredientPrice}>
           <span className="text text_type_digits-medium">{price}</span>
           <CurrencyIcon type="primary" />
@@ -31,7 +47,7 @@ const IngredientCard = ({ data, image, price, ingredientName }) => {
         <h3
           className={`${ingredientStyle.ingredientName} text text_type_main-default`}
         >
-          {ingredientName}
+          {name}
         </h3>
       </div>
       {isOpen && (
@@ -39,18 +55,16 @@ const IngredientCard = ({ data, image, price, ingredientName }) => {
           title="Детали ингредиента"
           onClose={() => isOpen && setIsOpen(false)}
         >
-          <IngredientDetails item={data} />
+          <IngredientDetails item={ingredient} />
         </Modal>
       )}
     </>
   );
-};
+});
 
 IngredientCard.propTypes = {
-  data: ingredientsPropTypes.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  ingredientName: PropTypes.string.isRequired,
+  ingredient: ingredientsPropTypes.isRequired,
+  onClickToAdd: PropTypes.func.isRequired,
 };
 
 export default IngredientCard;
