@@ -14,7 +14,7 @@ import { IngredientsContext } from "../../services/ingredientsContext";
 
 const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {ingredients} = useContext(IngredientsContext);
+  const { ingredients } = useContext(IngredientsContext);
 
   return (
     <>
