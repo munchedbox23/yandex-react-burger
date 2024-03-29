@@ -12,7 +12,6 @@ const fetchIngredients = async (url, setFunc) => {
   }
 };
 
-
 const postIngredients = async (url, order, postFunc)  => {
   try {
     const response = await fetch(url, {
@@ -20,19 +19,17 @@ const postIngredients = async (url, order, postFunc)  => {
       headers: {
         'Content-type': "application/json",
       },
-      body: JSON.stringify({"ingredients": order})
+      body: JSON.stringify({"ingredients": order.map((item) => item._id)})
     });
 
-    if(!response.ok) {
-      throw new Error(`Oops! It seems your link ${url} is broken`);
+    if(response.ok) {
+      const data = await response.json();
+      return postFunc(data);
     }
-    const data = await response.json();
-    return postFunc(data);
-    
+    throw new Error(`Oops! It seems your link ${url} is broken`);  
   } catch(error) {
     console.error("Error! It looks like we are unable to send the data, check the correctness of the sent data.", error);
   }
-}
-
+};
 
 export {fetchIngredients, postIngredients};
