@@ -4,7 +4,6 @@ import { useState, useRef, useContext, useCallback } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
-import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import { IngredientsContext } from "../../services/ingredientsContext";
 import { SelectedIngredientsContext } from "../../services/ingredientsContext";
 
@@ -20,7 +19,6 @@ const BurgerIngredients = ({ totalDispach }) => {
     SelectedIngredientsContext
   );
   const { selectedBun, selectedIngredients } = selectedIngredientsState;
-
   const calcOrderCost = (type, price) => {
     if (type !== "bun") {
       return totalDispach({ type: "add", ingredientType: type, price: price });
@@ -98,7 +96,7 @@ const BurgerIngredients = ({ totalDispach }) => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired),
+  totalDispach: PropTypes.func,
 };
 
 export default BurgerIngredients;
