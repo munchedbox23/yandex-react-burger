@@ -10,7 +10,7 @@ import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
 import { SelectedIngredientsContext } from "../../services/ingredientsContext";
 
-const IngredientCard = memo(({ ingredient, onClickToAdd }) => {
+const IngredientCard = memo(({ ingredient }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { _id, type, name, price, image } = ingredient;
   const {
@@ -29,7 +29,7 @@ const IngredientCard = memo(({ ingredient, onClickToAdd }) => {
   return (
     <>
       <div
-        onClick={() => onClickToAdd(_id, type, name, price, image)}
+        onClick={() => setIsOpen(true)}
         className={ingredientStyle.ingredientCard}
       >
         {calcCounter > 0 && (
@@ -64,7 +64,6 @@ const IngredientCard = memo(({ ingredient, onClickToAdd }) => {
 
 IngredientCard.propTypes = {
   ingredient: ingredientsPropTypes.isRequired,
-  onClickToAdd: PropTypes.func.isRequired,
 };
 
 export default IngredientCard;

@@ -10,9 +10,8 @@ import { useContext, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 import { SelectedIngredientsContext } from "../../services/ingredientsContext";
-import { postIngredients } from "../../services/services";
-
-const POST_API = "https://norma.nomoreparties.space/api/orders";
+import { BASE_URL, ORDER_ENDPOINT } from "../../utils/constants";
+import { request } from "../../utils/requests";
 
 const BurgerConstructor = ({ totalPrice }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,9 +21,18 @@ const BurgerConstructor = ({ totalPrice }) => {
 
   const handleAndPlaceOrder = () => {
     const postOrder = [selectedBun, ...selectedIngredients];
-
-    postIngredients(POST_API, postOrder, setOrder);
-    setIsOpen(true);
+    request(`${BASE_URL}${ORDER_ENDPOINT}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ ingredients: postOrder.map((item) => item._id) }),
+    })
+      .then((data) => {
+        setOrder(data);
+        setIsOpen(true);
+      })
+      .catch((error) => console.error("Error placing order:", error));
   };
   return (
     <>

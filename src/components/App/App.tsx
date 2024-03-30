@@ -2,14 +2,16 @@ import AppHeader from "../AppHeader/AppHeader";
 import AppConstructor from "../AppConstructor/AppConstructor";
 import { useState, useEffect } from "react";
 import { IngredientsContext } from "../../services/ingredientsContext";
-import { fetchIngredients } from "../../services/services";
+import { BASE_URL, LOAD_ENDPOINT } from "../../utils/constants";
+import { request } from "../../utils/requests";
 
 function App() {
-  const API_URL = "https://norma.nomoreparties.space/api/ingredients";
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
-    fetchIngredients(API_URL, setIngredients);
+    request(`${BASE_URL}${LOAD_ENDPOINT}`)
+      .then((data) => setIngredients(data.data))
+      .catch((error) => console.error("Error fetching ingredients:", error));
   }, []);
   return (
     <>
