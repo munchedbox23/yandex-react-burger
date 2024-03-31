@@ -1,13 +1,14 @@
 import styles from "./OrderDetails.module.css";
 import doneImage from "../../images/done.png";
+import PropTypes from "prop-types";
 
-const OrderDetails = () => {
+const OrderDetails = ({ orderNumber }) => {
   return (
     <div className={styles.orderDetailsWrapper}>
       <span
         className={`${styles.orderNum} text text_type_digits-large mt-10 mb-8`}
       >
-        034536
+        {orderNumber}
       </span>
       <h4 className="text text_type_main-medium">идентификатор заказа</h4>
       <img className="mt-15 mb-15" src={doneImage} alt="Заказ принят" />
@@ -21,6 +22,10 @@ const OrderDetails = () => {
       </div>
     </div>
   );
+};
+
+OrderDetails.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
 };
 
 export default OrderDetails;
