@@ -1,29 +1,34 @@
 import styles from "./AppConstructor.module.css";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { SelectedIngredientsContext } from "../../services/ingredientsContext";
-import { orderReducer } from "../../reducers/orderReducer";
-import { useReducer } from "react";
-import { totalPriceReducer } from "../../reducers/totalPriceReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredients } from "../../services/features/ingredients/ingredientsSlice";
+import { useEffect } from "react";
+import { Preloader } from "../Preloader/Preloader";
 
 const AppConstructor = () => {
-  const [selectedIngredientsState, selectedIngredientsDispatch] = useReducer(
-    orderReducer,
-    { selectedBun: null, selectedIngredients: [] }
+  const dispatch = useDispatch();
+  const getIngredientsRequest = useSelector(
+    (store) => store.ingredients.getIngredientsRequest
   );
-  const [totalPriceState, totalPriceDispatch] = useReducer(totalPriceReducer, {
-    total: 0,
-  });
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <main className={styles.mainContainer}>
       <div className={`${styles.contentWrapper} pb-10 pl-5`}>
-        <SelectedIngredientsContext.Provider
-          value={{ selectedIngredientsState, selectedIngredientsDispatch }}
-        >
-          <BurgerIngredients totalDispach={totalPriceDispatch} />
-          <BurgerConstructor totalPrice={totalPriceState.total} />
-        </SelectedIngredientsContext.Provider>
+        {getIngredientsRequest ? (
+          <Preloader />
+        ) : (
+          <>
+            {" "}
+            <BurgerIngredients
+            /* totalDispach={totalPriceDispatch}  */
+            />
+            {/* <BurgerConstructor totalPrice={totalPriceState.total} /> */}
+          </>
+        )}
       </div>
     </main>
   );
