@@ -3,7 +3,6 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useContext, useState, memo, useMemo } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
