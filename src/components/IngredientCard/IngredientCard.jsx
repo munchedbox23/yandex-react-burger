@@ -3,19 +3,31 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, memo, useMemo } from "react";
+import { useState, memo } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
+import { useDispatch } from "react-redux";
+import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
 
 const IngredientCard = memo(({ ingredient }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { _id, type, name, price, image } = ingredient;
+  const dispatch = useDispatch();
 
+  const handleModalOpen = () => {
+    dispatch(setDetailIngredient(ingredient));
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    dispatch(setDetailIngredient(null));
+    setIsModalOpen(false);
+  };
   return (
     <>
       <div
-        onClick={() => setIsOpen(true)}
+        onClick={() => handleModalOpen()}
         className={ingredientStyle.ingredientCard}
       >
         <Counter />
@@ -30,12 +42,9 @@ const IngredientCard = memo(({ ingredient }) => {
           {name}
         </h3>
       </div>
-      {isOpen && (
-        <Modal
-          title="Детали ингредиента"
-          onClose={() => isOpen && setIsOpen(false)}
-        >
-          <IngredientDetails item={ingredient} />
+      {isModalOpen && (
+        <Modal title="Детали ингредиента" onClose={() => handleModalClose()}>
+          <IngredientDetails />
         </Modal>
       )}
     </>

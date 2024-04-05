@@ -1,10 +1,11 @@
 import styles from "./BurgerIngredients.module.css";
 import PropTypes from "prop-types";
-import { useState, useRef, memo } from "react";
+import { useState, useRef } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
 import { useSelector } from "react-redux";
+
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
   const ingredients = useSelector((store) => store.ingredients.ingredients);

@@ -19,7 +19,7 @@ export const ingredientsSlice = createSlice({
   reducers: {
     setIngredients: (state, action) => {
       state.ingredients = action.payload
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -37,5 +37,5 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const {setIngredients} = ingredientsSlice.actions;
+export const { setIngredients } = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

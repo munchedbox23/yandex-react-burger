@@ -1,28 +1,30 @@
-import PropTypes from "prop-types";
-import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import styles from "./IngredientDetails.module.css";
 import IngredientDetail from "./IngredientDetail/IngredientDetail";
+import { useSelector } from "react-redux";
 
-const IngredientDetails = ({ item }) => {
+const IngredientDetails = () => {
+  const detailIngredient = useSelector(
+    (store) => store.modalIngredient.detailIngredient
+  );
   const detailsList = [
     {
       id: 1,
-      detailValue: item.calories,
+      detailValue: detailIngredient.calories,
       detailText: "Калории,ккал",
     },
     {
       id: 2,
-      detailValue: item.proteins,
+      detailValue: detailIngredient.proteins,
       detailText: "Белки, г",
     },
     {
       id: 3,
-      detailValue: item.fat,
+      detailValue: detailIngredient.fat,
       detailText: "Жиры, г",
     },
     {
       id: 4,
-      detailValue: item.carbohydrates,
+      detailValue: detailIngredient.carbohydrates,
       detailText: "Углеводы, г",
     },
   ];
@@ -31,13 +33,13 @@ const IngredientDetails = ({ item }) => {
     <div className={styles.detailsWrapper}>
       <img
         className={styles.image}
-        src={item.image_large}
-        alt={`Ингридиент: ${item.name}`}
+        src={detailIngredient.image_large}
+        alt={`Ингридиент: ${detailIngredient.name}`}
       />
       <h4
         className={`${styles.ingredientName} text text_type_main-medium mt-4 mb-8`}
       >
-        {item.name}
+        {detailIngredient.name}
       </h4>
       <div className={styles.detailsWrapper}>
         <ul className={styles.detailsList}>
@@ -53,10 +55,6 @@ const IngredientDetails = ({ item }) => {
       </div>
     </div>
   );
-};
-
-IngredientDetails.propTypes = {
-  item: ingredientsPropTypes.isRequired,
 };
 
 export default IngredientDetails;
