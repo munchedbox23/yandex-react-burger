@@ -9,11 +9,20 @@ import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
 import { useDispatch } from "react-redux";
 import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
+import { useDrag } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
 
 const IngredientCard = memo(({ ingredient }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { _id, type, name, price, image } = ingredient;
+  const { name, price, image } = ingredient;
   const dispatch = useDispatch();
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: { ...ingredient, idx: uuidv4() },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
 
   const handleModalOpen = () => {
     dispatch(setDetailIngredient(ingredient));
@@ -24,11 +33,15 @@ const IngredientCard = memo(({ ingredient }) => {
     dispatch(setDetailIngredient(null));
     setIsModalOpen(false);
   };
+
   return (
     <>
       <div
         onClick={() => handleModalOpen()}
-        className={ingredientStyle.ingredientCard}
+        className={`${ingredientStyle.ingredientCard} ${
+          isDrag && ingredientStyle.dragging
+        }`}
+        ref={dragRef}
       >
         <Counter />
         <img src={image} alt={`Ингридиент: ${name}`} />

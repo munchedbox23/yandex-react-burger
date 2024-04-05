@@ -1,0 +1,31 @@
+.element {
+  padding: 24px;
+  display: inline-block;
+  background: var(--background-element);
+  max-width: 536px;
+  width: 100%;
+  min-height: 80px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  line-height: 24px;
+  color: #f2f2f3;
+  flex-grow: 1;
+}
+
+.positionTop {
+  border-radius: 88px 88px 40px 40px;
+}
+
+.positionBottom {
+  border-radius: 40px 40px 88px 88px;
+}
+
+.elementRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.borderClass {
+  border: 1px solid #4c4cff;
+}

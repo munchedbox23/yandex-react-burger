@@ -14,13 +14,14 @@ const Modal = ({ children, title, onClose }) => {
     },
     [onClose]
   );
+
   useEffect(() => {
     document.addEventListener("keydown", closeByEscape);
 
     return () => {
       document.addEventListener("keydown", closeByEscape);
     };
-  }, [onClose]);
+  }, [onClose, closeByEscape]);
 
   return createPortal(
     <div className={modalStyles.modal}>

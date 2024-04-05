@@ -1,129 +1,120 @@
-// import styles from "./BurgerConstructor.module.css";
-// import {
-//   ConstructorElement,
-//   CurrencyIcon,
-//   DragIcon,
-//   Button,
-// } from "@ya.praktikum/react-developer-burger-ui-components";
-// import PropTypes from "prop-types";
-// import { useContext, useState } from "react";
-// import OrderDetails from "../OrderDetails/OrderDetails";
-// import Modal from "../Modal/Modal";
-// import { BASE_URL, ORDER_ENDPOINT } from "../../utils/constants";
-// import { request } from "../../utils/requests";
+import styles from "./BurgerConstructor.module.css";
+import {
+  CurrencyIcon,
+  Button,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useMemo, useState } from "react";
+import OrderDetails from "../OrderDetails/OrderDetails";
+import Modal from "../Modal/Modal";
+import { SelectedBun } from "./SelectedBun/SelectedBun";
+import { BASE_URL, ORDER_ENDPOINT } from "../../utils/constants";
+import { request } from "../../utils/requests";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
+import { useDrop } from "react-dnd";
+import {
+  calcTotalPrice,
+  setBun,
+  setIngredients,
+} from "../../services/features/constructor/burgerConstructorSlice";
 
-// const BurgerConstructor = ({ totalPrice }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const [orderList, setOrder] = useState(null);
-//   const handleAndPlaceOrder = () => {
-//     const postOrder = [selectedBun, ...selectedIngredients];
-//     request(`${BASE_URL}${ORDER_ENDPOINT}`, {
-//       method: "POST",
-//       headers: {
-//         "Content-type": "application/json",
-//       },
-//       body: JSON.stringify({ ingredients: postOrder.map((item) => item._id) }),
-//     })
-//       .then((data) => {
-//         setOrder(data);
-//         setIsOpen(true);
-//       })
-//       .catch((error) => console.error("Error placing order:", error));
-//   };
-//   return (
-//     <>
-//       <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
-//         <div className={styles.constructorWrapper}>
-//           {selectedBun ? (
-//             <ConstructorElement
-//               type="top"
-//               isLocked={true}
-//               text={selectedBun?.name}
-//               price={selectedBun?.price}
-//               thumbnail={selectedBun?.image}
-//               extraClass="ml-8"
-//             />
-//           ) : (
-//             <div className="constructor-element constructor-element_pos_top ml-8">
-//               <span className="constructor-element__row">
-//                 <span className="constructor-element__text">
-//                   Перетащите булку
-//                 </span>
-//               </span>
-//             </div>
-//           )}
-//           {selectedIngredients.length ? (
-//             <ul className={`${styles.constructorList} mt-4 mb-4`}>
-//               {selectedIngredients.map(({ _id, image, price, name }) => (
-//                 <li key={_id} className={`${styles.constructorItem} ml-2 mb-4`}>
-//                   <div className={styles.drag}>
-//                     <DragIcon type="primary" />
-//                   </div>
-//                   <ConstructorElement
-//                     text={name}
-//                     price={price}
-//                     thumbnail={image}
-//                     extraClass={`${styles.centerBun}`}
-//                   />
-//                 </li>
-//               ))}
-//             </ul>
-//           ) : (
-//             <div className="constructor-element constructor-element_pos_center ml-8 mt-4 mb-4">
-//               <span className="constructor-element__row">
-//                 <span className="constructor-element__text">
-//                   Перетащите булку
-//                 </span>
-//               </span>
-//             </div>
-//           )}
+const BurgerConstructor = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [orderList, setOrder] = useState(null);
+  const dispatch = useDispatch();
 
-//           {selectedBun ? (
-//             <ConstructorElement
-//               type="bottom"
-//               isLocked={true}
-//               text={selectedBun?.name}
-//               price={selectedBun?.price}
-//               thumbnail={selectedBun?.image}
-//               extraClass="ml-8"
-//             />
-//           ) : (
-//             <div className="constructor-element constructor-element_pos_bottom ml-8">
-//               <span className="constructor-element__row">
-//                 <span className="constructor-element__text">
-//                   Перетащите булку
-//                 </span>
-//               </span>
-//             </div>
-//           )}
-//         </div>
-//         <div className={`${styles.total} mt-10`}>
-//           <div className={styles.priceTotal}>
-//             <span className="text text_type_digits-medium">{totalPrice}</span>
-//             <CurrencyIcon type="primary" />
-//           </div>
-//           <Button
-//             onClick={handleAndPlaceOrder}
-//             htmlType="button"
-//             type="primary"
-//             size="medium"
-//             disabled={!selectedBun}
-//           >
-//             Офорить заказ
-//           </Button>
-//         </div>
-//       </section>
-//       {isOpen && orderList && (
-//         <Modal onClose={() => setIsOpen(false)}>
-//           <OrderDetails orderNumber={orderList.order.number} />
-//         </Modal>
-//       )}
-//     </>
-//   );
-// };
+  const selectedBun = useSelector(
+      (store) => store.burgerConstructor.selectedBun
+    ),
+    selectedIngredients = useSelector(
+      (store) => store.burgerConstructor.selectedIngredients
+    );
 
-// BurgerConstructor.propTypes = {
-//   totalPrice: PropTypes.number.isRequired,
-// };
+  const [{ isHover, ingredientType }, dropRef] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+      ingredientType: monitor.getItem()?.type,
+    }),
+    drop(item) {
+      if (item.type === "bun") {
+        dispatch(setBun(item));
+      } else {
+        dispatch(setIngredients(item));
+      }
+    },
+  });
 
-// export default BurgerConstructor;
+  useMemo(() => {
+    return dispatch(calcTotalPrice());
+  }, [dispatch, selectedBun, selectedIngredients]);
+
+  const totalPrice = useSelector((store) => store.burgerConstructor.totalPrice);
+
+  return (
+    <>
+      <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
+        <div ref={dropRef} className={styles.constructorWrapper}>
+          <SelectedBun
+            ingredientType={ingredientType}
+            isHover={isHover}
+            selectedBun={selectedBun}
+            position="top"
+          />
+          {selectedIngredients.length ? (
+            <ul className={`${styles.constructorList} mt-4 mb-4`}>
+              {selectedIngredients.map((selectedIngredient) => (
+                <li
+                  key={selectedIngredient.idx}
+                  className={`${styles.constructorItem} ml-2 mb-4`}
+                >
+                  <SelectedIngredient selectedIngredient={selectedIngredient} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div
+              className={`${styles.constructorElement} ${
+                isHover && ingredientType !== "bun" && styles.borderClass
+              } ml-8 mt-4 mb-4`}
+            >
+              <span className={`${styles.selectedIngredientRow} pt-6`}>
+                <span className={styles.constructorElementText}>
+                  Перетащите начинку
+                </span>
+              </span>
+            </div>
+          )}
+          <SelectedBun
+            ingredientType={ingredientType}
+            isHover={isHover}
+            selectedBun={selectedBun}
+            position="bottom"
+          />
+        </div>
+        <div className={`${styles.total} mt-10`}>
+          <div className={styles.priceTotal}>
+            <span className="text text_type_digits-medium">{totalPrice}</span>
+            <CurrencyIcon type="primary" />
+          </div>
+          <Button
+            // onClick={handleAndPlaceOrder}
+            htmlType="button"
+            type="primary"
+            size="medium"
+            disabled={!selectedBun}
+          >
+            Офорить заказ
+          </Button>
+        </div>
+      </section>
+      {isOpen && orderList && (
+        <Modal onClose={() => setIsOpen(false)}>
+          <OrderDetails orderNumber={orderList.order.number} />
+        </Modal>
+      )}
+    </>
+  );
+};
+
+export default BurgerConstructor;
