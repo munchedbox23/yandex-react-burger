@@ -8,7 +8,7 @@ const initialState = {
   postFailed: false
 };
 
-export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrder', async(order, {dispatch}) => {
+export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrder', async(order) => {
   const response = await request(`${BASE_URL}${ORDER_ENDPOINT}`, {
     method: "POST",
     headers: {
@@ -16,24 +16,21 @@ export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrd
     },
     body: JSON.stringify({ingredients: order.map((item) => item._id)})
 });
-  dispatch(setOrder(response));
+  return response;
 });
 
 
 export const orderPostSlice = createSlice({
   name: 'postOrder',
   initialState,
-  reducers: {
-    setOrder: (state, action) => {
-      state.orderList = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
     .addCase(handleAndPlaceOrder.pending, (state) => {
       state.postRequest =  true;
     })
     .addCase(handleAndPlaceOrder.fulfilled, (state, action) => {
+      state.orderList = action.payload;
       state.postRequest = false;
       state.postFailed = false;
     })

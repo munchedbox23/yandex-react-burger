@@ -8,25 +8,22 @@ const initialState = {
   getIngredientsFailed: false
 };
 
-export const getIngredients = createAsyncThunk('ingredients/getIngredients', async (_, {dispatch}) => {
+export const getIngredients = createAsyncThunk('ingredients/getIngredients', async () => {
   const response = await request(`${BASE_URL}${LOAD_ENDPOINT}`);
-  dispatch(setIngredients(response.data))
+  return response.data;
 })
 
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
-  reducers: {
-    setIngredients: (state, action) => {
-      state.ingredients = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
     .addCase(getIngredients.pending, (state) => {
       state.getIngredientsRequest = true;
     })
-    .addCase(getIngredients.fulfilled, (state) => {
+    .addCase(getIngredients.fulfilled, (state, action) => {
+      state.ingredients = action.payload;
       state.getIngredientsRequest = false;
       state.getIngredientsFailed = false;
     })
