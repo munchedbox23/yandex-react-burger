@@ -3,11 +3,11 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
 import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +17,13 @@ const IngredientCard = memo(({ ingredient }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { name, price, image } = ingredient;
   const dispatch = useDispatch();
+  const selectedBun = useSelector(
+    (store) => store.burgerConstructor.selectedBun
+  );
+  const selectedIngredients = useSelector(
+    (store) => store.burgerConstructor.selectedIngredients
+  );
+
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
     item: { ...ingredient, idx: uuidv4() },
@@ -44,7 +51,7 @@ const IngredientCard = memo(({ ingredient }) => {
         }`}
         ref={dragRef}
       >
-        <Counter count={ingredient.__v} size="default" />
+        <Counter count={count} size="default" />
         <img src={image} alt={`Ингридиент: ${name}`} />
         <div className={ingredientStyle.ingredientPrice}>
           <span className="text text_type_digits-medium">{price}</span>

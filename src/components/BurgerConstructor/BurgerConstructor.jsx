@@ -76,13 +76,12 @@ const BurgerConstructor = () => {
           />
           {selectedIngredients.length ? (
             <ul className={`${styles.constructorList} mt-4 mb-4`}>
-              {selectedIngredients.map((selectedIngredient) => (
-                <li
-                  key={selectedIngredient.idx}
-                  className={`${styles.constructorItem} ml-2 mb-4`}
-                >
-                  <SelectedIngredient selectedIngredient={selectedIngredient} />
-                </li>
+              {selectedIngredients.map((selectedIngredient, index) => (
+                <SelectedIngredient
+                  index={index}
+                  key={selectedIngredient?.idx}
+                  selectedIngredient={selectedIngredient}
+                />
               ))}
             </ul>
           ) : (
