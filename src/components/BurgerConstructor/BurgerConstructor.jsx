@@ -125,7 +125,7 @@ const BurgerConstructor = () => {
       ) : (
         isOpen &&
         orderList && (
-          <Modal onClose={() => handleCloseOrderModal()}>
+          <Modal onClose={handleCloseOrderModal}>
             <OrderDetails orderNumber={orderList.order.number} />
           </Modal>
         )

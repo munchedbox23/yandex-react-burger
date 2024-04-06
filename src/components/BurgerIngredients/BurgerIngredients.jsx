@@ -20,30 +20,22 @@ const BurgerIngredients = () => {
     tabsTitle[value].current.scrollIntoView();
   };
 
+  const getIntersectionBlock = (tabsTitle, contentRefTop) => {
+    const distances = Object.keys(tabsTitle).map((key) => ({
+      key,
+      distance: Math.abs(
+        tabsTitle[key].current.getBoundingClientRect().bottom - contentRefTop
+      ),
+    }));
+
+    return distances.reduce((prev, curr) =>
+      prev.distance < curr.distance ? prev : curr
+    ).key;
+  };
+
   const handleScroll = () => {
     const contentRefTop = contentRef.current.getBoundingClientRect().top;
-
-    if (
-      Math.abs(
-        tabsTitle.one.current.getBoundingClientRect().bottom - contentRefTop
-      ) <
-      Math.abs(
-        tabsTitle.two.current.getBoundingClientRect().bottom - contentRefTop
-      )
-    ) {
-      setCurrent("one");
-    } else if (
-      Math.abs(
-        tabsTitle.two.current.getBoundingClientRect().bottom - contentRefTop
-      ) <
-      Math.abs(
-        tabsTitle.three.current.getBoundingClientRect().bottom - contentRefTop
-      )
-    ) {
-      setCurrent("two");
-    } else {
-      setCurrent("three");
-    }
+    setCurrent(getIntersectionBlock(tabsTitle, contentRefTop));
   };
 
   return (

@@ -8,7 +8,7 @@ const initialState = {
   getIngredientsFailed: false
 };
 
-export const getIngredients = createAsyncThunk('ingredients/getIngredients', async (_, {rejectWithValue, dispatch}) => {
+export const getIngredients = createAsyncThunk('ingredients/getIngredients', async (_, {dispatch}) => {
   const response = await request(`${BASE_URL}${LOAD_ENDPOINT}`);
   dispatch(setIngredients(response.data))
 })

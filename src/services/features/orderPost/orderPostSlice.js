@@ -8,7 +8,7 @@ const initialState = {
   postFailed: false
 };
 
-export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrder', async(order, {rejectWithValue, dispatch}) => {
+export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrder', async(order, {dispatch}) => {
   const response = await request(`${BASE_URL}${ORDER_ENDPOINT}`, {
     method: "POST",
     headers: {
