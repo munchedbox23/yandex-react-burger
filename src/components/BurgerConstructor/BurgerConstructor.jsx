@@ -3,24 +3,24 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 import { SelectedBun } from "./SelectedBun/SelectedBun";
-import { BASE_URL, ORDER_ENDPOINT } from "../../utils/constants";
-import { request } from "../../utils/requests";
 import { useDispatch, useSelector } from "react-redux";
 import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
 import { useDrop } from "react-dnd";
 import {
   calcTotalPrice,
+  resetConstructor,
   setBun,
   setIngredients,
 } from "../../services/features/constructor/burgerConstructorSlice";
+import { handleAndPlaceOrder } from "../../services/features/orderPost/orderPostSlice";
+import { Preloader } from "../Preloader/Preloader";
 
 const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [orderList, setOrder] = useState(null);
   const dispatch = useDispatch();
 
   const selectedBun = useSelector(
@@ -28,7 +28,9 @@ const BurgerConstructor = () => {
     ),
     selectedIngredients = useSelector(
       (store) => store.burgerConstructor.selectedIngredients
-    );
+    ),
+    orderList = useSelector((store) => store.postOrder.orderList),
+    postRequest = useSelector((store) => store.postOrder.postRequest);
 
   const [{ isHover, ingredientType }, dropRef] = useDrop({
     accept: "ingredient",
@@ -45,11 +47,22 @@ const BurgerConstructor = () => {
     },
   });
 
-  useMemo(() => {
-    return dispatch(calcTotalPrice());
+  useEffect(() => {
+    dispatch(calcTotalPrice());
   }, [dispatch, selectedBun, selectedIngredients]);
 
   const totalPrice = useSelector((store) => store.burgerConstructor.totalPrice);
+
+  const handlePostOrder = () => {
+    const order = [selectedBun, ...selectedIngredients];
+    dispatch(handleAndPlaceOrder(order));
+    setIsOpen(true);
+  };
+
+  const handleCloseOrderModal = () => {
+    dispatch(resetConstructor());
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -98,7 +111,7 @@ const BurgerConstructor = () => {
             <CurrencyIcon type="primary" />
           </div>
           <Button
-            // onClick={handleAndPlaceOrder}
+            onClick={() => handlePostOrder()}
             htmlType="button"
             type="primary"
             size="medium"
@@ -108,10 +121,15 @@ const BurgerConstructor = () => {
           </Button>
         </div>
       </section>
-      {isOpen && orderList && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <OrderDetails orderNumber={orderList.order.number} />
-        </Modal>
+      {postRequest ? (
+        <Preloader />
+      ) : (
+        isOpen &&
+        orderList && (
+          <Modal onClose={() => handleCloseOrderModal()}>
+            <OrderDetails orderNumber={orderList.order.number} />
+          </Modal>
+        )
       )}
     </>
   );

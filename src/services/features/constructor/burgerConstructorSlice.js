@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   selectedBun: null,
   selectedIngredients: [],
-  totalPrice: 0
+  totalPrice: 0,
 };
 
 export const burgerConstructorSlice = createSlice({
@@ -11,10 +11,13 @@ export const burgerConstructorSlice = createSlice({
   initialState,
   reducers: {
     setBun: (state, action) => {
-      state.selectedBun = action.payload
+      state.selectedBun = action.payload;
     },
     setIngredients: (state, action) => {
-      state.selectedIngredients.push(action.payload);
+      state.selectedIngredients = [...state.selectedIngredients, action.payload];
+      state.selectedIngredients = state.selectedIngredients.map((item) =>
+      item.id === action.payload.id ? { ...item, __v: (item.__v || 0) + 1 } : item
+    );
     },
     removIngredient: (state, action) => {
       state.selectedIngredients = state.selectedIngredients.filter((item) => item.idx !== action.payload);
@@ -25,7 +28,7 @@ export const burgerConstructorSlice = createSlice({
     },
     calcTotalPrice: (state, action) => {
       state.totalPrice = (state.selectedBun ? state.selectedBun.price * 2 : 0) + (state.selectedIngredients?.reduce((acc, ingredient) => acc + ingredient.price, 0)); 
-    }
+    },
   }
 });
 

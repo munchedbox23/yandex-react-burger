@@ -13,6 +13,7 @@ import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 
 const IngredientCard = memo(({ ingredient }) => {
+  const [count, setCount] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { name, price, image } = ingredient;
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const IngredientCard = memo(({ ingredient }) => {
         }`}
         ref={dragRef}
       >
-        <Counter />
+        <Counter count={ingredient.__v} size="default" />
         <img src={image} alt={`Ингридиент: ${name}`} />
         <div className={ingredientStyle.ingredientPrice}>
           <span className="text text_type_digits-medium">{price}</span>
