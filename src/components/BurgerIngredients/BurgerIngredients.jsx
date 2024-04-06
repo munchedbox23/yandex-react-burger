@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState("one");
   const ingredients = useSelector((store) => store.ingredients.ingredients);
+  const contentRef = useRef(null);
   const tabsTitle = {
     one: useRef(),
     two: useRef(),
@@ -17,6 +18,32 @@ const BurgerIngredients = () => {
   const handleTabClick = (value) => {
     setCurrent(value);
     tabsTitle[value].current.scrollIntoView();
+  };
+
+  const handleScroll = () => {
+    const contentRefTop = contentRef.current.getBoundingClientRect().top;
+
+    if (
+      Math.abs(
+        tabsTitle.one.current.getBoundingClientRect().bottom - contentRefTop
+      ) <
+      Math.abs(
+        tabsTitle.two.current.getBoundingClientRect().bottom - contentRefTop
+      )
+    ) {
+      setCurrent("one");
+    } else if (
+      Math.abs(
+        tabsTitle.two.current.getBoundingClientRect().bottom - contentRefTop
+      ) <
+      Math.abs(
+        tabsTitle.three.current.getBoundingClientRect().bottom - contentRefTop
+      )
+    ) {
+      setCurrent("two");
+    } else {
+      setCurrent("three");
+    }
   };
 
   return (
@@ -34,7 +61,11 @@ const BurgerIngredients = () => {
           </Tab>
         ))}
       </div>
-      <div className={styles.ingredientsWrapper}>
+      <div
+        ref={contentRef}
+        onScroll={handleScroll}
+        className={styles.ingredientsWrapper}
+      >
         {tabs.map(({ id, type, typeName, value }) => (
           <div key={id} className={styles.ingredientContent}>
             <h2 ref={tabsTitle[value]}>{typeName}</h2>
