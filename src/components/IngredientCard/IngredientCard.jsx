@@ -32,6 +32,20 @@ const IngredientCard = memo(({ ingredient }) => {
     }),
   });
 
+  useEffect(() => {
+    if (selectedBun && ingredient.type === "bun") {
+      if (selectedBun._id === ingredient._id) {
+        setCount(2);
+      } else {
+        setCount(0);
+      }
+    } else {
+      setCount(
+        selectedIngredients.filter((item) => item._id === ingredient._id).length
+      );
+    }
+  }, [selectedBun, selectedIngredients]);
+
   const handleModalOpen = () => {
     dispatch(setDetailIngredient(ingredient));
     setIsModalOpen(true);

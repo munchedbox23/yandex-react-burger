@@ -1,5 +1,4 @@
 import styles from "./BurgerIngredients.module.css";
-import PropTypes from "prop-types";
 import { useState, useRef } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -54,10 +53,6 @@ const BurgerIngredients = () => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  totalDispach: PropTypes.func,
 };
 
 export default BurgerIngredients;
