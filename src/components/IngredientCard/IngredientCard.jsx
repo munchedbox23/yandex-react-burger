@@ -3,42 +3,69 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { useContext, useState, memo, useMemo } from "react";
+import { useState, memo, useEffect } from "react";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import Modal from "../Modal/Modal";
-import { SelectedIngredientsContext } from "../../services/ingredientsContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
+import { useDrag } from "react-dnd";
+import { v4 as uuidv4 } from "uuid";
 
 const IngredientCard = memo(({ ingredient }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { _id, type, name, price, image } = ingredient;
-  const {
-    selectedIngredientsState: { selectedBun, selectedIngredients },
-  } = useContext(SelectedIngredientsContext);
+  const [count, setCount] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { name, price, image } = ingredient;
+  const dispatch = useDispatch();
+  const selectedBun = useSelector(
+    (store) => store.burgerConstructor.selectedBun
+  );
+  const selectedIngredients = useSelector(
+    (store) => store.burgerConstructor.selectedIngredients
+  );
 
-  const calcCounter = useMemo(() => {
-    if (selectedBun && type === "bun") {
-      return selectedBun._id === _id ? 2 : 0;
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: { ...ingredient, idx: uuidv4() },
+    collect: (monitor) => ({
+      isDrag: monitor.isDragging(),
+    }),
+  });
+
+  useEffect(() => {
+    if (selectedBun && ingredient.type === "bun") {
+      if (selectedBun._id === ingredient._id) {
+        setCount(2);
+      } else {
+        setCount(0);
+      }
     } else {
-      return selectedIngredients.filter((ingredient) => ingredient._id === _id)
-        .length;
+      setCount(
+        selectedIngredients.filter((item) => item._id === ingredient._id).length
+      );
     }
   }, [selectedBun, selectedIngredients]);
+
+  const handleModalOpen = () => {
+    dispatch(setDetailIngredient(ingredient));
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    dispatch(setDetailIngredient(null));
+    setIsModalOpen(false);
+  };
 
   return (
     <>
       <div
-        onClick={() => setIsOpen(true)}
-        className={ingredientStyle.ingredientCard}
+        onClick={() => handleModalOpen()}
+        className={`${ingredientStyle.ingredientCard} ${
+          isDrag && ingredientStyle.dragging
+        }`}
+        ref={dragRef}
       >
-        {calcCounter > 0 && (
-          <Counter
-            count={calcCounter}
-            size="default"
-            extraClass={ingredientStyle.counter}
-          />
-        )}
+        <Counter count={count} size="default" />
         <img src={image} alt={`Ингридиент: ${name}`} />
         <div className={ingredientStyle.ingredientPrice}>
           <span className="text text_type_digits-medium">{price}</span>
@@ -50,12 +77,9 @@ const IngredientCard = memo(({ ingredient }) => {
           {name}
         </h3>
       </div>
-      {isOpen && (
-        <Modal
-          title="Детали ингредиента"
-          onClose={() => isOpen && setIsOpen(false)}
-        >
-          <IngredientDetails item={ingredient} />
+      {isModalOpen && (
+        <Modal title="Детали ингредиента" onClose={() => handleModalClose()}>
+          <IngredientDetails />
         </Modal>
       )}
     </>

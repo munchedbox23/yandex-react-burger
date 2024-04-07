@@ -1,9 +1,12 @@
 const checkResponse = (response) => {
-  return response.ok ? response.json() : response.json().then((error) => Promise.reject(error));
+  if(!response.ok) {
+    throw new Error(`Error when executing the request`)
+  }
+  return response.json();
 };
 
 const request = (url, options) => {
-  return fetch(url, options).then(checkResponse).catch((error) => console.error("Error when executing the request:", error));
+  return fetch(url, options).then(checkResponse);
 };
 
 export {checkResponse, request};

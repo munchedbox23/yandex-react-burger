@@ -24,3 +24,7 @@
 .ingredientName {
   text-align: center;
 }
+
+.dragging {
+  opacity: 0.7;
+}

@@ -1,105 +1,108 @@
 import styles from "./BurgerConstructor.module.css";
 import {
-  ConstructorElement,
   CurrencyIcon,
-  DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
-import { SelectedIngredientsContext } from "../../services/ingredientsContext";
-import { BASE_URL, ORDER_ENDPOINT } from "../../utils/constants";
-import { request } from "../../utils/requests";
+import { SelectedBun } from "./SelectedBun/SelectedBun";
+import { useDispatch, useSelector } from "react-redux";
+import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
+import { useDrop } from "react-dnd";
+import {
+  calcTotalPrice,
+  resetConstructor,
+  setBun,
+  setIngredients,
+} from "../../services/features/constructor/burgerConstructorSlice";
+import { handleAndPlaceOrder } from "../../services/features/orderPost/orderPostSlice";
+import { Preloader } from "../Preloader/Preloader";
 
-const BurgerConstructor = ({ totalPrice }) => {
+const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { selectedIngredientsState } = useContext(SelectedIngredientsContext);
-  const [orderList, setOrder] = useState(null);
-  const { selectedBun, selectedIngredients } = selectedIngredientsState;
+  const dispatch = useDispatch();
 
-  const handleAndPlaceOrder = () => {
-    const postOrder = [selectedBun, ...selectedIngredients];
-    request(`${BASE_URL}${ORDER_ENDPOINT}`, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ ingredients: postOrder.map((item) => item._id) }),
-    })
-      .then((data) => {
-        setOrder(data);
-        setIsOpen(true);
-      })
-      .catch((error) => console.error("Error placing order:", error));
+  const selectedBun = useSelector(
+      (store) => store.burgerConstructor.selectedBun
+    ),
+    selectedIngredients = useSelector(
+      (store) => store.burgerConstructor.selectedIngredients
+    ),
+    orderList = useSelector((store) => store.postOrder.orderList),
+    postRequest = useSelector((store) => store.postOrder.postRequest);
+
+  const [{ isHover, ingredientType }, dropRef] = useDrop({
+    accept: "ingredient",
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+      ingredientType: monitor.getItem()?.type,
+    }),
+    drop(item) {
+      if (item.type === "bun") {
+        dispatch(setBun(item));
+      } else {
+        dispatch(setIngredients(item));
+      }
+    },
+  });
+
+  useEffect(() => {
+    dispatch(calcTotalPrice());
+  }, [dispatch, selectedBun, selectedIngredients]);
+
+  const totalPrice = useSelector((store) => store.burgerConstructor.totalPrice);
+
+  const handlePostOrder = () => {
+    const order = [selectedBun, ...selectedIngredients];
+    dispatch(handleAndPlaceOrder(order));
+    setIsOpen(true);
   };
+
+  const handleCloseOrderModal = () => {
+    dispatch(resetConstructor());
+    setIsOpen(false);
+  };
+
   return (
     <>
       <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
-        <div className={styles.constructorWrapper}>
-          {selectedBun ? (
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={selectedBun?.name}
-              price={selectedBun?.price}
-              thumbnail={selectedBun?.image}
-              extraClass="ml-8"
-            />
-          ) : (
-            <div className="constructor-element constructor-element_pos_top ml-8">
-              <span className="constructor-element__row">
-                <span className="constructor-element__text">
-                  Перетащите булку
-                </span>
-              </span>
-            </div>
-          )}
+        <div ref={dropRef} className={styles.constructorWrapper}>
+          <SelectedBun
+            ingredientType={ingredientType}
+            isHover={isHover}
+            selectedBun={selectedBun}
+            position="top"
+          />
           {selectedIngredients.length ? (
             <ul className={`${styles.constructorList} mt-4 mb-4`}>
-              {selectedIngredients.map(({ _id, image, price, name }) => (
-                <li key={_id} className={`${styles.constructorItem} ml-2 mb-4`}>
-                  <div className={styles.drag}>
-                    <DragIcon type="primary" />
-                  </div>
-                  <ConstructorElement
-                    text={name}
-                    price={price}
-                    thumbnail={image}
-                    extraClass={`${styles.centerBun}`}
-                  />
-                </li>
+              {selectedIngredients.map((selectedIngredient, index) => (
+                <SelectedIngredient
+                  index={index}
+                  key={selectedIngredient?.idx}
+                  selectedIngredient={selectedIngredient}
+                />
               ))}
             </ul>
           ) : (
-            <div className="constructor-element constructor-element_pos_center ml-8 mt-4 mb-4">
-              <span className="constructor-element__row">
-                <span className="constructor-element__text">
-                  Перетащите булку
+            <div
+              className={`${styles.constructorElement} ${
+                isHover && ingredientType !== "bun" && styles.borderClass
+              } ml-8 mt-4 mb-4`}
+            >
+              <span className={`${styles.selectedIngredientRow} pt-6`}>
+                <span className={styles.constructorElementText}>
+                  Перетащите начинку
                 </span>
               </span>
             </div>
           )}
-
-          {selectedBun ? (
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={selectedBun?.name}
-              price={selectedBun?.price}
-              thumbnail={selectedBun?.image}
-              extraClass="ml-8"
-            />
-          ) : (
-            <div className="constructor-element constructor-element_pos_bottom ml-8">
-              <span className="constructor-element__row">
-                <span className="constructor-element__text">
-                  Перетащите булку
-                </span>
-              </span>
-            </div>
-          )}
+          <SelectedBun
+            ingredientType={ingredientType}
+            isHover={isHover}
+            selectedBun={selectedBun}
+            position="bottom"
+          />
         </div>
         <div className={`${styles.total} mt-10`}>
           <div className={styles.priceTotal}>
@@ -107,7 +110,7 @@ const BurgerConstructor = ({ totalPrice }) => {
             <CurrencyIcon type="primary" />
           </div>
           <Button
-            onClick={handleAndPlaceOrder}
+            onClick={() => handlePostOrder()}
             htmlType="button"
             type="primary"
             size="medium"
@@ -117,17 +120,18 @@ const BurgerConstructor = ({ totalPrice }) => {
           </Button>
         </div>
       </section>
-      {isOpen && orderList && (
-        <Modal onClose={() => setIsOpen(false)}>
-          <OrderDetails orderNumber={orderList.order.number} />
-        </Modal>
+      {postRequest ? (
+        <Preloader />
+      ) : (
+        isOpen &&
+        orderList && (
+          <Modal onClose={handleCloseOrderModal}>
+            <OrderDetails orderNumber={orderList.order.number} />
+          </Modal>
+        )
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructor;
