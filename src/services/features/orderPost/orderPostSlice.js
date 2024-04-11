@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { request } from "../../../utils/requests";
-import { BASE_URL, ORDER_ENDPOINT } from "../../../utils/constants";
+import { API } from "../../../utils/constants";
 
 const initialState = {
   orderList: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const handleAndPlaceOrder = createAsyncThunk('postOrder/handleAndPlaceOrder', async(order) => {
-  const response = await request(`${BASE_URL}${ORDER_ENDPOINT}`, {
+  const response = await request(`${API.baseUrl}${API.endpoints.order}`, {
     method: "POST",
     headers: {
       'Content-type': 'application/json'
