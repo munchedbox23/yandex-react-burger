@@ -5,24 +5,22 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SignForm } from "../../components/SignForm/SignForm";
 import { LoginLinks } from "../../components/SignForm/SignLinks/SignLinks";
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 
 export const LoginPage = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    e.preventDefault();
-  };
+  const { formState, onChange } = useForm();
+
   return (
     <SignForm linkComponent={LoginLinks} title="Вход">
       <EmailInput
-        onChange={(e) => onChange(e)}
-        value={value}
+        onChange={onChange}
+        value={formState.email || ""}
         name={"email"}
         isIcon={false}
       />
       <PasswordInput
-        onChange={(e) => onChange(e)}
-        value={value}
+        onChange={onChange}
+        value={formState.password || ""}
         name={"password"}
         extraClass="mb-2"
       />

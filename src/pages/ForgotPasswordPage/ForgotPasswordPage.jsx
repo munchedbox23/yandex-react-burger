@@ -4,8 +4,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SignForm } from "../../components/SignForm/SignForm";
 import { ForgotLinks } from "../../components/SignForm/SignLinks/SignLinks";
+import { useForm } from "../../hooks/useForm";
 
 export const ForgotPasswordPage = () => {
+  const { formState, onChange } = useForm();
+
   return (
     <SignForm linkComponent={ForgotLinks} title="Восстановление пароля">
       <Input
@@ -14,8 +17,8 @@ export const ForgotPasswordPage = () => {
         name={"forgot"}
         size={"default"}
         extraClass="ml-1"
-        value="1"
-        onChange={(e) => e.preventDefault()}
+        value={formState.forgot || ""}
+        onChange={onChange}
       />
       <Button htmlType="button" type="primary" size="large">
         Восстановить

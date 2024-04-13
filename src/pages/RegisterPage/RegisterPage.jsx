@@ -6,13 +6,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { SignForm } from "../../components/SignForm/SignForm";
 import { RegisterLinks } from "../../components/SignForm/SignLinks/SignLinks";
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
 
 export const RegisterPage = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e) => {
-    e.preventDefault();
-  };
+  const { formState, onChange } = useForm();
+
   return (
     <SignForm linkComponent={RegisterLinks} title="Регистрация">
       <Input
@@ -21,20 +19,20 @@ export const RegisterPage = () => {
         name={"name"}
         size={"default"}
         extraClass="ml-1"
-        value={value}
-        onChange={(e) => onChange(e)}
+        value={formState.name || ""}
+        onChange={onChange}
       />
       <EmailInput
         name={"email"}
         isIcon={false}
-        value={value}
-        onChange={(e) => onChange(e)}
+        value={formState.email || ""}
+        onChange={onChange}
       />
       <PasswordInput
         name={"password"}
         extraClass="mb-2"
-        value={value}
-        onChange={(e) => onChange(e)}
+        value={formState.password || ""}
+        onChange={onChange}
       />
       <Button htmlType="button" type="primary" size="large">
         Зарегистрироваться
