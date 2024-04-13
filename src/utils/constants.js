@@ -14,7 +14,8 @@ export const ROUTE = {
     resetPass: 'reset-password',
     forgotPass: 'forgot-password',
     profile: 'profile',
-    currIngredient: '/ingredients/:ingredientId'
+    currIngredient: '/ingredients/:ingredientId',
+    feed: 'feed'
   },
   
 };

@@ -1,0 +1,15 @@
+.signWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 180px;
+  text-align: center;
+  gap: 80px;
+}
+
+.signForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+}
