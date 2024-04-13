@@ -4,19 +4,19 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, memo, useEffect } from "react";
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
-import Modal from "../Modal/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
+import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { Link, useLocation } from "react-router-dom";
 
 const IngredientCard = memo(({ ingredient }) => {
   const [count, setCount] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { name, price, image } = ingredient;
-  const dispatch = useDispatch();
+
+  const location = useLocation();
+
   const selectedBun = useSelector(
     (store) => store.burgerConstructor.selectedBun
   );
@@ -46,20 +46,12 @@ const IngredientCard = memo(({ ingredient }) => {
     }
   }, [selectedBun, selectedIngredients]);
 
-  const handleModalOpen = () => {
-    dispatch(setDetailIngredient(ingredient));
-    setIsModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    dispatch(setDetailIngredient(null));
-    setIsModalOpen(false);
-  };
-
   return (
-    <>
+    <Link
+      to={`/ingredients/${ingredient._id}`}
+      state={{ background: location }}
+    >
       <div
-        onClick={() => handleModalOpen()}
         className={`${ingredientStyle.ingredientCard} ${
           isDrag && ingredientStyle.dragging
         }`}
@@ -77,12 +69,7 @@ const IngredientCard = memo(({ ingredient }) => {
           {name}
         </h3>
       </div>
-      {isModalOpen && (
-        <Modal title="Детали ингредиента" onClose={() => handleModalClose()}>
-          <IngredientDetails />
-        </Modal>
-      )}
-    </>
+    </Link>
   );
 });
 

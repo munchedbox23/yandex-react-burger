@@ -8,5 +8,13 @@ export const API = {
 
 export const ROUTE = {
   main: '/',
-
+  mainLayout: {
+    login: 'login',
+    register: 'register',
+    resetPass: 'reset-password',
+    forgotPass: 'forgot-password',
+    profile: 'profile',
+    currIngredient: '/ingredients/:ingredientId'
+  },
+  
 };
