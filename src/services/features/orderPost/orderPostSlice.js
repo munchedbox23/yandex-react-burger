@@ -42,5 +42,5 @@ export const orderPostSlice = createSlice({
   }
 });
 
-export const {setOrder, resetOrder} = orderPostSlice.actions;
+export const {} = orderPostSlice.actions;
 export default orderPostSlice.reducer;

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export const useForm = () => {
   const [formState, setFormState] = useState({});
+  const dispatch = useDispatch();
 
   const onChange = (e) => {
     e.preventDefault();
@@ -9,7 +11,12 @@ export const useForm = () => {
       ...formState,
       [e.target.name]: e.target.value
     });
-  }
+  };
 
-  return {formState, onChange, setFormState};
+  const onSubmit = (e, func) => {
+    e.preventDefault();
+    dispatch(func(formState));
+  };
+
+  return {formState, onChange, setFormState, onSubmit};
 };

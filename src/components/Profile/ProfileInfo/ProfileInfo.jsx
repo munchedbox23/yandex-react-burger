@@ -7,6 +7,7 @@ import { useForm } from "../../../hooks/useForm";
 
 export const ProfileInfo = () => {
   const { formState, onChange } = useForm();
+
   return (
     <form>
       <Input

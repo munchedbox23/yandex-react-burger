@@ -7,12 +7,22 @@ import {
 import { SignForm } from "../../components/SignForm/SignForm";
 import { RegisterLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
+import { userRegister } from "../../services/features/user/auth";
+import { useSelector } from "react-redux";
+import { ProfileLoader } from "../../components/Preloader/ProfileLoader/ProfileLoader";
 
 export const RegisterPage = () => {
-  const { formState, onChange } = useForm();
+  const { formState, onChange, onSubmit } = useForm();
+  const isRequestLoading = useSelector((store) => store.user.isRequestLoading);
 
-  return (
-    <SignForm linkComponent={RegisterLinks} title="Регистрация">
+  return isRequestLoading ? (
+    <ProfileLoader />
+  ) : (
+    <SignForm
+      onSubmit={(e) => onSubmit(e, userRegister)}
+      linkComponent={RegisterLinks}
+      title="Регистрация"
+    >
       <Input
         type={"text"}
         placeholder={"Имя"}
@@ -34,7 +44,7 @@ export const RegisterPage = () => {
         value={formState.password || ""}
         onChange={onChange}
       />
-      <Button htmlType="button" type="primary" size="large">
+      <Button htmlType="submit" type="primary" size="large">
         Зарегистрироваться
       </Button>
     </SignForm>

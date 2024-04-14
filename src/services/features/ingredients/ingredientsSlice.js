@@ -34,5 +34,5 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const { setIngredients } = ingredientsSlice.actions;
+export const {} = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;

@@ -2,7 +2,11 @@ export const API = {
   baseUrl: 'https://norma.nomoreparties.space/api',
   endpoints: {
     order: '/orders',
-    ingredients: '/ingredients'
+    ingredients: '/ingredients',
+    register: '/auth/register',
+    login: '/auth/login',
+    refreshToken: '/auth/token',
+    logout: '/auth/logout'
   }
 };
 
