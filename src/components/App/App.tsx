@@ -8,10 +8,13 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
+  ProfilePage,
 } from "../../pages";
 import { useLocation, useNavigate } from "react-router-dom";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
+import { ProfileInfo } from "../Profile/ProfileInfo/ProfileInfo";
+import { ProfileOrders } from "../Profile/ProfileOrders/ProfileOrders";
 
 function App() {
   const navigate = useNavigate();
@@ -41,6 +44,13 @@ function App() {
             path={ROUTE.mainLayout.resetPass}
             element={<ResetPasswordPage />}
           />
+          <Route path={ROUTE.userProfile.profile} element={<ProfilePage />}>
+            <Route index element={<ProfileInfo />} />
+            <Route
+              path={ROUTE.userProfile.orders}
+              element={<ProfileOrders />}
+            />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

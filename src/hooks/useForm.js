@@ -11,5 +11,5 @@ export const useForm = () => {
     });
   }
 
-  return {formState, onChange}
+  return {formState, onChange, setFormState};
 };

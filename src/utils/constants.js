@@ -13,9 +13,11 @@ export const ROUTE = {
     register: 'register',
     resetPass: 'reset-password',
     forgotPass: 'forgot-password',
-    profile: 'profile',
     currIngredient: '/ingredients/:ingredientId',
-    feed: 'feed'
+    feed: 'feed',
   },
-  
+  userProfile: {
+    profile: '/profile',
+    orders: 'orders',
+  }
 };
