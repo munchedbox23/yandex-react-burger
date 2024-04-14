@@ -4,9 +4,14 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../../hooks/useForm";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export const ProfileInfo = () => {
-  const { formState, onChange } = useForm();
+  const { formState, onChange, setFormState } = useForm();
+  const user = useSelector((store) => store.user.user);
+
+  
 
   return (
     <form>

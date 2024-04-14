@@ -37,7 +37,7 @@ const AppHeader = () => {
           <HeaderButton
             icon={ProfileIcon}
             text="Личный кабинет"
-            link={`/${ROUTE.mainLayout.login}`}
+            link={ROUTE.userProfile.profile}
           />
         </div>
       </div>

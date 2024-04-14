@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { userLogin, userRegister, userLogout, editUserData, getAuthUserData} from "./auth";
+import { userLogin, userRegister, userLogout, editUserData, checkUserAuth} from "./auth";
 
 const initialState = {
   user: null,
   isRequestLoading: false,
   isRequestFailed: false,
-  isUserChecked: false
+  isAuthChecked: false
 };
 
 export const userSlice = createSlice({
@@ -55,17 +55,19 @@ export const userSlice = createSlice({
     .addCase(userLogout.rejected, (state) => {
       state.isRequestFailed = true;
     })
-    .addCase(getAuthUserData.pending, (state) =>{
+    .addCase(checkUserAuth.pending, (state) =>{
       state.isRequestFailed = false;
       state.isRequestLoading = true;
     })
-    .addCase(getAuthUserData.fulfilled, (state, action) =>{
+    .addCase(checkUserAuth.fulfilled, (state, action) =>{
       state.user = action.payload;
+      state.isAuthChecked = true;
       state.isRequestFailed = false;
       state.isRequestLoading = false;
     })
-    .addCase(getAuthUserData.rejected, (state) =>{
+    .addCase(checkUserAuth.rejected, (state) =>{
       state.isRequestFailed = true;
+      state.isAuthChecked = true;
       state.isRequestLoading = false;
     })
     .addCase(editUserData.pending, (state) =>{

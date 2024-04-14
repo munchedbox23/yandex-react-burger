@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { request, fetchWithRefresh} from "../../../utils/requests";
-import { API, ROUTE } from "../../../utils/constants";
+import { API } from "../../../utils/constants";
 
 export const userRegister = createAsyncThunk('user/userRegister', async(form) => {
     const response = await request(`${API.baseUrl}${API.endpoints.register}`, {
@@ -51,7 +51,7 @@ export const forgotPassword = async (data) => {
   return response;
 };
 
-export const getAuthUserData = createAsyncThunk('user/getAuthUserData', async() => {
+export const checkUserAuth = createAsyncThunk('user/getAuthUserData', async() => {
   const response = await fetchWithRefresh(`${API.baseUrl}${API.endpoints.userData}`, {
     method: "GET",
     headers: {
