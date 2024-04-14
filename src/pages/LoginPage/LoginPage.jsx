@@ -7,21 +7,19 @@ import { SignForm } from "../../components/SignForm/SignForm";
 import { LoginLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
 import { userLogin } from "../../services/features/user/auth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 
 export const LoginPage = () => {
   const { formState, onChange } = useForm();
-  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const from = location.state?.from?.pathname || ROUTE.userProfile.profile;
 
   const onLogin = (e) => {
     e.preventDefault();
     dispatch(userLogin(formState))
-      .then(() => navigate(from))
+      .then(() => navigate(ROUTE.main))
       .catch((error) => console.error(error));
   };
 

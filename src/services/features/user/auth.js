@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { request } from "../../../utils/requests";
-import { API } from "../../../utils/constants";
+import { request, fetchWithRefresh} from "../../../utils/requests";
+import { API, ROUTE } from "../../../utils/constants";
 
 export const userRegister = createAsyncThunk('user/userRegister', async(form) => {
     const response = await request(`${API.baseUrl}${API.endpoints.register}`, {
@@ -39,16 +39,41 @@ export const userLogout = createAsyncThunk('user/userLogout', async() => {
   }
 });
 
-export const updateToken = createAsyncThunk('user/updateToken', async() => {
-  const response = await request(`${API.baseUrl}${API.endpoints.refreshToken}`, {
-    method: 'POST',
+export const forgotPassword = async (data) => {
+  const response = await request(`${API.baseUrl}${API.endpoints.forgotPassword}`, {
+    method: "POST",
     headers: {
-      'Content-type': 'application/json',
+      'Content-type': 'application/json'
     },
-    body: JSON.stringify({token: localStorage.getItem('refreshToken')})
+    body: JSON.stringify(data)
+  });
+  
+  return response;
+};
+
+export const getAuthUserData = createAsyncThunk('user/getAuthUserData', async() => {
+  const response = await fetchWithRefresh(`${API.baseUrl}${API.endpoints.userData}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+    }
   });
   if(response.success) {
-    localStorage.setItem('accessToken', response.accessToken.split('Bearer ')[1]);
-    localStorage.setItem('refreshToken', response.refreshToken);
+    return response;
+  }
+});
+
+export const editUserData = createAsyncThunk('user/editUserData', async(data) => {
+  const response = await fetchWithRefresh(`${API.baseUrl}${API.endpoints.userData}`, {
+    method: "PATCH",
+    headers: {
+      'Content-type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+    },
+    body: JSON.stringify(data)
+  });
+  if(response.success) {
+    return response;
   }
 });

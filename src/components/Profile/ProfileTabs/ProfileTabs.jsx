@@ -2,8 +2,20 @@ import styles from "./ProfileTabs.module.css";
 import { ProfileTab } from "./ProfileTab/ProfileTab";
 import { ROUTE } from "../../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { userLogout } from "../../../services/features/user/auth";
 
 export const ProfileTabs = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(userLogout())
+      .then(() => navigate(`/${ROUTE.mainLayout.login}`, { replace: true }))
+      .catch((error) => console.error(error));
+  };
+
   const profileTabs = [
     { name: "Профиль", route: `/profile` },
     {
@@ -23,7 +35,7 @@ export const ProfileTabs = () => {
           />
         ))}
         <li className="pt-3">
-          <button type="button" className={styles.btn}>
+          <button onClick={handleLogout} type="button" className={styles.btn}>
             Выйти
           </button>
         </li>

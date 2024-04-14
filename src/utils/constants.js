@@ -6,7 +6,10 @@ export const API = {
     register: '/auth/register',
     login: '/auth/login',
     refreshToken: '/auth/token',
-    logout: '/auth/logout'
+    logout: '/auth/logout',
+    forgotPassword: '/password-reset',
+    resetPassword: '/password-reset/reset',
+    userData: '/auth/user',
   }
 };
 
@@ -15,7 +18,7 @@ export const ROUTE = {
   mainLayout: {
     login: 'login',
     register: 'register',
-    resetPass: 'reset-password',
+    resetPass: '/reset-password',
     forgotPass: 'forgot-password',
     currIngredient: '/ingredients/:ingredientId',
     feed: 'feed',

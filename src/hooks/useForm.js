@@ -16,6 +16,7 @@ export const useForm = () => {
   const onSubmit = (e, func) => {
     e.preventDefault();
     dispatch(func(formState));
+    setFormState({});
   };
 
   return {formState, onChange, setFormState, onSubmit};

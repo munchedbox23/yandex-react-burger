@@ -8,7 +8,7 @@ import { ForgotLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
 
 export const ResetPasswordPage = () => {
-  const { formState, onChange } = useForm;
+  const { formState, onChange } = useForm();
 
   return (
     <SignForm linkComponent={ForgotLinks} title="Восстановление пароля">
