@@ -1,6 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { request, fetchWithRefresh} from "../../../utils/requests";
 import { API } from "../../../utils/constants";
+import Cookies from "universal-cookie";
+
+export const cookies = new Cookies();
 
 export const userRegister = createAsyncThunk('user/userRegister', async(form) => {
     const response = await request(`${API.baseUrl}${API.endpoints.register}`, {
@@ -10,7 +13,11 @@ export const userRegister = createAsyncThunk('user/userRegister', async(form) =>
       },
       body: JSON.stringify(form)
     });
-    return response;
+    if(response.success) {
+      cookies.set('accessToken', response.accessToken.split('Bearer ')[1], {path: '/'});
+      cookies.set('refreshToken', response.refreshToken, {path: '/'});
+      return response;
+    }
 });
 
 export const userLogin = createAsyncThunk('user/userLogin', async(form) => {
@@ -22,6 +29,8 @@ export const userLogin = createAsyncThunk('user/userLogin', async(form) => {
     body: JSON.stringify(form)
   });
   if(response.success) {
+    cookies.set('accessToken', response.accessToken.split('Bearer ')[1], {path: '/'});
+    cookies.set('refreshToken', response.refreshToken, {path: '/'});
     return response;
   }
 });
@@ -32,10 +41,11 @@ export const userLogout = createAsyncThunk('user/userLogout', async() => {
     headers: {
       'Content-type': 'application/json',
     },
-    body: JSON.stringify({token: localStorage.getItem('refreshToken')})
+    body: JSON.stringify({token: cookies.get('refreshToken')})
   });
   if(response.success) {
-    return response;
+    cookies.remove('accessToken');
+    cookies.remove('refreshToken');
   }
 });
 
@@ -51,12 +61,26 @@ export const forgotPassword = async (data) => {
   return response;
 };
 
+export const resetPassword = async (form) => {
+  const response = await request(`${API.baseUrl}${API.endpoints.resetPassword}`, {
+    method: "POST",
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: form
+  });
+
+  if(response.success) {
+    return response;
+  }
+};
+
 export const checkUserAuth = createAsyncThunk('user/getAuthUserData', async() => {
   const response = await fetchWithRefresh(`${API.baseUrl}${API.endpoints.userData}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+      Authorization: 'Bearer ' + cookies.get('accessToken')
     }
   });
   if(response.success) {
@@ -69,7 +93,7 @@ export const editUserData = createAsyncThunk('user/editUserData', async(data) =>
     method: "PATCH",
     headers: {
       'Content-type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+      Authorization: 'Bearer ' + cookies.get('accessToken')
     },
     body: JSON.stringify(data)
   });

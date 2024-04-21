@@ -11,7 +11,11 @@ export const ProfileInfo = () => {
   const { formState, onChange, setFormState } = useForm();
   const user = useSelector((store) => store.user.user);
 
-  
+  useEffect(() => {
+    if (user.name && user.email) {
+      setFormState({ ...formState, name: user.name, email: user.email });
+    }
+  }, [user.name, user.email]);
 
   return (
     <form>

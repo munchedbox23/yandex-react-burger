@@ -6,10 +6,24 @@ import {
 import { SignForm } from "../../components/SignForm/SignForm";
 import { ForgotLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
+import { resetPassword } from "../../services/features/user/auth";
+import { useNavigate } from "react-router";
+import { ROUTE } from "../../utils/constants";
 
 export const ResetPasswordPage = () => {
   const { formState, onChange } = useForm();
+  const navigate = useNavigate();
 
+  const handleReset = (e) => {
+    e.preventDefault();
+
+    resetPassword(formState)
+      .then((res) => {
+        console.log(res);
+        navigate(`/${ROUTE.mainLayout.login}`);
+      })
+      .catch((error) => console.error(error));
+  };
   return (
     <SignForm linkComponent={ForgotLinks} title="Восстановление пароля">
       <PasswordInput
@@ -27,7 +41,12 @@ export const ResetPasswordPage = () => {
         value={formState?.reset || ""}
         onChange={onChange}
       />
-      <Button htmlType="button" type="primary" size="large">
+      <Button
+        onClick={(e) => handleReset(e)}
+        htmlType="button"
+        type="primary"
+        size="large"
+      >
         Восстановить
       </Button>
     </SignForm>

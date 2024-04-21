@@ -1,4 +1,5 @@
 import { API } from "./constants";
+import { cookies } from "../services/features/user/auth";
 
 const checkResponse = (response) => {
   if(!response.ok) {
@@ -19,8 +20,8 @@ export const refreshToken = () => {
     headers: {
       'Content-type': 'application/json'
     },
-    body: JSON.stringify({token: localStorage.getItem('refreshToken')})
-  });
+    body: JSON.stringify({token: cookies.get('refreshToken')})
+  }).then(checkResponse);
 };
 
 export const fetchWithRefresh = async (url, options) => {
@@ -33,8 +34,8 @@ export const fetchWithRefresh = async (url, options) => {
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      localStorage.setItem("accessToken", refreshData.accessToken.split('Bearer ')[1]);
+      cookies.set("refreshToken", refreshData.refreshToken);
+      cookies.set("accessToken", refreshData.accessToken.split('Bearer ')[1]);
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);

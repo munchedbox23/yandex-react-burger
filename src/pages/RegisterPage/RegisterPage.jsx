@@ -8,16 +8,11 @@ import { SignForm } from "../../components/SignForm/SignForm";
 import { RegisterLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
 import { userRegister } from "../../services/features/user/auth";
-import { useSelector } from "react-redux";
-import { ProfileLoader } from "../../components/Preloader/ProfileLoader/ProfileLoader";
 
 export const RegisterPage = () => {
   const { formState, onChange, onSubmit } = useForm();
-  const isRequestLoading = useSelector((store) => store.user.isRequestLoading);
 
-  return isRequestLoading ? (
-    <ProfileLoader />
-  ) : (
+  return (
     <SignForm
       onSubmit={(e) => onSubmit(e, userRegister)}
       linkComponent={RegisterLinks}

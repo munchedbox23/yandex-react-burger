@@ -19,8 +19,6 @@ export const userSlice = createSlice({
     })
     .addCase(userLogin.fulfilled, (state, action) => {
       state.user = action.payload.user;
-      localStorage.setItem('accessToken', action.payload.accessToken.split('Bearer ')[1]);
-      localStorage.setItem('refreshToken', action.payload.refreshToken);
       state.isRequestLoading = false;
       state.isRequestFailed = false;
     })
@@ -32,8 +30,6 @@ export const userSlice = createSlice({
       state.isRequestLoading = true;
     })
     .addCase(userRegister.fulfilled, (state, action) => {
-      localStorage.setItem('accessToken', action.payload.accessToken.split('Bearer ')[1]);
-      localStorage.setItem('refreshToken', action.payload.refreshToken);
       state.user = action.payload.user;
       state.isRequestLoading = false;
       state.isRequestFailed = false;
@@ -47,8 +43,6 @@ export const userSlice = createSlice({
     })
     .addCase(userLogout.fulfilled, (state) => {
       state.user = null;
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
       state.isRequestFailed = false;
       state.isRequestLoading = false;
     })
@@ -60,7 +54,7 @@ export const userSlice = createSlice({
       state.isRequestLoading = true;
     })
     .addCase(checkUserAuth.fulfilled, (state, action) =>{
-      state.user = action.payload;
+      state.user = action.payload.user;
       state.isAuthChecked = true;
       state.isRequestFailed = false;
       state.isRequestLoading = false;
