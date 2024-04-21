@@ -1,5 +1,6 @@
 import styles from "./Buttons.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 export const Buttons = ({ isVisible, onCancel }) => {
   return (
@@ -19,4 +20,9 @@ export const Buttons = ({ isVisible, onCancel }) => {
       </div>
     )
   );
+};
+
+Buttons.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  onCancel: PropTypes.func,
 };

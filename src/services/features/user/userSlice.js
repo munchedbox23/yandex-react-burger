@@ -50,12 +50,11 @@ export const userSlice = createSlice({
       state.isRequestFailed = true;
     })
     .addCase(checkUserAuth.pending, (state) =>{
-      state.isRequestFailed = false;
       state.isRequestLoading = true;
     })
     .addCase(checkUserAuth.fulfilled, (state, action) =>{
-      state.user = action.payload.user;
       state.isAuthChecked = true;
+      state.user = action.payload.user;
       state.isRequestFailed = false;
       state.isRequestLoading = false;
     })

@@ -17,7 +17,7 @@ export const ProfileTabs = () => {
   };
 
   const profileTabs = [
-    { name: "Профиль", route: `/profile` },
+    { name: "Профиль", route: ROUTE.userProfile.profile },
     {
       name: "История заказов",
       route: `${ROUTE.userProfile.orders}`,

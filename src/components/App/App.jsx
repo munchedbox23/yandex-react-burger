@@ -19,6 +19,7 @@ import { ProfileOrders } from "../Profile/ProfileOrders/ProfileOrders";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/features/user/auth";
+import { getIngredients } from "../../services/features/ingredients/ingredientsSlice";
 
 function App() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ function App() {
   const background = location.state?.background;
 
   useEffect(() => {
+    dispatch(getIngredients());
     dispatch(checkUserAuth());
   }, [dispatch]);
 
@@ -76,7 +78,7 @@ function App() {
       {background && (
         <Routes>
           <Route
-            path={ROUTE.mainLayout.currIngredient}
+            path={`/${ROUTE.mainLayout.currIngredient}`}
             element={
               <Modal title="Детали ингредиента" onClose={handleCloseModal}>
                 <IngredientDetails />
