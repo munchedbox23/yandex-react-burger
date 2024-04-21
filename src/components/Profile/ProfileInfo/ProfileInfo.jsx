@@ -4,21 +4,44 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../../hooks/useForm";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { Buttons } from "../Buttons/Buttons";
+import { editUser } from "../../../services/features/user/auth";
 
 export const ProfileInfo = () => {
-  const { formState, onChange, setFormState } = useForm();
+  const { formState, onChange, setFormState, onSubmit } = useForm();
+  const [isVisible, setIsVisible] = useState(false);
   const user = useSelector((store) => store.user.user);
 
   useEffect(() => {
     if (user.name && user.email) {
-      setFormState({ ...formState, name: user.name, email: user.email });
+      setFormState({ name: user.name, email: user.email });
     }
   }, [user.name, user.email]);
 
+  useEffect(() => {
+    if (
+      formState.name !== user.name ||
+      formState.email !== user.email ||
+      formState.password
+    ) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  }, [formState, user.name, user.email]);
+
+  const onCancel = () => {
+    setFormState({
+      name: user.name,
+      email: user.email,
+      password: "",
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={(e) => onSubmit(e, editUser)}>
       <Input
         placeholder={"Имя"}
         onChange={onChange}
@@ -42,6 +65,7 @@ export const ProfileInfo = () => {
         name={"password"}
         icon="EditIcon"
       />
+      <Buttons onCancel={onCancel} isVisible={isVisible} />
     </form>
   );
 };

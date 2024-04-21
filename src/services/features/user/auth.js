@@ -88,7 +88,7 @@ export const checkUserAuth = createAsyncThunk('user/getAuthUserData', async() =>
   }
 });
 
-export const editUserData = createAsyncThunk('user/editUserData', async(data) => {
+export const editUser = createAsyncThunk('user/editUserData', async(data) => {
   const response = await fetchWithRefresh(`${API.baseUrl}${API.endpoints.userData}`, {
     method: "PATCH",
     headers: {

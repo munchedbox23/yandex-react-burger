@@ -36,7 +36,7 @@ export const fetchWithRefresh = async (url, options) => {
       }
       cookies.set("refreshToken", refreshData.refreshToken);
       cookies.set("accessToken", refreshData.accessToken.split('Bearer ')[1]);
-      options.headers.authorization = refreshData.accessToken;
+      options.headers.Authorization = refreshData.accessToken;
       const res = await fetch(url, options);
       return await checkResponse(res);
     } else {
