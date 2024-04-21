@@ -55,7 +55,7 @@ export const forgotPassword = async (data) => {
     headers: {
       'Content-type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify({email: data})
   });
   
   return response;
@@ -67,7 +67,7 @@ export const resetPassword = async (form) => {
     headers: {
       'Content-type': 'application/json'
     },
-    body: form
+    body: JSON.stringify({password: form.password, token: form.token})
   });
 
   if(response.success) {

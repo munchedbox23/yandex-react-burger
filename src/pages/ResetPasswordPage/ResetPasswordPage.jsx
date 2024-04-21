@@ -7,24 +7,30 @@ import { SignForm } from "../../components/SignForm/SignForm";
 import { ForgotLinks } from "../../components/SignForm/SignLinks/SignLinks";
 import { useForm } from "../../hooks/useForm";
 import { resetPassword } from "../../services/features/user/auth";
-import { useNavigate } from "react-router";
+import { useNavigate, Navigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
+import { useState } from "react";
 
 export const ResetPasswordPage = () => {
   const { formState, onChange } = useForm();
   const navigate = useNavigate();
+  const [requestError, setRequestError] = useState(false);
 
   const handleReset = (e) => {
     e.preventDefault();
-
     resetPassword(formState)
       .then((res) => {
-        console.log(res);
-        navigate(`/${ROUTE.mainLayout.login}`);
+        if (res.success) {
+          localStorage.removeItem("forgotSuccess");
+          navigate(`/${ROUTE.mainLayout.login}`);
+        }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setRequestError(true);
+      });
   };
-  return (
+  return JSON.parse(localStorage.getItem("forgotSuccess")) ? (
     <SignForm linkComponent={ForgotLinks} title="Восстановление пароля">
       <PasswordInput
         name="password"
@@ -35,11 +41,12 @@ export const ResetPasswordPage = () => {
       <Input
         type={"text"}
         placeholder={"Введите код из письма"}
-        name={"reset"}
+        name={"token"}
         size={"default"}
         extraClass="ml-1"
-        value={formState?.reset || ""}
+        value={formState?.token || ""}
         onChange={onChange}
+        error={requestError}
       />
       <Button
         onClick={(e) => handleReset(e)}
@@ -50,5 +57,7 @@ export const ResetPasswordPage = () => {
         Восстановить
       </Button>
     </SignForm>
+  ) : (
+    <Navigate to={`/${ROUTE.mainLayout.forgotPass}`} />
   );
 };

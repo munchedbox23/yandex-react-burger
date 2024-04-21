@@ -8,22 +8,27 @@ import { useForm } from "../../hooks/useForm";
 import { forgotPassword } from "../../services/features/user/auth";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
+import { useState } from "react";
+import { ProfileLoader } from "../../components/Preloader/ProfileLoader/ProfileLoader";
 
 export const ForgotPasswordPage = () => {
   const { formState, onChange } = useForm();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    forgotPassword(formState).then((res) => {
-      console.log(res);
-      if (res.success) {
-        navigate(ROUTE.mainLayout.resetPass);
-      }
+    setIsLoading(true);
+    forgotPassword(formState.forgot).then((res) => {
+      navigate(ROUTE.mainLayout.resetPass);
+      localStorage.setItem("forgotSuccess", JSON.stringify(res.message));
+      setIsLoading(false);
     });
   };
 
-  return (
+  return isLoading ? (
+    <ProfileLoader />
+  ) : (
     <SignForm
       onSubmit={(e) => onSubmit(e)}
       linkComponent={ForgotLinks}
