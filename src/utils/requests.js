@@ -15,7 +15,7 @@ export const refreshToken = () => {
   return request(`${API.baseUrl}${API.endpoints.refreshToken}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json;charset=utf-8",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({token: cookies.get("refreshToken")})
   });
@@ -33,7 +33,7 @@ export const fetchWithRefresh = async (url, options) => {
       }
       cookies.set("refreshToken", refreshData.refreshToken);
       cookies.set("accessToken", refreshData.accessToken.split('Bearer ')[1]);
-      options.headers.authorization = refreshData.accessToken.split('Bearer ')[1];
+      options.headers.authorization = refreshData.accessToken;
       const res = await request(url, options);
       return res;
     } else {

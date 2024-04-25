@@ -4,8 +4,8 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SignForm } from "../../components/SignForm/SignForm";
-import { RegisterLinks } from "../../components/SignForm/SignLinks/SignLinks";
+import { Form } from "../../components/Form/Form";
+import { RegisterLinks } from "../../components/Form/FormLinks/FormLinks";
 import { useForm } from "../../hooks/useForm";
 import { userRegister } from "../../services/features/user/auth";
 
@@ -13,7 +13,7 @@ export const RegisterPage = () => {
   const { formState, onChange, onSubmit } = useForm();
 
   return (
-    <SignForm
+    <Form
       onSubmit={(e) => onSubmit(e, userRegister)}
       linkComponent={RegisterLinks}
       title="Регистрация"
@@ -45,6 +45,6 @@ export const RegisterPage = () => {
       <Button htmlType="submit" type="primary" size="large">
         Зарегистрироваться
       </Button>
-    </SignForm>
+    </Form>
   );
 };

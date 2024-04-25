@@ -1,12 +1,7 @@
-import styles from "./SignForm.module.css";
+import styles from "./Form.module.css";
 import PropTypes from "prop-types";
 
-export const SignForm = ({
-  children,
-  title,
-  onSubmit,
-  linkComponent: LoginLinks,
-}) => {
+export const Form = ({ children, title, onSubmit, linkComponent: Links }) => {
   return (
     <section>
       <div className={`${styles.signWrapper}`}>
@@ -16,15 +11,15 @@ export const SignForm = ({
           </h1>
           {children}
         </form>
-        <LoginLinks />
+        {Links && <Links />}
       </div>
     </section>
   );
 };
 
-SignForm.propTypes = {
-  title: PropTypes.string.isRequired,
+Form.propTypes = {
+  title: PropTypes.string,
   onSubmit: PropTypes.func,
-  linkComponent: PropTypes.elementType.isRequired,
+  linkComponent: PropTypes.elementType,
   children: PropTypes.node.isRequired,
 };

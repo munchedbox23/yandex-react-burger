@@ -3,8 +3,8 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SignForm } from "../../components/SignForm/SignForm";
-import { LoginLinks } from "../../components/SignForm/SignLinks/SignLinks";
+import { Form } from "../../components/Form/Form";
+import { LoginLinks } from "../../components/Form/FormLinks/FormLinks";
 import { useForm } from "../../hooks/useForm";
 import { userLogin } from "../../services/features/user/auth";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +24,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <SignForm
+    <Form
       onSubmit={(e) => onLogin(e)}
       linkComponent={LoginLinks}
       title="Вход"
@@ -46,6 +46,6 @@ export const LoginPage = () => {
       <Button htmlType="submit" type="primary" size="large">
         Войти
       </Button>
-    </SignForm>
+    </Form>
   );
 };

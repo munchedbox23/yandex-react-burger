@@ -3,8 +3,8 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { SignForm } from "../../components/SignForm/SignForm";
-import { ForgotLinks } from "../../components/SignForm/SignLinks/SignLinks";
+import { Form } from "../../components/Form/Form";
+import { ForgotLinks } from "../../components/Form/FormLinks/FormLinks";
 import { useForm } from "../../hooks/useForm";
 import { resetPassword } from "../../services/features/user/auth";
 import { useNavigate, Navigate } from "react-router";
@@ -31,7 +31,7 @@ export const ResetPasswordPage = () => {
       });
   };
   return JSON.parse(localStorage.getItem("forgotSuccess")) ? (
-    <SignForm linkComponent={ForgotLinks} title="Восстановление пароля">
+    <Form linkComponent={ForgotLinks} title="Восстановление пароля">
       <PasswordInput
         name="password"
         extraClass="mb-2"
@@ -58,7 +58,7 @@ export const ResetPasswordPage = () => {
       >
         Восстановить
       </Button>
-    </SignForm>
+    </Form>
   ) : (
     <Navigate to={`/${ROUTE.mainLayout.forgotPass}`} />
   );

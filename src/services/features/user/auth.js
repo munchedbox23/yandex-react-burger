@@ -80,7 +80,7 @@ export const checkUserAuth = createAsyncThunk('user/getAuthUserData', async() =>
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + cookies.get('accessToken')
+      authorization: 'Bearer ' + cookies.get('accessToken')
     }
   });
   if(response.success) {
@@ -93,7 +93,7 @@ export const editUser = createAsyncThunk('user/editUserData', async(data) => {
     method: "PATCH",
     headers: {
       'Content-type': 'application/json',
-      Authorization: 'Bearer ' + cookies.get('accessToken')
+      authorization: 'Bearer ' + cookies.get('accessToken')
     },
     body: JSON.stringify(data)
   });

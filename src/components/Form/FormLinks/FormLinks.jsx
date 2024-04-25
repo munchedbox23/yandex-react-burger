@@ -1,5 +1,5 @@
 import { ROUTE } from "../../../utils/constants";
-import styles from "./SignLinks.module.css";
+import styles from "./FormLinks.module.css";
 import { Link } from "react-router-dom";
 
 export const LoginLinks = () => {
