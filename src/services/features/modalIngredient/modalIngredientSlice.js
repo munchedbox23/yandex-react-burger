@@ -10,7 +10,7 @@ const modalIngredientSlice = createSlice({
   reducers: {
     setDetailIngredient: (state, action) => {
       state.detailIngredient = action.payload
-    }
+    },
   }
 });
 

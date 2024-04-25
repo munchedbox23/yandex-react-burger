@@ -41,6 +41,10 @@
   scroll-behavior: smooth;
 }
 
+a {
+  color: #fff;
+}
+
 :root {
   --neon: #b5ff3d;
   --interface-modal-bg: #1c1c21;

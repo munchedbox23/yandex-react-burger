@@ -18,10 +18,13 @@ import {
 } from "../../services/features/constructor/burgerConstructorSlice";
 import { handleAndPlaceOrder } from "../../services/features/orderPost/orderPostSlice";
 import { Preloader } from "../Preloader/Preloader";
+import { useNavigate } from "react-router";
+import { ROUTE } from "../../utils/constants";
 
 const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const selectedBun = useSelector(
       (store) => store.burgerConstructor.selectedBun
@@ -30,7 +33,8 @@ const BurgerConstructor = () => {
       (store) => store.burgerConstructor.selectedIngredients
     ),
     orderList = useSelector((store) => store.postOrder.orderList),
-    postRequest = useSelector((store) => store.postOrder.postRequest);
+    postRequest = useSelector((store) => store.postOrder.postRequest),
+    user = useSelector((store) => store.user.user);
 
   const [{ isHover, ingredientType }, dropRef] = useDrop({
     accept: "ingredient",
@@ -54,9 +58,13 @@ const BurgerConstructor = () => {
   const totalPrice = useSelector((store) => store.burgerConstructor.totalPrice);
 
   const handlePostOrder = () => {
-    const order = [selectedBun, ...selectedIngredients];
-    dispatch(handleAndPlaceOrder(order));
-    setIsOpen(true);
+    if (user) {
+      const order = [selectedBun, ...selectedIngredients];
+      dispatch(handleAndPlaceOrder(order));
+      setIsOpen(true);
+    } else {
+      navigate(ROUTE.mainLayout.login);
+    }
   };
 
   const handleCloseOrderModal = () => {

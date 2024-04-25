@@ -1,0 +1,8 @@
+.profileWrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 120px;
+  gap: 60px;
+}

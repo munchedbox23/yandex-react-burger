@@ -6,6 +6,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import headerStyles from "./AppHeader.module.css";
 import HeaderButton from "../HeaderButton/HeaderButton";
+import { ROUTE } from "../../utils/constants";
 
 const AppHeader = () => {
   return (
@@ -18,19 +19,26 @@ const AppHeader = () => {
                 <HeaderButton
                   icon={BurgerIcon}
                   text="Конструктор"
-                  link={"#"}
-                  active
+                  link={ROUTE.main}
                 />
               </li>
               <li>
-                <HeaderButton icon={ListIcon} text="Лента заказов" link={"#"} />
+                <HeaderButton
+                  icon={ListIcon}
+                  text="Лента заказов"
+                  link={ROUTE.mainLayout.feed}
+                />
               </li>
             </ul>
           </nav>
           <Logo />
         </div>
         <div className={headerStyles.profileAccount}>
-          <HeaderButton icon={ProfileIcon} text="Личный кабинет" link={"#"} />
+          <HeaderButton
+            icon={ProfileIcon}
+            text="Личный кабинет"
+            link={ROUTE.userProfile.profile}
+          />
         </div>
       </div>
     </header>

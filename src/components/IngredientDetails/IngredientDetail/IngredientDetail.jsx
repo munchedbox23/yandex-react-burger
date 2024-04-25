@@ -15,8 +15,8 @@ const IngredientDetail = ({ detailValue, detailText }) => {
 };
 
 IngredientDetail.propTypes = {
-  detailValue: PropTypes.number.isRequired,
-  detailText: PropTypes.string.isRequired,
+  detailValue: PropTypes.number,
+  detailText: PropTypes.string,
 };
 
 export default IngredientDetail;

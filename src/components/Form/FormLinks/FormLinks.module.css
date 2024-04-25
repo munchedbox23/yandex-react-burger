@@ -1,0 +1,11 @@
+.link {
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: var(--font-family);
+  color: var(--interface-accent);
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  color: #fff;
+}

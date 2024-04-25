@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import { BASE_URL, LOAD_ENDPOINT} from "../../../utils/constants";
 import { request } from "../../../utils/requests";
+import { API } from "../../../utils/constants";
 
 const initialState = {
   ingredients: [],
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const getIngredients = createAsyncThunk('ingredients/getIngredients', async () => {
-  const response = await request(`${BASE_URL}${LOAD_ENDPOINT}`);
+  const response = await request(`${API.baseUrl}${API.endpoints.ingredients}`);
   return response.data;
 })
 
@@ -34,5 +34,5 @@ export const ingredientsSlice = createSlice({
   }
 });
 
-export const { setIngredients } = ingredientsSlice.actions;
+export const {} = ingredientsSlice.actions;
 export default ingredientsSlice.reducer;
