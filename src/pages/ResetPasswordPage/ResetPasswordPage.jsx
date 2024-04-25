@@ -37,6 +37,7 @@ export const ResetPasswordPage = () => {
         extraClass="mb-2"
         onChange={onChange}
         value={formState?.password || ""}
+        autoComplete="new-password"
       />
       <Input
         type={"text"}
@@ -47,6 +48,7 @@ export const ResetPasswordPage = () => {
         value={formState?.token || ""}
         onChange={onChange}
         error={requestError}
+        autoComplete="one-time-code"
       />
       <Button
         onClick={(e) => handleReset(e)}

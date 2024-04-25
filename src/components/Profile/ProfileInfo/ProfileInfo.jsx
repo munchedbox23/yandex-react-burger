@@ -50,6 +50,7 @@ export const ProfileInfo = () => {
         name={"name"}
         size={"default"}
         extraClass="mb-6"
+        autoComplete="name"
       />
       <EmailInput
         onChange={onChange}
@@ -58,12 +59,14 @@ export const ProfileInfo = () => {
         placeholder="Логин"
         isIcon={true}
         extraClass="mb-6"
+        autoComplete="email"
       />
       <PasswordInput
         onChange={onChange}
         value={formState?.password || ""}
         name={"password"}
         icon="EditIcon"
+        autoComplete="new-password"
       />
       <Buttons onCancel={onCancel} isVisible={isVisible} />
     </form>

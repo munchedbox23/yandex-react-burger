@@ -34,12 +34,14 @@ export const LoginPage = () => {
         value={formState.email || ""}
         name={"email"}
         isIcon={false}
+        autoComplete="email"
       />
       <PasswordInput
         onChange={onChange}
         value={formState.password || ""}
         name={"password"}
         extraClass="mb-2"
+        autoComplete="current-password"
       />
       <Button htmlType="submit" type="primary" size="large">
         Войти

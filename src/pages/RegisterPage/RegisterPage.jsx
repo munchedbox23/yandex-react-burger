@@ -26,18 +26,21 @@ export const RegisterPage = () => {
         extraClass="ml-1"
         value={formState.name || ""}
         onChange={onChange}
+        autoComplete="name"
       />
       <EmailInput
         name={"email"}
         isIcon={false}
         value={formState.email || ""}
         onChange={onChange}
+        autoComplete="email"
       />
       <PasswordInput
         name={"password"}
         extraClass="mb-2"
         value={formState.password || ""}
         onChange={onChange}
+        autoComplete="new-password"
       />
       <Button htmlType="submit" type="primary" size="large">
         Зарегистрироваться

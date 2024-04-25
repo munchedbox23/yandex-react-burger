@@ -30,7 +30,7 @@ export const ForgotPasswordPage = () => {
     <ProfileLoader />
   ) : (
     <SignForm
-      onSubmit={(e) => onSubmit(e)}
+      onSubmit={onSubmit}
       linkComponent={ForgotLinks}
       title="Восстановление пароля"
     >
@@ -42,6 +42,7 @@ export const ForgotPasswordPage = () => {
         extraClass="ml-1"
         value={formState.forgot || ""}
         onChange={onChange}
+        autoComplete="email"
       />
       <Button htmlType="submit" type="primary" size="large">
         Восстановить
