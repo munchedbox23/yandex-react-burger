@@ -1,13 +1,14 @@
 import styles from "./AppConstructor.module.css";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store/hooks";
 import { Preloader } from "../Preloader/Preloader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { FC } from "react";
 
-const AppConstructor = () => {
-  const getIngredientsRequest = useSelector(
+const AppConstructor: FC = () => {
+  const getIngredientsRequest = useAppSelector(
     (store) => store.ingredients.getIngredientsRequest
   );
 

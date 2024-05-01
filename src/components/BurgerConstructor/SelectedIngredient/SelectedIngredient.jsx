@@ -8,8 +8,6 @@ import { removIngredient } from "../../../services/features/constructor/burgerCo
 import { useDrop, useDrag } from "react-dnd";
 import { useRef } from "react";
 import { moveCard } from "../../../services/features/constructor/burgerConstructorSlice";
-import ingredientsPropTypes from "../../../utils/ingredientsPropTypes";
-import PropTypes from "prop-types";
 
 export const SelectedIngredient = ({ selectedIngredient, index }) => {
   const dispatch = useDispatch();
@@ -85,9 +83,4 @@ export const SelectedIngredient = ({ selectedIngredient, index }) => {
       />
     </li>
   );
-};
-
-SelectedIngredient.propTypes = {
-  selectedIngredient: ingredientsPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
 };

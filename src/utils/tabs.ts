@@ -1,4 +1,13 @@
-const tabs = [
+export type TIngredient = "bun" | "sauce" | "main";
+
+export interface ITabs {
+  id: number;
+  type: TIngredient;
+  typeName: string;
+  value: string;
+}
+
+const tabs: ITabs[] = [
   {
     id: 1,
     type: "bun",

@@ -16,14 +16,14 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 import Modal from "../Modal/Modal";
 import { ProfileInfo } from "../Profile/ProfileInfo/ProfileInfo";
 import { ProfileOrders } from "../Profile/ProfileOrders/ProfileOrders";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/store/hooks";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/features/user/auth";
 import { getIngredients } from "../../services/features/ingredients/ingredientsSlice";
 
 function App() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const background = location.state?.background;
 

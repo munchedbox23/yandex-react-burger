@@ -4,7 +4,6 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, memo, useEffect } from "react";
-import ingredientsPropTypes from "../../utils/ingredientsPropTypes";
 import { useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
@@ -72,9 +71,5 @@ const IngredientCard = memo(({ ingredient }) => {
     </Link>
   );
 });
-
-IngredientCard.propTypes = {
-  ingredient: ingredientsPropTypes.isRequired,
-};
 
 export default IngredientCard;

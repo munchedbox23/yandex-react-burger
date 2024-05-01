@@ -11,6 +11,9 @@ export const store = configureStore({
     modalIngredient: modalIngredientSlice,
     burgerConstructor: burgerConstructorSlice,
     postOrder: orderPostSlice,
-    user: userSlice
+    user: userSlice,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

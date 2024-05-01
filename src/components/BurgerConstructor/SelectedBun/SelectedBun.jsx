@@ -1,7 +1,5 @@
 import styles from "./SelectedBun.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import ingredientsPropTypes from "../../../utils/ingredientsPropTypes";
 
 export const SelectedBun = ({
   isHover,
@@ -31,11 +29,4 @@ export const SelectedBun = ({
       </span>
     </div>
   );
-};
-
-SelectedBun.propTypes = {
-  isHover: PropTypes.bool,
-  position: PropTypes.string.isRequired,
-  ingredientType: PropTypes.string,
-  selectedBun: ingredientsPropTypes,
 };
