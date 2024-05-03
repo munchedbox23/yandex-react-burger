@@ -1,7 +1,19 @@
 import styles from "./Form.module.css";
-import PropTypes from "prop-types";
+import { FC, FormEvent } from "react";
 
-export const Form = ({ children, title, onSubmit, linkComponent: Links }) => {
+type TFormProps = {
+  children: React.ReactNode;
+  title: string;
+  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  linkComponent: React.ElementType;
+};
+
+export const Form: FC<TFormProps> = ({
+  children,
+  title,
+  onSubmit,
+  linkComponent: Links,
+}) => {
   return (
     <section>
       <div className={`${styles.signWrapper}`}>
@@ -15,11 +27,4 @@ export const Form = ({ children, title, onSubmit, linkComponent: Links }) => {
       </div>
     </section>
   );
-};
-
-Form.propTypes = {
-  title: PropTypes.string,
-  onSubmit: PropTypes.func,
-  linkComponent: PropTypes.elementType,
-  children: PropTypes.node.isRequired,
 };

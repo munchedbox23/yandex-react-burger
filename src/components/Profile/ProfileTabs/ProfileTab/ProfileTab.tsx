@@ -1,7 +1,17 @@
 import { NavLink, useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
+import { FC } from "react";
 
-export const ProfileTab = ({ route, text, className }) => {
+type TProfileTabProps = {
+  route: string;
+  text: string;
+  className?: string;
+};
+
+export const ProfileTab: FC<TProfileTabProps> = ({
+  route,
+  text,
+  className,
+}) => {
   const location = useLocation();
 
   return (
@@ -22,10 +32,4 @@ export const ProfileTab = ({ route, text, className }) => {
       </NavLink>
     </li>
   );
-};
-
-ProfileTab.propTypes = {
-  route: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  className: PropTypes.string,
 };

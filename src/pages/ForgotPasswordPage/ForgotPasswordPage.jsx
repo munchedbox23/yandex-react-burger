@@ -37,10 +37,10 @@ export const ForgotPasswordPage = () => {
       <Input
         type="email"
         placeholder={"Укажите e-mail"}
-        name={"forgot"}
+        name={"email"}
         size={"default"}
         extraClass="ml-1"
-        value={formState.forgot || ""}
+        value={formState.email || ""}
         onChange={onChange}
         autoComplete="email"
       />

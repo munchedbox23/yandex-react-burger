@@ -7,8 +7,9 @@ import {
 import headerStyles from "./AppHeader.module.css";
 import HeaderButton from "../HeaderButton/HeaderButton";
 import { ROUTE } from "../../utils/constants";
+import { FC } from "react";
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className={`${headerStyles.header} pt-4 pb-4`}>
       <div className={headerStyles.wrapper}>

@@ -1,8 +1,9 @@
+import { FC } from "react";
 import { ROUTE } from "../../../utils/constants";
 import styles from "./FormLinks.module.css";
 import { Link } from "react-router-dom";
 
-export const LoginLinks = () => {
+export const LoginLinks: FC = (): JSX.Element => {
   return (
     <main className={styles.links}>
       <div className={styles.linkContent}>
@@ -25,7 +26,7 @@ export const LoginLinks = () => {
   );
 };
 
-export const RegisterLinks = () => {
+export const RegisterLinks: FC = (): JSX.Element => {
   return (
     <main className={styles.links}>
       <div className={styles.linkContent}>
@@ -40,7 +41,7 @@ export const RegisterLinks = () => {
   );
 };
 
-export const ForgotLinks = () => {
+export const ForgotLinks: FC = (): JSX.Element => {
   return (
     <main className={styles.links}>
       <div className={styles.linkContent}>

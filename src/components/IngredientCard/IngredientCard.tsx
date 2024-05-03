@@ -3,23 +3,28 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, memo, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useState, memo, useEffect, FC } from "react";
+import { useAppSelector } from "../../services/store/hooks";
 import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useLocation } from "react-router-dom";
+import { IIngredient } from "../../types/ingredient-types";
 
-const IngredientCard = memo(({ ingredient }) => {
+type TIngredientCardProps = {
+  ingredient: IIngredient;
+};
+
+const IngredientCard: FC<TIngredientCardProps> = memo(({ ingredient }) => {
   const [count, setCount] = useState(0);
 
   const { name, price, image } = ingredient;
 
   const location = useLocation();
 
-  const selectedBun = useSelector(
+  const selectedBun = useAppSelector(
     (store) => store.burgerConstructor.selectedBun
   );
-  const selectedIngredients = useSelector(
+  const selectedIngredients = useAppSelector(
     (store) => store.burgerConstructor.selectedIngredients
   );
 

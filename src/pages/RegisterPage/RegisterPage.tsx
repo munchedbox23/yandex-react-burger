@@ -8,26 +8,26 @@ import { Form } from "../../components/Form/Form";
 import { RegisterLinks } from "../../components/Form/FormLinks/FormLinks";
 import { useForm } from "../../hooks/useForm";
 import { userRegister } from "../../services/features/user/auth";
+import { FC } from "react";
 
-export const RegisterPage = () => {
+export const RegisterPage: FC = () => {
   const { formState, onChange, onSubmit } = useForm();
-
   return (
     <Form
       onSubmit={(e) => onSubmit(e, userRegister)}
       linkComponent={RegisterLinks}
       title="Регистрация"
     >
-      <Input
+      {/* <Input
         type={"text"}
         placeholder={"Имя"}
         name={"name"}
         size={"default"}
         extraClass="ml-1"
-        value={formState.name || ""}
+        value={formState?.name || ""}
         onChange={onChange}
         autoComplete="name"
-      />
+      /> */}
       <EmailInput
         name={"email"}
         isIcon={false}

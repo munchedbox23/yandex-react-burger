@@ -1,7 +1,11 @@
+import { FC } from "react";
 import styles from "./IngredientDetail.module.css";
-import PropTypes from "prop-types";
+import { IIngredientDetails } from "../../../types/ingredient-types";
 
-const IngredientDetail = ({ detailValue, detailText }) => {
+const IngredientDetail: FC<Omit<IIngredientDetails, "id">> = ({
+  detailValue,
+  detailText,
+}) => {
   return (
     <div className={styles.detail}>
       <p className="text text_type_main-default text_color_inactive">
@@ -12,11 +16,6 @@ const IngredientDetail = ({ detailValue, detailText }) => {
       </span>
     </div>
   );
-};
-
-IngredientDetail.propTypes = {
-  detailValue: PropTypes.number,
-  detailText: PropTypes.string,
 };
 
 export default IngredientDetail;

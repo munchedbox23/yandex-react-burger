@@ -9,26 +9,24 @@ import { useForm } from "../../hooks/useForm";
 import { userLogin } from "../../services/features/user/auth";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../utils/constants";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../services/store/hooks";
+import { FC, FormEvent } from "react";
+import { IUserLogin } from "../../types/user-types";
 
-export const LoginPage = () => {
+export const LoginPage: FC = () => {
   const { formState, onChange } = useForm();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const onLogin = (e) => {
+  const onLogin = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(userLogin(formState))
+    dispatch(userLogin(formState as IUserLogin))
       .then(() => navigate(ROUTE.main))
       .catch((error) => console.error(error));
   };
 
   return (
-    <Form
-      onSubmit={(e) => onLogin(e)}
-      linkComponent={LoginLinks}
-      title="Вход"
-    >
+    <Form onSubmit={(e) => onLogin(e)} linkComponent={LoginLinks} title="Вход">
       <EmailInput
         onChange={onChange}
         value={formState.email || ""}

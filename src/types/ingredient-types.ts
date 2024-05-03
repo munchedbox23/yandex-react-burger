@@ -23,3 +23,9 @@ export interface IIngredientResponse {
 export interface IIngredientsWithIdx extends IIngredient {
   idx: string;
 }
+
+export interface IIngredientDetails {
+  id: number;
+  detailValue: number | null | undefined;
+  detailText: string;
+}

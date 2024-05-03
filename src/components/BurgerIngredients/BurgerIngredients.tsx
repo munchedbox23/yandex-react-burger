@@ -1,30 +1,33 @@
 import styles from "./BurgerIngredients.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, FC, RefObject } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../services/store/hooks";
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState("one");
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
-  const contentRef = useRef(null);
-  const tabsTitle = {
-    one: useRef(),
-    two: useRef(),
-    three: useRef(),
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const tabsTitle: { [key: string]: React.RefObject<HTMLHeadingElement> } = {
+    one: useRef<HTMLHeadingElement>(null),
+    two: useRef<HTMLHeadingElement>(null),
+    three: useRef<HTMLHeadingElement>(null),
   };
 
-  const handleTabClick = (value) => {
+  const handleTabClick = (value: string): void => {
     setCurrent(value);
-    tabsTitle[value].current.scrollIntoView();
+    tabsTitle[value].current?.scrollIntoView();
   };
 
-  const getIntersectionBlock = (tabsTitle, contentRefTop) => {
+  const getIntersectionBlock = (
+    tabsTitle: Record<string, React.RefObject<HTMLHeadingElement>>,
+    contentRefTop: number
+  ) => {
     const distances = Object.keys(tabsTitle).map((key) => ({
       key,
       distance: Math.abs(
-        tabsTitle[key].current.getBoundingClientRect().bottom - contentRefTop
+        tabsTitle[key].current!.getBoundingClientRect().bottom - contentRefTop
       ),
     }));
 
@@ -33,8 +36,8 @@ const BurgerIngredients = () => {
     ).key;
   };
 
-  const handleScroll = () => {
-    const contentRefTop = contentRef.current.getBoundingClientRect().top;
+  const handleScroll = (): void => {
+    const contentRefTop = contentRef.current!.getBoundingClientRect().top;
     setCurrent(getIntersectionBlock(tabsTitle, contentRefTop));
   };
 

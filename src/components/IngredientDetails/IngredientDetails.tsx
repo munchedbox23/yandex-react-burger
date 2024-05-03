@@ -1,14 +1,15 @@
 import styles from "./IngredientDetails.module.css";
 import IngredientDetail from "./IngredientDetail/IngredientDetail";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../services/store/hooks";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
+import { IIngredientDetails } from "../../types/ingredient-types";
 
 const IngredientDetails = () => {
-  const { ingredientId } = useParams();
-  const ingredients = useSelector((store) => store.ingredients.ingredients);
-  const dispatch = useDispatch();
+  const { ingredientId } = useParams<string>();
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const currIngredient = ingredients?.find(
@@ -20,11 +21,11 @@ const IngredientDetails = () => {
     }
   }, [ingredients, dispatch, ingredientId]);
 
-  const detailIngredient = useSelector(
+  const detailIngredient = useAppSelector(
     (store) => store.modalIngredient.detailIngredient
   );
 
-  const detailsList = [
+  const detailsList: IIngredientDetails[] = [
     {
       id: 1,
       detailValue: detailIngredient?.calories,

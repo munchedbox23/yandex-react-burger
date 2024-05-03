@@ -1,6 +1,7 @@
+import { FC } from "react";
 import styles from "./ProfileOrders.module.css";
 
-export const ProfileOrders = () => {
+export const ProfileOrders: FC = () => {
   return (
     <div className={styles.profileOrders}>
       <h1 className={`${styles.heading} text text_type_main-medium mb-3`}>

@@ -1,8 +1,14 @@
 import { NavLink } from "react-router-dom";
 import styles from "./HeaderButton.module.css";
-import PropTypes from "prop-types";
+import { ElementType, FC } from "react";
 
-const HeaderButton = ({ link, icon: Icon, text }) => {
+type THeaderButtonProps = {
+  link: string;
+  text: string;
+  icon: ElementType;
+};
+
+const HeaderButton: FC<THeaderButtonProps> = ({ link, icon: Icon, text }) => {
   return (
     <NavLink to={link} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
       {({ isActive }) => (
@@ -19,12 +25,6 @@ const HeaderButton = ({ link, icon: Icon, text }) => {
       )}
     </NavLink>
   );
-};
-
-HeaderButton.propTypes = {
-  link: PropTypes.string.isRequired,
-  icon: PropTypes.elementType.isRequired,
-  text: PropTypes.string.isRequired,
 };
 
 export default HeaderButton;

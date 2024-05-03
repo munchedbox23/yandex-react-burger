@@ -1,7 +1,16 @@
+import { FC } from "react";
+import { IIngredientsWithIdx } from "../../../types/ingredient-types";
 import styles from "./SelectedBun.module.css";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const SelectedBun = ({
+type TSelectedBunProps = {
+  isHover: boolean;
+  selectedBun: IIngredientsWithIdx;
+  position: "top" | "bottom";
+  ingredientType: string;
+};
+
+export const SelectedBun: FC<TSelectedBunProps> = ({
   isHover,
   selectedBun,
   position,
