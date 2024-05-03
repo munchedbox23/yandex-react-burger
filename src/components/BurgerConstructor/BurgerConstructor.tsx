@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
 import { SelectedBun } from "./SelectedBun/SelectedBun";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
 import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
 import { useDrop } from "react-dnd";
 import {
@@ -20,23 +20,34 @@ import { handleAndPlaceOrder } from "../../services/features/orderPost/orderPost
 import { Preloader } from "../Preloader/Preloader";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
+import { IIngredientsWithIdx } from "../../types/ingredient-types";
+import { TIngredient } from "../../utils/tabs";
+
+type TCollectedProps = {
+  isHover: boolean;
+  ingredientType: TIngredient;
+};
 
 const BurgerConstructor = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const selectedBun = useSelector(
+  const selectedBun = useAppSelector(
       (store) => store.burgerConstructor.selectedBun
     ),
-    selectedIngredients = useSelector(
+    selectedIngredients = useAppSelector(
       (store) => store.burgerConstructor.selectedIngredients
     ),
-    orderList = useSelector((store) => store.postOrder.orderList),
-    postRequest = useSelector((store) => store.postOrder.postRequest),
-    user = useSelector((store) => store.user.user);
+    orderList = useAppSelector((store) => store.postOrder.orderList),
+    postRequest = useAppSelector((store) => store.postOrder.postRequest),
+    user = useAppSelector((store) => store.user.user);
 
-  const [{ isHover, ingredientType }, dropRef] = useDrop({
+  const [{ isHover, ingredientType }, dropRef] = useDrop<
+    IIngredientsWithIdx,
+    unknown,
+    TCollectedProps
+  >({
     accept: "ingredient",
     collect: (monitor) => ({
       isHover: monitor.isOver(),
@@ -55,19 +66,23 @@ const BurgerConstructor = () => {
     dispatch(calcTotalPrice());
   }, [dispatch, selectedBun, selectedIngredients]);
 
-  const totalPrice = useSelector((store) => store.burgerConstructor.totalPrice);
+  const totalPrice = useAppSelector(
+    (store) => store.burgerConstructor.totalPrice
+  );
 
-  const handlePostOrder = () => {
+  const handlePostOrder = (): void => {
     if (user) {
-      const order = [selectedBun, ...selectedIngredients];
-      dispatch(handleAndPlaceOrder(order));
-      setIsOpen(true);
+      if (selectedBun) {
+        const order = [selectedBun, ...selectedIngredients];
+        dispatch(handleAndPlaceOrder(order));
+        setIsOpen(true);
+      }
     } else {
       navigate(ROUTE.mainLayout.login);
     }
   };
 
-  const handleCloseOrderModal = () => {
+  const handleCloseOrderModal = (): void => {
     dispatch(resetConstructor());
     setIsOpen(false);
   };

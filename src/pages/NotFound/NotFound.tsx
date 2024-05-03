@@ -1,8 +1,9 @@
+import { FC } from "react";
 import { ROUTE } from "../../utils/constants";
 import styles from "./NotFound.module.css";
 import { Link } from "react-router-dom";
 
-export const NotFound = () => {
+export const NotFound: FC = () => {
   return (
     <div className={styles.notFound}>
       <div className={styles.noise}></div>

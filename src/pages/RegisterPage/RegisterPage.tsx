@@ -18,7 +18,7 @@ export const RegisterPage: FC = () => {
       linkComponent={RegisterLinks}
       title="Регистрация"
     >
-      {/* <Input
+      <Input
         type={"text"}
         placeholder={"Имя"}
         name={"name"}
@@ -27,7 +27,7 @@ export const RegisterPage: FC = () => {
         value={formState?.name || ""}
         onChange={onChange}
         autoComplete="name"
-      /> */}
+      />
       <EmailInput
         name={"email"}
         isIcon={false}

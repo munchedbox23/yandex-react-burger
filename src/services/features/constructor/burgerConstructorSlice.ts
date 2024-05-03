@@ -5,7 +5,7 @@ import {
 } from "../../../types/ingredient-types";
 
 type TSelectedState = {
-  selectedBun: IIngredient | null;
+  selectedBun: IIngredientsWithIdx | null;
   selectedIngredients: IIngredientsWithIdx[];
   totalPrice: number;
 };
@@ -20,7 +20,7 @@ export const burgerConstructorSlice = createSlice({
   name: "burgerConstructor",
   initialState,
   reducers: {
-    setBun: (state, action: PayloadAction<IIngredient>) => {
+    setBun: (state, action: PayloadAction<IIngredientsWithIdx>) => {
       state.selectedBun = action.payload;
     },
     setIngredients: (state, action: PayloadAction<IIngredientsWithIdx>) => {

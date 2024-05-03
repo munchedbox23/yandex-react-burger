@@ -9,29 +9,33 @@ import { useForm } from "../../hooks/useForm";
 import { resetPassword } from "../../services/features/user/auth";
 import { useNavigate, Navigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export const ResetPasswordPage = () => {
   const { formState, onChange } = useForm();
   const navigate = useNavigate();
-  const [requestError, setRequestError] = useState(false);
+  const [requestError, setRequestError] = useState<boolean>(false);
+  const forgotSuccess: string | null = localStorage.getItem("forgotSuccess");
 
-  const handleReset = (e) => {
+  const handleReset = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    resetPassword(formState)
+    resetPassword(formState as { password: string; token: string })
       .then((res) => {
-        if (res.success) {
+        if (res && res.success) {
           localStorage.removeItem("forgotSuccess");
           navigate(`/${ROUTE.mainLayout.login}`);
         }
       })
       .catch((error) => {
-        console.error(error);
         setRequestError(true);
       });
   };
-  return JSON.parse(localStorage.getItem("forgotSuccess")) ? (
-    <Form linkComponent={ForgotLinks} title="Восстановление пароля">
+  return forgotSuccess ? (
+    <Form
+      onSubmit={handleReset}
+      linkComponent={ForgotLinks}
+      title="Восстановление пароля"
+    >
       <PasswordInput
         name="password"
         extraClass="mb-2"
@@ -50,12 +54,7 @@ export const ResetPasswordPage = () => {
         error={requestError}
         autoComplete="one-time-code"
       />
-      <Button
-        onClick={(e) => handleReset(e)}
-        htmlType="button"
-        type="primary"
-        size="large"
-      >
+      <Button htmlType="submit" type="primary" size="large">
         Восстановить
       </Button>
     </Form>

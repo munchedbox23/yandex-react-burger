@@ -22,7 +22,7 @@ export const useForm = (input: TFormData = {}) => {
     dispatch(func(formState))
       .then(() => navigate(`${ROUTE.userProfile.profile}`, { replace: true }))
       .catch((error: unknown) => console.error(error));
-    setFormState({});
+    setFormState(input);
   };
 
   return { formState, onChange, setFormState, onSubmit };

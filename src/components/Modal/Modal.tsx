@@ -6,7 +6,7 @@ import { FC, ReactNode, useCallback, useEffect } from "react";
 
 type TModalProps = {
   children: ReactNode;
-  title: string;
+  title?: string;
   onClose: () => void;
 };
 

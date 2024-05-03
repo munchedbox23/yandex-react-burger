@@ -4,38 +4,38 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useForm } from "../../../hooks/useForm";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useAppSelector } from "../../../services/store/hooks";
+import { FC, useEffect, useState } from "react";
 import { Buttons } from "../Buttons/Buttons";
 import { editUser } from "../../../services/features/user/auth";
 
-export const ProfileInfo = () => {
+export const ProfileInfo: FC = () => {
   const { formState, onChange, setFormState, onSubmit } = useForm();
   const [isVisible, setIsVisible] = useState(false);
-  const user = useSelector((store) => store.user.user);
+  const user = useAppSelector((store) => store.user.user);
 
   useEffect(() => {
-    if (user.name && user.email) {
+    if (user) {
       setFormState({ name: user.name, email: user.email });
     }
-  }, [user.name, user.email]);
+  }, [user!.name, user!.email]);
 
   useEffect(() => {
     if (
-      formState.name !== user.name ||
-      formState.email !== user.email ||
+      formState.name !== user!.name ||
+      formState.email !== user!.email ||
       formState.password
     ) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
-  }, [formState, user.name, user.email]);
+  }, [formState, user!.name, user!.email]);
 
-  const onCancel = () => {
+  const onCancel = (): void => {
     setFormState({
-      name: user.name,
-      email: user.email,
+      name: user!.name,
+      email: user!.email,
       password: "",
     });
   };

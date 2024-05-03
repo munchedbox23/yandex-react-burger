@@ -5,7 +5,7 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 type TSelectedBunProps = {
   isHover: boolean;
-  selectedBun: IIngredientsWithIdx;
+  selectedBun: IIngredientsWithIdx | null;
   position: "top" | "bottom";
   ingredientType: string;
 };

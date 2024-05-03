@@ -8,22 +8,28 @@ import { useForm } from "../../hooks/useForm";
 import { forgotPassword } from "../../services/features/user/auth";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
-import { useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import { ProfileLoader } from "../../components/Preloader/ProfileLoader/ProfileLoader";
 
-export const ForgotPasswordPage = () => {
+export const ForgotPasswordPage: FC = () => {
   const { formState, onChange } = useForm();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isValidForm, setIsValidForm] = useState<boolean>(true);
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    forgotPassword(formState.forgot).then((res) => {
-      navigate(ROUTE.mainLayout.resetPass);
-      localStorage.setItem("forgotSuccess", JSON.stringify(res.message));
+    if (formState.email) {
+      forgotPassword(formState.email).then((res) => {
+        navigate(ROUTE.mainLayout.resetPass);
+        localStorage.setItem("forgotSuccess", JSON.stringify(res.message));
+        setIsLoading(false);
+      });
+    } else {
+      setIsValidForm(false);
       setIsLoading(false);
-    });
+    }
   };
 
   return isLoading ? (
@@ -43,6 +49,7 @@ export const ForgotPasswordPage = () => {
         value={formState.email || ""}
         onChange={onChange}
         autoComplete="email"
+        error={!isValidForm}
       />
       <Button htmlType="submit" type="primary" size="large">
         Восстановить

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../services/store/hooks";
 import styles from "./SelectedIngredient.module.css";
 import {
   DragIcon,
@@ -6,15 +6,29 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { removeIngredient } from "../../../services/features/constructor/burgerConstructorSlice";
 import { useDrop, useDrag } from "react-dnd";
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import { moveCard } from "../../../services/features/constructor/burgerConstructorSlice";
+import { IIngredientsWithIdx } from "../../../types/ingredient-types";
+import { Identifier } from "dnd-core";
 
-export const SelectedIngredient = ({ selectedIngredient, index }) => {
-  const dispatch = useDispatch();
-  const ref = useRef(null);
-  const _id = selectedIngredient?.id;
+type TSelectedIngredient = {
+  selectedIngredient: IIngredientsWithIdx;
+  index: number;
+};
 
-  const [{ handlerId }, drop] = useDrop({
+export const SelectedIngredient: FC<TSelectedIngredient> = ({
+  selectedIngredient,
+  index,
+}) => {
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLLIElement | null>(null);
+  const { _id } = selectedIngredient;
+
+  const [{ handlerId }, drop] = useDrop<
+    { index: number },
+    unknown,
+    { handlerId: Identifier | null }
+  >({
     accept: "sortIngredient",
     collect: (monitor) => ({
       handlerId: monitor.getHandlerId(),
@@ -28,13 +42,13 @@ export const SelectedIngredient = ({ selectedIngredient, index }) => {
       if (dragIndex === hoverIndex) {
         return;
       }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverBoundingRect = ref.current.getBoundingClientRect();
 
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
       if (
         (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) ||
@@ -60,7 +74,7 @@ export const SelectedIngredient = ({ selectedIngredient, index }) => {
 
   drag(drop(ref));
 
-  const handleDeleteIngredient = (index) => {
+  const handleDeleteIngredient = (index: string) => {
     dispatch(removeIngredient(index));
   };
   return (
