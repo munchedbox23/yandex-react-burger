@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IIngredient } from "../../../utils/types";
+import { IIngredient } from "./../../../types/ingredient-types";
 
 type TDetailIngredient = {
   detailIngredient: IIngredient | null;

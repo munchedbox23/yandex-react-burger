@@ -1,4 +1,4 @@
-import { TIngredient } from "./tabs";
+import { TIngredient } from "../utils/tabs";
 
 export interface IIngredient {
   _id: string;
@@ -15,7 +15,11 @@ export interface IIngredient {
   _v: number;
 }
 
+export interface IIngredientResponse {
+  success: boolean;
+  data: IIngredient[];
+}
+
 export interface IIngredientsWithIdx extends IIngredient {
   idx: string;
 }
-

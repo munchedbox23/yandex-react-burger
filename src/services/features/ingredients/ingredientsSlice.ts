@@ -1,7 +1,10 @@
+import {
+  IIngredient,
+  IIngredientResponse,
+} from "./../../../types/ingredient-types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../../utils/requests";
 import { API } from "../../../utils/constants";
-import { IIngredient } from "../../../utils/types";
 
 type TIngredientsState = {
   ingredients: IIngredient[];
@@ -18,7 +21,7 @@ const initialState: TIngredientsState = {
 export const getIngredients = createAsyncThunk<IIngredient[], undefined>(
   "ingredients/getIngredients",
   async () => {
-    const response = await request(
+    const response = await request<IIngredientResponse>(
       `${API.baseUrl}${API.endpoints.ingredients}`
     );
     return response.data;
