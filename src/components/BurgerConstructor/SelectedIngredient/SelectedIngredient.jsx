@@ -4,7 +4,7 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { removIngredient } from "../../../services/features/constructor/burgerConstructorSlice";
+import { removeIngredient } from "../../../services/features/constructor/burgerConstructorSlice";
 import { useDrop, useDrag } from "react-dnd";
 import { useRef } from "react";
 import { moveCard } from "../../../services/features/constructor/burgerConstructorSlice";
@@ -61,7 +61,7 @@ export const SelectedIngredient = ({ selectedIngredient, index }) => {
   drag(drop(ref));
 
   const handleDeleteIngredient = (index) => {
-    dispatch(removIngredient(index));
+    dispatch(removeIngredient(index));
   };
   return (
     <li

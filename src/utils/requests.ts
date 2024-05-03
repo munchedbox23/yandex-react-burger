@@ -1,6 +1,6 @@
 import { API } from "./constants";
 import { cookies } from "../services/features/user/auth";
-import { IRefreshToken } from "../types/user-types";
+import { IRefreshToken, TTokenError } from "../types/user-types";
 
 export const checkResponse = <T>(response: Response): Promise<T> => {
   return response.ok
@@ -30,7 +30,7 @@ export const fetchWithRefresh = async <T>(
     const res = await request<T>(url, options);
     return res;
   } catch (err: unknown) {
-    if ((err as Error).message === "jwt expired") {
+    if ((err as TTokenError).message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
