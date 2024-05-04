@@ -11,10 +11,13 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../utils/constants";
 import { useAppDispatch } from "../../services/store/hooks";
 import { FC, FormEvent } from "react";
-import { IUserLogin } from "../../types/user-types";
+import { IUser, IUserLogin } from "../../types/user-types";
 
 export const LoginPage: FC = () => {
-  const { formState, onChange } = useForm();
+  const { formState, onChange } = useForm<IUserLogin>({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -26,7 +29,7 @@ export const LoginPage: FC = () => {
   };
 
   return (
-    <Form onSubmit={(e) => onLogin(e)} linkComponent={LoginLinks} title="Вход">
+    <Form onSubmit={onLogin} linkComponent={LoginLinks} title="Вход">
       <EmailInput
         onChange={onChange}
         value={formState.email || ""}

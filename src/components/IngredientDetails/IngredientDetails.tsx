@@ -1,6 +1,6 @@
 import styles from "./IngredientDetails.module.css";
 import IngredientDetail from "./IngredientDetail/IngredientDetail";
-import { useAppSelector, useAppDispatch } from "../../services/store/hooks";
+import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";

@@ -8,9 +8,14 @@ import { useAppSelector } from "../../../services/store/hooks";
 import { FC, useEffect, useState } from "react";
 import { Buttons } from "../Buttons/Buttons";
 import { editUser } from "../../../services/features/user/auth";
+import { IUser } from "../../../types/user-types";
+
+type TProfileInfo = IUser & { password?: string };
 
 export const ProfileInfo: FC = () => {
-  const { formState, onChange, setFormState, onSubmit } = useForm();
+  const { formState, onChange, setFormState, onSubmit } = useForm<TProfileInfo>(
+    { name: "", email: "", password: "" }
+  );
   const [isVisible, setIsVisible] = useState(false);
   const user = useAppSelector((store) => store.user.user);
 

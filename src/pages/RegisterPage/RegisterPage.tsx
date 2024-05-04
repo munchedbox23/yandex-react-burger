@@ -9,9 +9,14 @@ import { RegisterLinks } from "../../components/Form/FormLinks/FormLinks";
 import { useForm } from "../../hooks/useForm";
 import { userRegister } from "../../services/features/user/auth";
 import { FC } from "react";
+import { IUserRegister } from "../../types/user-types";
 
 export const RegisterPage: FC = () => {
-  const { formState, onChange, onSubmit } = useForm();
+  const { formState, onChange, onSubmit } = useForm<IUserRegister>({
+    name: "",
+    password: "",
+    email: "",
+  });
   return (
     <Form
       onSubmit={(e) => onSubmit(e, userRegister)}

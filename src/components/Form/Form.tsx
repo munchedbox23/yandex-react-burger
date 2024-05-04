@@ -1,14 +1,13 @@
 import styles from "./Form.module.css";
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, PropsWithChildren } from "react";
 
 type TFormProps = {
-  children: React.ReactNode;
   title: string;
   onSubmit: (e: FormEvent<HTMLFormElement>) => void;
   linkComponent: React.ElementType;
 };
 
-export const Form: FC<TFormProps> = ({
+export const Form: FC<PropsWithChildren<TFormProps>> = ({
   children,
   title,
   onSubmit,

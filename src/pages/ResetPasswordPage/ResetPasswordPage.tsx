@@ -10,9 +10,13 @@ import { resetPassword } from "../../services/features/user/auth";
 import { useNavigate, Navigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { FormEvent, useState } from "react";
+import { IUserResetPassword } from "../../types/user-types";
 
 export const ResetPasswordPage = () => {
-  const { formState, onChange } = useForm();
+  const { formState, onChange } = useForm<IUserResetPassword>({
+    token: "",
+    password: "",
+  });
   const navigate = useNavigate();
   const [requestError, setRequestError] = useState<boolean>(false);
   const forgotSuccess: string | null = localStorage.getItem("forgotSuccess");

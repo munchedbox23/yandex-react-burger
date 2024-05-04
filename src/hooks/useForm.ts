@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useAppDispatch } from "../services/store/hooks";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../utils/constants";
-import { TFormData } from "../types/form-types";
 
-export const useForm = (input: TFormData = {}) => {
+export const useForm = <T>(input: T) => {
   const [formState, setFormState] = useState(input);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
