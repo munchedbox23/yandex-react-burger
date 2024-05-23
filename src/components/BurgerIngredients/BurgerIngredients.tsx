@@ -4,12 +4,13 @@ import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
 import { useAppSelector } from "../../services/store/hooks";
+import { motion } from "framer-motion";
 
 const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState("one");
   const ingredients = useAppSelector((store) => store.ingredients.ingredients);
   const contentRef = useRef<HTMLDivElement>(null);
-  const tabsTitle: { [key: string]: React.RefObject<HTMLHeadingElement> } = {
+  const tabsTitle: { [key: string]: RefObject<HTMLHeadingElement> } = {
     one: useRef<HTMLHeadingElement>(null),
     two: useRef<HTMLHeadingElement>(null),
     three: useRef<HTMLHeadingElement>(null),
@@ -21,7 +22,7 @@ const BurgerIngredients: FC = () => {
   };
 
   const getIntersectionBlock = (
-    tabsTitle: Record<string, React.RefObject<HTMLHeadingElement>>,
+    tabsTitle: Record<string, RefObject<HTMLHeadingElement>>,
     contentRefTop: number
   ) => {
     const distances = Object.keys(tabsTitle).map((key) => ({
@@ -43,7 +44,13 @@ const BurgerIngredients: FC = () => {
 
   return (
     <section className={`${styles.burgerIngredients} pt-10`}>
-      <h1 className="text text_type_main-large mb-10">Соберите бургер</h1>
+      <motion.h1
+        className="text text_type_main-large mb-10"
+        initial={{ x: "-200px" }}
+        animate={{ x: 0 }}
+      >
+        Соберите бургер
+      </motion.h1>
       <div className={`${styles.tabContainer} mb-10`}>
         {tabs.map(({ id, typeName, value }) => (
           <Tab
@@ -67,7 +74,7 @@ const BurgerIngredients: FC = () => {
             <div className={`${styles.ingredientsMenu} pt-6 pb-10 pl-4 pb-4`}>
               {ingredients
                 ?.filter((card) => card.type === type)
-                .map((ingredient) => (
+                .map((ingredient, index) => (
                   <IngredientCard
                     ingredient={ingredient}
                     key={ingredient._id}

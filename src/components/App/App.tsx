@@ -20,6 +20,7 @@ import { useAppDispatch } from "../../services/store/hooks";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/features/user/auth";
 import { getIngredients } from "../../services/features/ingredients/ingredientsSlice";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const navigate = useNavigate();
@@ -37,8 +38,8 @@ function App() {
   };
 
   return (
-    <>
-      <Routes location={background || location}>
+    <AnimatePresence mode="wait">
+      <Routes key={location.pathname} location={background || location}>
         <Route path={ROUTE.main} element={<MainLayout />}>
           <Route index element={<AppConstructor />} />
           <Route
@@ -76,7 +77,7 @@ function App() {
       </Routes>
 
       {background && (
-        <Routes>
+        <Routes key={location.pathname}>
           <Route
             path={`/${ROUTE.mainLayout.currIngredient}`}
             element={
@@ -87,7 +88,7 @@ function App() {
           />
         </Routes>
       )}
-    </>
+    </AnimatePresence>
   );
 }
 

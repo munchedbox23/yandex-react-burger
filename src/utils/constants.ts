@@ -61,3 +61,15 @@ export const ROUTE: IRoutes = {
     orders: "orders",
   },
 };
+
+export const fadeInVariant = Object.freeze({
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+    },
+  },
+});

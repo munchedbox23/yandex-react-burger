@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
-import { SelectedBun } from "./SelectedBun/SelectedBun";
+import { MSelectedBun } from "./SelectedBun/SelectedBun";
 import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
 import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
 import { useDrop } from "react-dnd";
@@ -17,11 +17,13 @@ import {
   setIngredients,
 } from "../../services/features/constructor/burgerConstructorSlice";
 import { handleAndPlaceOrder } from "../../services/features/orderPost/orderPostSlice";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../ui/Preloader/Preloader";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { IIngredientsWithIdx } from "../../types/ingredient-types";
 import { TIngredient } from "../../utils/tabs";
+import { motion } from "framer-motion";
+import { fadeInVariant } from "../../utils/constants";
 
 type TCollectedProps = {
   isHover: boolean;
@@ -42,6 +44,20 @@ const BurgerConstructor = () => {
     orderList = useAppSelector((store) => store.postOrder.orderList),
     postRequest = useAppSelector((store) => store.postOrder.postRequest),
     user = useAppSelector((store) => store.user.user);
+
+  const variants = {
+    hidden: {
+      x: "500px",
+      opacity: 0,
+    },
+    visible: (i: number) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: i * 0.2,
+      },
+    }),
+  };
 
   const [{ isHover, ingredientType }, dropRef] = useDrop<
     IIngredientsWithIdx,
@@ -89,13 +105,20 @@ const BurgerConstructor = () => {
 
   return (
     <>
-      <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
+      <motion.section
+        className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}
+        viewport={{ once: true }}
+      >
         <div ref={dropRef} className={styles.constructorWrapper}>
-          <SelectedBun
+          <MSelectedBun
             ingredientType={ingredientType}
             isHover={isHover}
             selectedBun={selectedBun}
             position="top"
+            initial={"hidden"}
+            animate={"visible"}
+            variants={variants}
+            custom={1}
           />
           {selectedIngredients.length ? (
             <ul className={`${styles.constructorList} mt-4 mb-4`}>
@@ -108,26 +131,39 @@ const BurgerConstructor = () => {
               ))}
             </ul>
           ) : (
-            <div
+            <motion.div
               className={`${styles.constructorElement} ${
                 isHover && ingredientType !== "bun" && styles.borderClass
               } ml-8 mt-4 mb-4`}
+              initial={"hidden"}
+              animate={"visible"}
+              variants={variants}
+              custom={2}
             >
               <span className={`${styles.selectedIngredientRow} pt-6`}>
                 <span className={styles.constructorElementText}>
                   Перетащите начинку
                 </span>
               </span>
-            </div>
+            </motion.div>
           )}
-          <SelectedBun
+          <MSelectedBun
             ingredientType={ingredientType}
             isHover={isHover}
             selectedBun={selectedBun}
             position="bottom"
+            initial="hidden"
+            animate="visible"
+            variants={variants}
+            custom={1}
           />
         </div>
-        <div className={`${styles.total} mt-10`}>
+        <motion.div
+          className={`${styles.total} mt-10`}
+          initial="hidden"
+          animate="visible"
+          variants={fadeInVariant}
+        >
           <div className={styles.priceTotal}>
             <span className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
@@ -141,8 +177,8 @@ const BurgerConstructor = () => {
           >
             Офорить заказ
           </Button>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
       {postRequest ? (
         <Preloader />
       ) : (
