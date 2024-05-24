@@ -3,19 +3,18 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, memo, useEffect, FC, forwardRef } from "react";
+import { useState, memo, useEffect, FC } from "react";
 import { useAppSelector } from "../../services/store/hooks";
 import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useLocation } from "react-router-dom";
 import { IIngredient } from "../../types/ingredient-types";
-import { motion } from "framer-motion";
 
 type TIngredientCardProps = {
   ingredient: IIngredient;
 };
 
-const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
+const IngredientCard: FC<TIngredientCardProps> = memo(({ ingredient }) => {
   const [count, setCount] = useState(0);
 
   const { name, price, image } = ingredient;
@@ -56,14 +55,11 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
       to={`/ingredients/${ingredient._id}`}
       state={{ background: location }}
     >
-      <motion.div
+      <div
         className={`${ingredientStyle.ingredientCard} ${
           isDrag && ingredientStyle.dragging
         }`}
         ref={dragRef}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
       >
         <Counter count={count} size="default" />
         <img src={image} alt={`Ингридиент: ${name}`} />
@@ -76,9 +72,9 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
         >
           {name}
         </h3>
-      </motion.div>
+      </div>
     </Link>
   );
-};
+});
 
 export default IngredientCard;

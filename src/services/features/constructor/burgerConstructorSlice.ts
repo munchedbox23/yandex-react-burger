@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  IIngredient,
   IIngredientsWithIdx,
 } from "../../../types/ingredient-types";
 

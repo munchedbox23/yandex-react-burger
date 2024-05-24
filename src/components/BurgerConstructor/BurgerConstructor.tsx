@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import Modal from "../Modal/Modal";
-import { MSelectedBun } from "./SelectedBun/SelectedBun";
+import { SelectedBun } from "./SelectedBun/SelectedBun";
 import { useAppDispatch, useAppSelector } from "../../services/store/hooks";
 import { SelectedIngredient } from "./SelectedIngredient/SelectedIngredient";
 import { useDrop } from "react-dnd";
@@ -22,8 +22,6 @@ import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { IIngredientsWithIdx } from "../../types/ingredient-types";
 import { TIngredient } from "../../utils/tabs";
-import { motion } from "framer-motion";
-import { fadeInVariant } from "../../utils/constants";
 
 type TCollectedProps = {
   isHover: boolean;
@@ -44,20 +42,6 @@ const BurgerConstructor = () => {
     orderList = useAppSelector((store) => store.postOrder.orderList),
     postRequest = useAppSelector((store) => store.postOrder.postRequest),
     user = useAppSelector((store) => store.user.user);
-
-  const variants = {
-    hidden: {
-      x: "500px",
-      opacity: 0,
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: i * 0.2,
-      },
-    }),
-  };
 
   const [{ isHover, ingredientType }, dropRef] = useDrop<
     IIngredientsWithIdx,
@@ -105,20 +89,13 @@ const BurgerConstructor = () => {
 
   return (
     <>
-      <motion.section
-        className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}
-        viewport={{ once: true }}
-      >
+      <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
         <div ref={dropRef} className={styles.constructorWrapper}>
-          <MSelectedBun
+          <SelectedBun
             ingredientType={ingredientType}
             isHover={isHover}
             selectedBun={selectedBun}
             position="top"
-            initial={"hidden"}
-            animate={"visible"}
-            variants={variants}
-            custom={1}
           />
           {selectedIngredients.length ? (
             <ul className={`${styles.constructorList} mt-4 mb-4`}>
@@ -131,39 +108,26 @@ const BurgerConstructor = () => {
               ))}
             </ul>
           ) : (
-            <motion.div
+            <div
               className={`${styles.constructorElement} ${
                 isHover && ingredientType !== "bun" && styles.borderClass
               } ml-8 mt-4 mb-4`}
-              initial={"hidden"}
-              animate={"visible"}
-              variants={variants}
-              custom={2}
             >
               <span className={`${styles.selectedIngredientRow} pt-6`}>
                 <span className={styles.constructorElementText}>
                   Перетащите начинку
                 </span>
               </span>
-            </motion.div>
+            </div>
           )}
-          <MSelectedBun
+          <SelectedBun
             ingredientType={ingredientType}
             isHover={isHover}
             selectedBun={selectedBun}
             position="bottom"
-            initial="hidden"
-            animate="visible"
-            variants={variants}
-            custom={1}
           />
         </div>
-        <motion.div
-          className={`${styles.total} mt-10`}
-          initial="hidden"
-          animate="visible"
-          variants={fadeInVariant}
-        >
+        <div className={`${styles.total} mt-10`}>
           <div className={styles.priceTotal}>
             <span className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
@@ -177,8 +141,8 @@ const BurgerConstructor = () => {
           >
             Офорить заказ
           </Button>
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
       {postRequest ? (
         <Preloader />
       ) : (
