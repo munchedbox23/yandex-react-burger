@@ -1,18 +1,6 @@
-interface IApiEndpoints {
-  order: string;
-  ingredients: string;
-  register: string;
-  login: string;
-  refreshToken: string;
-  logout: string;
-  forgotPassword: string;
-  resetPassword: string;
-  userData: string;
-}
-
 interface IApi {
   baseUrl: string;
-  endpoints: IApiEndpoints;
+  endpoints: Record<string, string>;
 }
 
 interface IRoutes {
@@ -43,6 +31,14 @@ export const API: IApi = {
     forgotPassword: "/password-reset",
     resetPassword: "/password-reset/reset",
     userData: "/auth/user",
+  },
+};
+
+export const WEBSOCKET_API: IApi = {
+  baseUrl: "wss://wss://norma.nomoreparties.space",
+  endpoints: {
+    profileOrders: "/orders",
+    allOrders: "/orders/all",
   },
 };
 

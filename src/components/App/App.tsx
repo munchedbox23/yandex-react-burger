@@ -10,6 +10,7 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
+  FeedPage,
 } from "../../pages";
 import { useLocation, useNavigate } from "react-router-dom";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
@@ -45,6 +46,7 @@ function App() {
             path={ROUTE.mainLayout.currIngredient}
             element={<IngredientDetails />}
           />
+          <Route path={ROUTE.mainLayout.feed} element={<FeedPage />} />
           <Route
             path={ROUTE.mainLayout.login}
             element={<OnlyUnAuth component={<LoginPage />} />}

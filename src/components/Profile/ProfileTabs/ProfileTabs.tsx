@@ -2,7 +2,7 @@ import styles from "./ProfileTabs.module.css";
 import { ProfileTab } from "./ProfileTab/ProfileTab";
 import { ROUTE } from "../../../utils/constants";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { userLogout } from "../../../services/features/user/auth";
 import { useAppDispatch } from "../../../services/store/hooks";
 import { FC } from "react";
@@ -10,6 +10,7 @@ import { FC } from "react";
 export const ProfileTabs: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = (): void => {
     dispatch(userLogout())
@@ -17,9 +18,10 @@ export const ProfileTabs: FC = () => {
       .catch((error) => console.error(error));
   };
 
-  const profileTabs: { name: string; route: string }[] = [
-    { name: "Профиль", route: ROUTE.userProfile.profile },
+  const profileTabs: { id: number; name: string; route: string }[] = [
+    { id: 1, name: "Профиль", route: ROUTE.userProfile.profile },
     {
+      id: 2,
       name: "История заказов",
       route: `${ROUTE.userProfile.orders}`,
     },
@@ -41,8 +43,12 @@ export const ProfileTabs: FC = () => {
           </button>
         </li>
       </ul>
-      <p className="text text_type_main-default text_color_inactive">
-        В этом разделе вы можете <br></br> изменить свои персональные данные
+      <p
+        className={`${styles.tabDescr} text text_type_main-default text_color_inactive`}
+      >
+        {location.pathname.endsWith(ROUTE.userProfile.profile)
+          ? "В этом разделе вы можете изменить свои персональные данные"
+          : "В этом разделе вы можете посмотреть свою историю заказов"}
       </p>
     </div>
   );

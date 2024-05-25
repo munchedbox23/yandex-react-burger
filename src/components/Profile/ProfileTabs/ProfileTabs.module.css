@@ -1,11 +1,8 @@
-.profileTabs {
-  max-width: 320px;
-}
-
 .tabsContainer {
   display: flex;
   flex-direction: column;
   gap: 80px;
+  max-width: 320px;
 }
 
 .btn {
@@ -17,4 +14,8 @@
   line-height: 1.5;
   font-family: var(--font-family);
   cursor: pointer;
+}
+
+.tabDescr {
+  width: 100%;
 }

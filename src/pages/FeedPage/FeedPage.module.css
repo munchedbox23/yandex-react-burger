@@ -1,0 +1,12 @@
+.feedPage {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  height: calc(100vh - 90px);
+}
+
+.feedWrapper {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
