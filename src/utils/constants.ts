@@ -57,3 +57,9 @@ export const ROUTE: IRoutes = {
     orders: "orders",
   },
 };
+
+export const ORDER_STATUS: Record<string, string> = {
+  created: "Создан",
+  pending: "Готовиться",
+  done: "Выполнен",
+};

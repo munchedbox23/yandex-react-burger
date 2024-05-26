@@ -19,7 +19,7 @@ const Protected: FC<TProtectedProps> = ({ component, onlyUnAuth = false }) => {
     const { from } = location.state || { from: { pathname: ROUTE.main } };
     return <Navigate to={from} replace />;
   }
-
+  
   if (!onlyUnAuth && !user) {
     return (
       <Navigate to={`/${ROUTE.mainLayout.login}`} state={{ from: location }} />
