@@ -5,6 +5,21 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
 import { refreshToken } from "../../utils/requests";
+import {
+  wsOrdersClosed,
+  wsOrdersConnect,
+  wsOrdersDisconnect,
+  wsOrdersError,
+  wsOrdersGetMessage,
+  wsOrdersOpenSuccess,
+} from "../features/feedOrders/actions";
+import {
+  wsUserOrdClosed,
+  wsUserOrdConnect,
+  wsUserOrdDisconnect,
+  wsUserOrdError,
+  wsUserOrdGetMessage,
+} from "../features/userOrders/actions";
 
 export type TActionsTypes = {
   wsConnect: ActionCreatorWithPayload<string>;
@@ -16,7 +31,7 @@ export type TActionsTypes = {
 };
 
 export const socketMiddleware =
-  (wsOptions: TActionsTypes): Middleware<{}, RootState> =>
+  (wsOptions: TActionsTypes): Middleware<{}, unknown> =>
   (store) => {
     let socket: WebSocket | null = null;
     const { wsConnect, wsClose, wsDisconnect, wsOpen, wsError, wsMessage } =
@@ -60,3 +75,21 @@ export const socketMiddleware =
       next(action);
     };
   };
+
+export const feedOrdersMiddleware = socketMiddleware({
+  wsConnect: wsOrdersConnect,
+  wsClose: wsOrdersClosed,
+  wsDisconnect: wsOrdersDisconnect,
+  wsOpen: wsOrdersOpenSuccess,
+  wsError: wsOrdersError,
+  wsMessage: wsOrdersGetMessage,
+});
+
+export const userOrdersMiddleware = socketMiddleware({
+  wsConnect: wsUserOrdConnect,
+  wsClose: wsUserOrdClosed,
+  wsDisconnect: wsUserOrdDisconnect,
+  wsOpen: wsOrdersOpenSuccess,
+  wsError: wsUserOrdError,
+  wsMessage: wsUserOrdGetMessage,
+});
