@@ -6,7 +6,7 @@ import {
 import { RootState } from "../store/store";
 import { refreshToken } from "../../utils/requests";
 
-type TActionOptions = {
+export type TActionsTypes = {
   wsConnect: ActionCreatorWithPayload<string>;
   wsDisconnect: ActionCreatorWithoutPayload;
   wsOpen: ActionCreatorWithoutPayload;
@@ -16,10 +16,10 @@ type TActionOptions = {
 };
 
 export const socketMiddleware =
-  (wsOptions: TActionOptions): Middleware<{}, RootState> =>
+  (wsOptions: TActionsTypes): Middleware<{}, RootState> =>
   (store) => {
     let socket: WebSocket | null = null;
-    const { wsConnect, wsClose, wsMessage, wsError, wsOpen, wsDisconnect } =
+    const { wsConnect, wsClose, wsDisconnect, wsOpen, wsError, wsMessage } =
       wsOptions;
 
     return (next) => (action) => {
@@ -34,25 +34,25 @@ export const socketMiddleware =
 
         socket.onclose = () => dispatch(wsClose());
 
-        socket.onerror = () => dispatch(wsError("Oops! Check the connection"));
+        socket.onerror = () =>
+          dispatch(wsError("Oops! Connection has some error"));
 
         socket.onmessage = (event: MessageEvent) => {
           try {
-            const { data } = event.data;
-            const payloadData = JSON.parse(data);
+            const { data } = event;
+            const parsedData = JSON.parse(data);
 
-            if (payloadData.message === "Invalid or missing token") {
+            if (parsedData?.message === "Invalid or missing token") {
               refreshToken();
             } else {
-              dispatch(wsMessage(payloadData));
+              dispatch(wsMessage(parsedData));
             }
           } catch (error) {
-            throw new Error(
-              `Error! There's been an trouble with message. ${error}`
-            );
+            throw new Error(`Error! Something's wrong: ${error}`);
           }
         };
-        if (wsDisconnect.match(action)) {
+
+        if (socket && wsDisconnect.match(action)) {
           socket.close();
           socket = null;
         }

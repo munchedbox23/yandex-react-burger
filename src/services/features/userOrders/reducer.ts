@@ -1,53 +1,40 @@
 import { PayloadAction, createReducer } from "@reduxjs/toolkit";
 import { IWsOrder, IWsOrders } from "../../../types/order-types";
 import {
-  wsUserOrdConnectionClosed,
-  wsUserOrdConnectionError,
-  wsUserOrdConnectionOpenSuccess,
-  wsUserOrdConnectionStart,
+  wsUserOrdClosed,
   wsUserOrdGetMessage,
+  wsUserOrdError,
+  wsUserOrdOpenSuccess,
 } from "./actions";
 
 export type TUserOrdersState = {
   wsConnected: boolean;
   orders: IWsOrder[];
   error: string | null;
-  wsStatus: string;
 };
 
 const initialState: TUserOrdersState = {
   wsConnected: false,
   orders: [],
   error: null,
-  wsStatus: "",
 };
 
 export const userOrdersReducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(wsUserOrdConnectionStart, (state) => {
-      state.wsStatus = "Connecting";
-    })
-    .addCase(wsUserOrdConnectionOpenSuccess, (state) => {
+    .addCase(wsUserOrdOpenSuccess, (state) => {
       state.wsConnected = true;
       state.error = null;
-      state.wsStatus = "Connecting Success";
     })
-    .addCase(wsUserOrdConnectionClosed, (state) => {
+    .addCase(wsUserOrdClosed, (state) => {
       state.wsConnected = false;
-      state.wsStatus = "Connection Closed";
     })
     .addCase(
       wsUserOrdGetMessage,
       (state, { payload }: PayloadAction<IWsOrders>) => {
         state.orders = payload.orders;
-        state.error = null;
       }
     )
-    .addCase(
-      wsUserOrdConnectionError,
-      (state, action: PayloadAction<string>) => {
-        state.error = action.payload;
-        state.wsStatus = "Connection Error";
-      }
-    );
+    .addCase(wsUserOrdError, (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    });
 });
