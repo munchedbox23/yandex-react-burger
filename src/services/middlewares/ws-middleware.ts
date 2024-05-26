@@ -3,7 +3,6 @@ import {
   ActionCreatorWithoutPayload,
   Middleware,
 } from "@reduxjs/toolkit";
-import { RootState } from "../store/store";
 import { refreshToken } from "../../utils/requests";
 import {
   wsOrdersClosed,

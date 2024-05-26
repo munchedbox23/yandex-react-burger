@@ -1,4 +1,5 @@
 import AppHeader from "../components/AppHeader/AppHeader";
+import styles from "./MainLayout.module.css";
 import { Outlet } from "react-router-dom";
 import { Preloader } from "../ui/Preloader/Preloader";
 import { useAppSelector } from "../services/store/hooks";
@@ -15,7 +16,13 @@ export const MainLayout: FC = () => {
   return (
     <>
       <AppHeader />
-      {isRequestLoading || getIngredientsRequest ? <Preloader /> : <Outlet />}
+      {isRequestLoading || getIngredientsRequest ? (
+        <Preloader />
+      ) : (
+        <main className={`${styles.mainContent} pb-10`}>
+          <Outlet />
+        </main>
+      )}
     </>
   );
 };

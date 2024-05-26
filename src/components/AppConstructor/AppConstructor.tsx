@@ -7,14 +7,12 @@ import { FC } from "react";
 
 const AppConstructor: FC = () => {
   return (
-    <main className={styles.mainContainer}>
-      <div className={`${styles.contentWrapper} pb-10 pl-5`}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </div>
-    </main>
+    <article className={`${styles.constructorContainer} pl-5`}>
+      <DndProvider backend={HTML5Backend}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </DndProvider>
+    </article>
   );
 };
 

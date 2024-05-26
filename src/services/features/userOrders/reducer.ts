@@ -11,12 +11,14 @@ export type TUserOrdersState = {
   wsConnected: boolean;
   orders: IWsOrder[];
   error: string | null;
+  orderResponse: IWsOrders | null;
 };
 
 const initialState: TUserOrdersState = {
   wsConnected: false,
   orders: [],
   error: null,
+  orderResponse: null,
 };
 
 export const userOrdersReducer = createReducer(initialState, (builder) => {
@@ -31,6 +33,7 @@ export const userOrdersReducer = createReducer(initialState, (builder) => {
     .addCase(
       wsUserOrdGetMessage,
       (state, { payload }: PayloadAction<IWsOrders>) => {
+        state.orderResponse = payload;
         state.orders = payload.orders;
       }
     )

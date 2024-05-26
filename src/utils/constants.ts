@@ -12,6 +12,7 @@ interface IRoutes {
     forgotPass: string;
     currIngredient: string;
     feed: string;
+    feedOrder: string;
   };
   userProfile: {
     profile: string;
@@ -35,7 +36,7 @@ export const API: IApi = {
 };
 
 export const WEBSOCKET_API: IApi = {
-  baseUrl: "wss://wss://norma.nomoreparties.space",
+  baseUrl: "wss://norma.nomoreparties.space",
   endpoints: {
     profileOrders: "/orders",
     allOrders: "/orders/all",
@@ -51,6 +52,7 @@ export const ROUTE: IRoutes = {
     forgotPass: "forgot-password",
     currIngredient: "/ingredients/:ingredientId",
     feed: "feed",
+    feedOrder: "/feed/:number",
   },
   userProfile: {
     profile: "/profile",

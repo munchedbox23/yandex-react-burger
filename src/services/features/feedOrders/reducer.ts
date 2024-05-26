@@ -11,11 +11,13 @@ export type TFeedOrdersState = {
   wsConnected: boolean;
   orders: IWsOrder[];
   error: string | null;
+  orderResponse: IWsOrders | null;
 };
 
 const initialState: TFeedOrdersState = {
   wsConnected: false,
   orders: [],
+  orderResponse: null,
   error: null,
 };
 
@@ -31,6 +33,7 @@ export const feedOrdersReducer = createReducer(initialState, (builder) => {
     .addCase(
       wsOrdersGetMessage,
       (state, { payload }: PayloadAction<IWsOrders>) => {
+        state.orderResponse = payload;
         state.orders = payload.orders;
       }
     )

@@ -1,12 +1,13 @@
 .feedPage {
   max-width: 1280px;
   margin: 0 auto;
+  height: 100%;
   position: relative;
-  height: calc(100vh - 90px);
 }
 
 .feedWrapper {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  height: calc(100% - 65px);
   gap: 60px;
 }
