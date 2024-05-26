@@ -10,7 +10,7 @@ type TOrderCardProps = {
 
 export const OrderCard: FC<TOrderCardProps> = ({ order }) => {
   return (
-    <Link to={`/feed/${order._id}`} className={`${styles.orderCard} p-6`}>
+    <Link to={order._id} className={`${styles.orderCard} p-6`}>
       <div className={styles.cardWrapper}>
         <header className={styles.heading}>
           <span className="text text_type_digits-default">{`#${order?.number}`}</span>

@@ -29,7 +29,9 @@ export const FeedPage: FC = () => {
     <section className={`${styles.feedPage} pt-10`}>
       <h1 className="text text_type_main-large mb-5 ml-5">Лента заказов</h1>
       <div className={styles.feedWrapper}>
-        <OrderFeed data={allOrders} />
+        <div className={styles.feedList}>
+          <OrderFeed data={allOrders} />
+        </div>
         <OrderStatistic />
       </div>
     </section>

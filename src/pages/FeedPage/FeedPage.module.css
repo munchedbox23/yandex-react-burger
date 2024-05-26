@@ -1,8 +1,8 @@
 .feedPage {
   max-width: 1280px;
   margin: 0 auto;
-  height: 100%;
   position: relative;
+  height: 100%;
 }
 
 .feedWrapper {
@@ -10,4 +10,9 @@
   align-items: flex-start;
   height: calc(100% - 65px);
   gap: 60px;
+}
+
+.feedList {
+  width: 50%;
+  height: 100%;
 }
