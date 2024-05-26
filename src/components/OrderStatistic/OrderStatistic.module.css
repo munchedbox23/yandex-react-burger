@@ -3,4 +3,23 @@
   height: 100%;
 }
 
+.onlineOrdersStats {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
 
+.column {
+  max-width: 272px;
+}
+
+.statisticBoard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.primary {
+  color: #00cccc;
+}
