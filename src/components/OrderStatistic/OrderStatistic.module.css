@@ -1,6 +1,8 @@
 .orderStatistics {
   flex: 1 1 calc(50% - 60px);
   height: 100%;
+  max-height: calc(100vh - 120px - 90px);
+  overflow-y: auto;
 }
 
 .onlineOrdersStats {

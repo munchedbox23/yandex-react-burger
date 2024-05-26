@@ -29,3 +29,7 @@
   display: flex;
   gap: 24px;
 }
+
+.done {
+  color: var(--interface-success);
+}

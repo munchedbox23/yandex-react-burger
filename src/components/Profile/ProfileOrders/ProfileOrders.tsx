@@ -26,7 +26,7 @@ export const ProfileOrders: FC = () => {
 
   return (
     <div className={styles.profileOrders}>
-      <OrderFeed data={userOrders} />
+      <OrderFeed hasStatus={true} data={userOrders} />
     </div>
   );
 };

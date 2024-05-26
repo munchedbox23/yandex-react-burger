@@ -30,7 +30,7 @@ export const FeedPage: FC = () => {
       <h1 className="text text_type_main-large mb-5 ml-5">Лента заказов</h1>
       <div className={styles.feedWrapper}>
         <div className={styles.feedList}>
-          <OrderFeed data={allOrders} />
+          <OrderFeed hasStatus={false} data={allOrders} />
         </div>
         <OrderStatistic />
       </div>

@@ -4,12 +4,11 @@
 }
 
 .orderList {
-  height: 100%;
+  max-height: calc(100vh - 230px);
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: center;
-  overflow-y: scroll;
   width: 100%;
   overflow-y: auto;
 }
