@@ -1,10 +1,13 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import styles from "./OrderCard.module.css";
 import { Link } from "react-router-dom";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IWsOrder } from "../../types/order-types";
 import { ORDER_STATUS } from "../../utils/constants";
 import cn from "classnames";
+import { useAppSelector } from "../../services/store/hooks";
+import { OrderIcons } from "./OrderIcons/OrderIcons";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 type TOrderCardProps = {
   order: IWsOrder;
@@ -12,6 +15,26 @@ type TOrderCardProps = {
 };
 
 export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
+  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+
+  const { price, orderIcons } = useMemo(() => {
+    const initialState = {
+      price: 0 as number,
+      orderIcons: [] as Array<string>,
+    };
+
+    return order.ingredients.reduce((acc, item) => {
+      const ingredient = ingredients.find(
+        (ingredient) => ingredient._id === item
+      );
+      if (ingredient) {
+        acc.orderIcons.push(ingredient.image_mobile);
+        acc.price += ingredient.price;
+      }
+      return acc;
+    }, initialState);
+  }, [order]);
+
   return (
     <Link to={order._id} className={`${styles.orderCard} p-6`}>
       <div className={styles.cardWrapper}>
@@ -35,8 +58,11 @@ export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
           </span>
         )}
         <div className={styles.orderInfo}>
-          <div className={styles.orderIcons}></div>
-          <div className={styles.orderPrice}></div>
+          <OrderIcons icons={orderIcons} />
+          <div className={styles.orderPrice}>
+            <span className="text text_type_digits-default">{price}</span>
+            <CurrencyIcon type="primary" />
+          </div>
         </div>
       </div>
     </Link>

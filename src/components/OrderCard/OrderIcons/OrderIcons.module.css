@@ -1,0 +1,26 @@
+.orderIcons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  background: var(--interface-bg);
+  border: 2px solid purple;
+}
+
+.iconImage {
+  position: absolute;
+  height: 95%;
+}
+
+.numberIcon {
+  composes: icon;
+  margin-left: calc(-15px * 5);
+}
