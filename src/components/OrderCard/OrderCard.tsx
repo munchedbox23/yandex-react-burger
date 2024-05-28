@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import styles from "./OrderCard.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IWsOrder } from "../../types/order-types";
 import { ORDER_STATUS } from "../../utils/constants";
@@ -16,6 +16,7 @@ type TOrderCardProps = {
 
 export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
   const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const location = useLocation();
 
   const { price, orderIcons } = useMemo(() => {
     const initialState = {
@@ -36,7 +37,11 @@ export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
   }, [order]);
 
   return (
-    <Link to={order._id} className={`${styles.orderCard} p-6`}>
+    <Link
+      to={order._id}
+      state={{ background: location, totalPrice: price }}
+      className={`${styles.orderCard} p-6`}
+    >
       <div className={styles.cardWrapper}>
         <header className={styles.heading}>
           <span className="text text_type_digits-default">{`#${order?.number}`}</span>

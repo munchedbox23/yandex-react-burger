@@ -1,0 +1,82 @@
+.info-flex {
+  display: flex;
+  align-items: center;
+}
+.orderInfo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.infoHeading {
+  text-align: left;
+}
+
+.done {
+  color: var(--interface-success);
+}
+
+.footer {
+  composes: info-flex;
+  justify-content: space-between;
+}
+
+.price {
+  composes: info-flex;
+  gap: 8px;
+}
+
+.orderStructure {
+  composes: info-flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: flex-start;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.structureItem {
+  width: 100%;
+  composes: info-flex;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+}
+
+.ingredientIcon {
+  composes: icon from "../OrderCard/OrderIcons/OrderIcons.module.css";
+}
+
+.ingredientImage {
+  composes: iconImage from "../OrderCard/OrderIcons/OrderIcons.module.css";
+}
+
+.itemPrice {
+  composes: info-flex;
+  justify-content: flex-end;
+  flex: 1 1 200px;
+  gap: 8px;
+}
+
+.itemName {
+  flex: 1 1 auto;
+}
+
+@media (max-height: 950px) {
+  .orderStructure {
+    max-height: 370px;
+  }
+}
+
+@media (max-height: 850px) {
+  .orderStructure {
+    max-height: 225px;
+  }
+}
+
+@media (max-height: 755px) {
+  .orderStructure {
+    max-height: 150px;
+  }
+}

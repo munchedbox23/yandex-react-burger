@@ -21,6 +21,7 @@ import { useAppDispatch } from "../../services/store/hooks";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/features/user/auth";
 import { getIngredients } from "../../services/features/ingredients/ingredientsSlice";
+import { OrderInfo } from "../OrderInfo/OrderInfo";
 
 function App() {
   const navigate = useNavigate();
@@ -47,6 +48,11 @@ function App() {
             element={<IngredientDetails />}
           />
           <Route path={ROUTE.mainLayout.feed} element={<FeedPage />} />
+          <Route path={ROUTE.mainLayout.feedOrder} element={<OrderInfo />} />
+          <Route
+            path={ROUTE.userProfile.userOrders}
+            element={<OnlyAuth component={<OrderInfo />} />}
+          />
           <Route
             path={ROUTE.mainLayout.login}
             element={<OnlyUnAuth component={<LoginPage />} />}
@@ -84,6 +90,22 @@ function App() {
             element={
               <Modal title="Детали ингредиента" onClose={handleCloseModal}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/${ROUTE.mainLayout.feedOrder}`}
+            element={
+              <Modal onClose={handleCloseModal}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path={`/${ROUTE.userProfile.userOrders}`}
+            element={
+              <Modal onClose={handleCloseModal}>
+                <OnlyAuth component={<OrderInfo />} />
               </Modal>
             }
           />

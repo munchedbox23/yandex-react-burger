@@ -17,6 +17,7 @@ interface IRoutes {
   userProfile: {
     profile: string;
     orders: string;
+    userOrders: string;
   };
 }
 
@@ -52,11 +53,12 @@ export const ROUTE: IRoutes = {
     forgotPass: "forgot-password",
     currIngredient: "/ingredients/:ingredientId",
     feed: "feed",
-    feedOrder: "/feed/:number",
+    feedOrder: "feed/:number",
   },
   userProfile: {
     profile: "/profile",
     orders: "orders",
+    userOrders: "profile/orders/:number",
   },
 };
 
