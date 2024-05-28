@@ -1,5 +1,6 @@
 .orderCard {
   width: 100%;
+  max-width: 875px;
   border-radius: 40px;
   background: var(--interface-modal-bg);
 }

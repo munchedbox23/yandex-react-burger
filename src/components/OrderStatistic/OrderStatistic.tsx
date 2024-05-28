@@ -2,7 +2,6 @@ import styles from "./OrderStatistic.module.css";
 import { useAppSelector } from "../../services/store/hooks";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
-import cn from "classnames";
 
 export const OrderStatistic = () => {
   const orders = useAppSelector((store) => store.feedOrders.orders);

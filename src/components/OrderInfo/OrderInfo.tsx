@@ -2,12 +2,12 @@ import { useLocation, useParams } from "react-router";
 import styles from "./OrderInfo.module.css";
 import { useAppSelector } from "../../services/store/hooks";
 import { FC, useMemo } from "react";
-import { Preloader } from "../../ui/Preloader/Preloader";
 import { ORDER_STATUS } from "../../utils/constants";
 import cn from "classnames";
 import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IIngredient } from "../../types/ingredient-types";
+import { Preloader } from "../../ui/Preloader/Preloader";
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
@@ -24,11 +24,11 @@ export const OrderInfo: FC = () => {
       ingredientsWithoutRepeat: [] as Array<IIngredient>,
       ingredientsObj: {} as Record<string, { price: number; count: number }>,
     };
-    const itemsWithoutRepeat = Array.from(new Set(order?.ingredients)); //список заказанных ингредиентов без повтора
+    const itemsWithoutRepeat = Array.from(new Set(order?.ingredients));
 
     itemsWithoutRepeat.forEach((item) => {
       const ingredient = ingredients.find(
-        (ingredient) => ingredient._id === item /* объект ингредиента */
+        (ingredient) => ingredient._id === item
       );
 
       if (ingredient) {
@@ -48,23 +48,25 @@ export const OrderInfo: FC = () => {
     return initialState;
   }, [order, ingredients]);
 
-  return order ? (
+  return !order ? (
+    <Preloader />
+  ) : (
     <div className={styles.orderInfo}>
       <span className="text text_type_digits-default">{`#${order?.number}`}</span>
       <div className={styles.infoHeading}>
         <h2 className="text text_type_main-medium mt-10 mb-3">{order?.name}</h2>
         <p
           className={cn("text text_type_main-default", {
-            [styles.done]: order.status === "done",
+            [styles.done]: order?.status === "done",
           })}
         >
-          {ORDER_STATUS[order.status]}
+          {ORDER_STATUS[order!.status]}
         </p>
         <h3 className="text text_type_main-medium mt-15">Состав:</h3>
       </div>
       <div className={`${styles.orderStructure} mt-6 pr-6`}>
         {ingredientsWithoutRepeat.map((ingredient) => (
-          <div className={styles.structureItem}>
+          <div key={ingredient._id} className={styles.structureItem}>
             <div className={styles.ingredientIcon}>
               <img
                 className={styles.ingredientImage}
@@ -87,7 +89,7 @@ export const OrderInfo: FC = () => {
       <div className={`${styles.footer} mt-10`}>
         <FormattedDate
           className="text text_type_main-default text_color_inactive"
-          date={new Date(order.createdAt)}
+          date={new Date(order!.createdAt)}
         />
         <div className={styles.price}>
           <span className="text text_type_digits-default">
@@ -97,7 +99,5 @@ export const OrderInfo: FC = () => {
         </div>
       </div>
     </div>
-  ) : (
-    <Preloader />
   );
 };

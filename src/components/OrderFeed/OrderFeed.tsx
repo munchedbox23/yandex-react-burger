@@ -2,6 +2,7 @@ import { FC } from "react";
 import { IWsOrder } from "../../types/order-types";
 import styles from "./OrderFeed.module.css";
 import { OrderCard } from "../OrderCard/OrderCard";
+import { Preloader } from "../../ui/Preloader/Preloader";
 
 type TOrderFeedProps = {
   data: IWsOrder[];
@@ -9,7 +10,7 @@ type TOrderFeedProps = {
 };
 
 export const OrderFeed: FC<TOrderFeedProps> = ({ data, hasStatus }) => {
-  return (
+  return data.length !== 0 ? (
     <section className={styles.orderFeed}>
       <ul className={`${styles.orderList} pr-2`}>
         {data.map((order) => (
@@ -17,5 +18,7 @@ export const OrderFeed: FC<TOrderFeedProps> = ({ data, hasStatus }) => {
         ))}
       </ul>
     </section>
+  ) : (
+    <Preloader />
   );
 };

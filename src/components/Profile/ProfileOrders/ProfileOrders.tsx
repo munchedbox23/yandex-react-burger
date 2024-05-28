@@ -20,6 +20,10 @@ export const ProfileOrders: FC = () => {
         }?token=${cookies.get("accessToken")}`
       )
     );
+
+    return () => {
+      dispatch(disconnect());
+    };
   }, [dispatch]);
 
   const userOrders = useAppSelector((store) => store.userOrders.orders);
