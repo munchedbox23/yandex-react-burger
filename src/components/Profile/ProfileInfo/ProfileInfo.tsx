@@ -6,7 +6,7 @@ import {
 import { useForm } from "../../../hooks/useForm";
 import { useAppSelector } from "../../../services/store/hooks";
 import { FC, useEffect, useState } from "react";
-import { Buttons } from "../Buttons/Buttons";
+import { AppearingButtons } from "../../../ui/AppearingButtons/AppearingButtons";
 import { editUser } from "../../../services/features/user/auth";
 import { IUser } from "../../../types/user-types";
 
@@ -73,7 +73,7 @@ export const ProfileInfo: FC = () => {
         icon="EditIcon"
         autoComplete="new-password"
       />
-      <Buttons onCancel={onCancel} isVisible={isVisible} />
+      <AppearingButtons onCancel={onCancel} isVisible={isVisible} />
     </form>
   );
 };

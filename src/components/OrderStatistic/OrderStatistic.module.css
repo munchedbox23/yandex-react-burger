@@ -1,0 +1,27 @@
+.orderStatistics {
+  flex: 1 1 calc(50% - 60px);
+  height: 100%;
+  max-height: calc(100vh - 120px - 90px);
+  overflow-y: auto;
+}
+
+.onlineOrdersStats {
+  display: flex;
+  gap: 36px;
+  align-items: flex-start;
+}
+
+.column {
+  max-width: 272px;
+}
+
+.statisticBoard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.primary {
+  color: #00cccc;
+}

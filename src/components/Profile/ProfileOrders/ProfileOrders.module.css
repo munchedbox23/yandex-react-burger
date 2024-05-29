@@ -1,0 +1,5 @@
+.profileOrders {
+  flex: 1 1 75%;
+  max-width: 900px;
+  max-height: calc(100vh - 120px - 90px);
+}

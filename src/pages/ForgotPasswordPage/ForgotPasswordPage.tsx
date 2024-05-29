@@ -9,10 +9,10 @@ import { forgotPassword } from "../../services/features/user/auth";
 import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { FC, FormEvent, useState } from "react";
-import { ProfileLoader } from "../../components/Preloader/ProfileLoader/ProfileLoader";
+import { ProfileLoader } from "../../ui/Preloader/ProfileLoader/ProfileLoader";
 
 export const ForgotPasswordPage: FC = () => {
-  const { formState, onChange } = useForm<{email: string}>({email: ''});
+  const { formState, onChange } = useForm<{ email: string }>({ email: "" });
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isValidForm, setIsValidForm] = useState(true);

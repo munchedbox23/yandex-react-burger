@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../utils/constants";
 import { useAppDispatch } from "../../services/store/hooks";
 import { FC, FormEvent } from "react";
-import { IUser, IUserLogin } from "../../types/user-types";
+import { IUserLogin } from "../../types/user-types";
 
 export const LoginPage: FC = () => {
   const { formState, onChange } = useForm<IUserLogin>({

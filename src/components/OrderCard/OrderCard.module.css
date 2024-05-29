@@ -1,0 +1,45 @@
+.orderCard {
+  width: 100%;
+  max-width: 875px;
+  border-radius: 40px;
+  background: var(--interface-modal-bg);
+}
+
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.heading {
+  width: 100%;
+  display: flex;
+  align-items: ce nter;
+  justify-content: space-between;
+}
+
+.title {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orderInfo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.orderPrice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.done {
+  color: var(--interface-success);
+}

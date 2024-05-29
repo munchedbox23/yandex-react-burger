@@ -1,18 +1,6 @@
-interface IApiEndpoints {
-  order: string;
-  ingredients: string;
-  register: string;
-  login: string;
-  refreshToken: string;
-  logout: string;
-  forgotPassword: string;
-  resetPassword: string;
-  userData: string;
-}
-
 interface IApi {
   baseUrl: string;
-  endpoints: IApiEndpoints;
+  endpoints: Record<string, string>;
 }
 
 interface IRoutes {
@@ -24,10 +12,12 @@ interface IRoutes {
     forgotPass: string;
     currIngredient: string;
     feed: string;
+    feedOrder: string;
   };
   userProfile: {
     profile: string;
     orders: string;
+    userOrders: string;
   };
 }
 
@@ -46,6 +36,14 @@ export const API: IApi = {
   },
 };
 
+export const WEBSOCKET_API: IApi = {
+  baseUrl: "wss://norma.nomoreparties.space",
+  endpoints: {
+    profileOrders: "/orders",
+    allOrders: "/orders/all",
+  },
+};
+
 export const ROUTE: IRoutes = {
   main: "/",
   mainLayout: {
@@ -55,9 +53,17 @@ export const ROUTE: IRoutes = {
     forgotPass: "forgot-password",
     currIngredient: "/ingredients/:ingredientId",
     feed: "feed",
+    feedOrder: "feed/:number",
   },
   userProfile: {
     profile: "/profile",
     orders: "orders",
+    userOrders: "profile/orders/:number",
   },
+};
+
+export const ORDER_STATUS: Record<string, string> = {
+  created: "Создан",
+  pending: "Готовиться",
+  done: "Выполнен",
 };

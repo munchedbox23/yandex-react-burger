@@ -1,6 +1,7 @@
 .burgerConstructor {
   position: relative;
-  width: calc(50% - 20px);
+  flex: 1 1 calc(50% - 20px);
+  overflow: hidden;
 }
 
 .constructorList {
@@ -18,7 +19,6 @@
   background-color: var(--text-dark-grey-secondary-text);
   border-radius: 20px;
 }
-
 
 .borderClass {
   box-shadow: 0px 0px 0px 2px rgba(76, 76, 255, 1);

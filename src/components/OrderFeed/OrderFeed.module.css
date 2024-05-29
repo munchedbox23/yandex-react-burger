@@ -1,0 +1,14 @@
+.orderFeed {
+  height: 100%;
+  width: 100%;
+}
+
+.orderList {
+  max-height: calc(100vh - 230px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  overflow-y: auto;
+}
