@@ -33,15 +33,19 @@ const BurgerConstructor = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const selectedBun = useAppSelector(
-      (store) => store.burgerConstructor.selectedBun
-    ),
-    selectedIngredients = useAppSelector(
-      (store) => store.burgerConstructor.selectedIngredients
-    ),
-    orderList = useAppSelector((store) => store.postOrder.orderList),
-    postRequest = useAppSelector((store) => store.postOrder.postRequest),
-    user = useAppSelector((store) => store.user.user);
+  const { selectedBun, selectedIngredients, totalPrice } = useAppSelector(
+    (store) => ({
+      selectedBun: store.burgerConstructor.selectedBun,
+      selectedIngredients: store.burgerConstructor.selectedIngredients,
+      totalPrice: store.burgerConstructor.totalPrice,
+    })
+  );
+  const { orderList, postRequest } = useAppSelector((store) => ({
+    orderList: store.postOrder.orderList,
+    postRequest: store.postOrder.postRequest,
+  }));
+
+  const user = useAppSelector((store) => store.user.user);
 
   const [{ isHover, ingredientType }, dropRef] = useDrop<
     IIngredientsWithIdx,
@@ -65,10 +69,6 @@ const BurgerConstructor = () => {
   useEffect(() => {
     dispatch(calcTotalPrice());
   }, [dispatch, selectedBun, selectedIngredients]);
-
-  const totalPrice = useAppSelector(
-    (store) => store.burgerConstructor.totalPrice
-  );
 
   const handlePostOrder = (): void => {
     if (user) {

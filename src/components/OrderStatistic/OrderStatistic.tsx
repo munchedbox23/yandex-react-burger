@@ -4,10 +4,10 @@ import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export const OrderStatistic = () => {
-  const orders = useAppSelector((store) => store.feedOrders.orders);
-  const orderResponse = useAppSelector(
-    (store) => store.feedOrders.orderResponse
-  );
+  const { orders, orderResponse } = useAppSelector((store) => ({
+    orders: store.feedOrders.orders,
+    orderResponse: store.feedOrders.orderResponse,
+  }));
 
   const { readyOrders, inProgressOrders } = useMemo(() => {
     const initialState = {

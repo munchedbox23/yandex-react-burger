@@ -20,13 +20,11 @@ const IngredientCard: FC<TIngredientCardProps> = memo(({ ingredient }) => {
   const { name, price, image } = ingredient;
 
   const location = useLocation();
-
-  const selectedBun = useAppSelector(
-    (store) => store.burgerConstructor.selectedBun
-  );
-  const selectedIngredients = useAppSelector(
-    (store) => store.burgerConstructor.selectedIngredients
-  );
+  
+  const { selectedBun, selectedIngredients } = useAppSelector((store) => ({
+    selectedBun: store.burgerConstructor.selectedBun,
+    selectedIngredients: store.burgerConstructor.selectedIngredients,
+  }));
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
