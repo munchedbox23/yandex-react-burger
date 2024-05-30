@@ -9,8 +9,11 @@ interface TProtectedProps {
 }
 
 const Protected: FC<TProtectedProps> = ({ component, onlyUnAuth = false }) => {
-  const isAuthChecked = useAppSelector((store) => store.user.isAuthChecked);
-  const user = useAppSelector((store) => store.user.user);
+  const { isAuthChecked, user } = useAppSelector((store) => ({
+    isAuthChecked: store.user.isAuthChecked,
+    user: store.user.user,
+  }));
+
   const location = useLocation();
 
   if (!isAuthChecked) return null;
@@ -19,7 +22,7 @@ const Protected: FC<TProtectedProps> = ({ component, onlyUnAuth = false }) => {
     const { from } = location.state || { from: { pathname: ROUTE.main } };
     return <Navigate to={from} replace />;
   }
-  
+
   if (!onlyUnAuth && !user) {
     return (
       <Navigate to={`/${ROUTE.mainLayout.login}`} state={{ from: location }} />
