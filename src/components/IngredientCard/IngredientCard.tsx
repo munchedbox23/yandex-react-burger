@@ -9,6 +9,7 @@ import { useDrag } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { Link, useLocation } from "react-router-dom";
 import { IIngredient } from "../../types/ingredient-types";
+import { shallowEqual } from "react-redux";
 
 type TIngredientCardProps = {
   ingredient: IIngredient;
@@ -20,11 +21,14 @@ const IngredientCard: FC<TIngredientCardProps> = memo(({ ingredient }) => {
   const { name, price, image } = ingredient;
 
   const location = useLocation();
-  
-  const { selectedBun, selectedIngredients } = useAppSelector((store) => ({
-    selectedBun: store.burgerConstructor.selectedBun,
-    selectedIngredients: store.burgerConstructor.selectedIngredients,
-  }));
+
+  const { selectedBun, selectedIngredients } = useAppSelector(
+    (store) => ({
+      selectedBun: store.burgerConstructor.selectedBun,
+      selectedIngredients: store.burgerConstructor.selectedIngredients,
+    }),
+    shallowEqual
+  );
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",

@@ -22,6 +22,7 @@ import { useNavigate } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { IIngredientsWithIdx } from "../../types/ingredient-types";
 import { TIngredient } from "../../utils/tabs";
+import { shallowEqual } from "react-redux";
 
 type TCollectedProps = {
   isHover: boolean;
@@ -38,12 +39,12 @@ const BurgerConstructor = () => {
       selectedBun: store.burgerConstructor.selectedBun,
       selectedIngredients: store.burgerConstructor.selectedIngredients,
       totalPrice: store.burgerConstructor.totalPrice,
-    })
+    }), shallowEqual
   );
   const { orderList, postRequest } = useAppSelector((store) => ({
     orderList: store.postOrder.orderList,
     postRequest: store.postOrder.postRequest,
-  }));
+  }), shallowEqual);
 
   const user = useAppSelector((store) => store.user.user);
 
