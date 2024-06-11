@@ -51,13 +51,13 @@ export const OrderStatistic = () => {
         </div>
       </div>
       <div className="mb-15">
-        <h2 className="text text_type_main-medium">Выполнено за всё время</h2>
+        <h2 className="text text_type_main-medium">Выполнено за всё время:</h2>
         <span className="text text_type_digits-large">
           {orderResponse?.total}
         </span>
       </div>
       <div>
-        <h2 className="text text_type_main-medium">Выполнено за всё время</h2>
+        <h2 className="text text_type_main-medium">Выполнено за cегодня:</h2>
         <span className="text text_type_digits-large">
           {orderResponse?.totalToday}
         </span>
