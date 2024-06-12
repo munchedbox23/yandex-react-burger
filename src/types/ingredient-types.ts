@@ -12,7 +12,7 @@ export interface IIngredient {
   image: string;
   image_mobile: string;
   image_large: string;
-  _v: number;
+  __v: number;
 }
 
 export interface IIngredientResponse {

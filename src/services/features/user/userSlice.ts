@@ -15,7 +15,7 @@ type TUserState = {
   isRequestLoading: boolean;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   isRequestLoading: false,
   isRequestFailed: false,
@@ -66,9 +66,9 @@ export const userSlice = createSlice({
       .addCase(checkUserAuth.pending, (state) => {
         state.isRequestLoading = true;
       })
-      .addCase(checkUserAuth.fulfilled, (state, action) => {
+      .addCase(checkUserAuth.fulfilled, (state, { payload }) => {
         state.isAuthChecked = true;
-        state.user = action.payload.user;
+        state.user = payload.user;
         state.isRequestFailed = false;
         state.isRequestLoading = false;
       })
@@ -80,8 +80,8 @@ export const userSlice = createSlice({
       .addCase(editUser.pending, (state) => {
         state.isRequestLoading = true;
       })
-      .addCase(editUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+      .addCase(editUser.fulfilled, (state, { payload }) => {
+        state.user = payload.user;
         state.isRequestFailed = false;
         state.isRequestLoading = false;
       })

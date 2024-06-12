@@ -2,12 +2,16 @@ import styles from "./OrderStatistic.module.css";
 import { useAppSelector } from "../../services/store/hooks";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { shallowEqual } from "react-redux";
 
 export const OrderStatistic = () => {
-  const { orders, orderResponse } = useAppSelector((store) => ({
-    orders: store.feedOrders.orders,
-    orderResponse: store.feedOrders.orderResponse,
-  }));
+  const { orders, orderResponse } = useAppSelector(
+    (store) => ({
+      orders: store.feedOrders.orders,
+      orderResponse: store.feedOrders.orderResponse,
+    }),
+    shallowEqual
+  );
 
   const { readyOrders, inProgressOrders } = useMemo(() => {
     const initialState = {

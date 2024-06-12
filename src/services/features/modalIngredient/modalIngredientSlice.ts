@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IIngredient } from "./../../../types/ingredient-types";
+import {
+  IIngredient,
+  IIngredientsWithIdx,
+} from "./../../../types/ingredient-types";
 
 type TDetailIngredient = {
-  detailIngredient: IIngredient | null;
+  detailIngredient: IIngredient | IIngredientsWithIdx | null;
 };
 
-const initialState: TDetailIngredient = {
+export const initialState: TDetailIngredient = {
   detailIngredient: null,
 };
 

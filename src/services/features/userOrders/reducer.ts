@@ -14,7 +14,7 @@ export type TUserOrdersState = {
   orderResponse: IWsOrders | null;
 };
 
-const initialState: TUserOrdersState = {
+export const initialState: TUserOrdersState = {
   wsConnected: false,
   orders: [],
   error: null,

@@ -11,7 +11,7 @@ type TOrderState = {
   postRequest: boolean;
 };
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orderList: null,
   postRequest: false,
   postFailed: false,
