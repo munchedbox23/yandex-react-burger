@@ -8,7 +8,7 @@ type TOrderProps = {
 
 const OrderDetails: FC<TOrderProps> = ({ orderNumber }) => {
   return (
-    <div className={styles.orderDetailsWrapper}>
+    <div data-cy="order-details" className={styles.orderDetailsWrapper}>
       <span
         className={`${styles.orderNum} text text_type_digits-large mt-10 mb-8`}
       >
