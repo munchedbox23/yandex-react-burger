@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cypress:open": "./node_modules/.bin/cypress open",
+    "test:cypress": "cypress open",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
