@@ -12,7 +12,7 @@ describe('checking the functionality of the constructor', () => {
       fixture: 'order.json',
     });
 
-    cy.visit('http://localhost:3000/').viewport(1920, 1080);
+    cy.visit('/');
   });
 
   it('should renders the constructor page correctly', () => {
@@ -33,7 +33,7 @@ describe('checking the functionality of the constructor', () => {
   });
 
   it('should open the page with ingredient and information about him', () => {
-    cy.visit('http://localhost:3000/ingredients/643d69a5c3f7b9001cfa093c');
+    cy.visit('/ingredients/643d69a5c3f7b9001cfa093c');
     cy.contains('Краторная булка N-200i'); 
   });
 
