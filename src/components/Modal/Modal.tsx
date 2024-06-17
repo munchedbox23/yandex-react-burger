@@ -38,11 +38,13 @@ const Modal: FC<PropsWithChildren<TModalProps>> = ({
           <h2 className={`${modalStyles.title} text text_type_main-large`}>
             {title}
           </h2>
-          <div className={modalStyles.closeBtn}>
+          <div data-cy="close" className={modalStyles.closeBtn}>
             <CloseIcon onClick={onClose} type="primary" />
           </div>
         </header>
-        <main className={modalStyles.content}>{children}</main>
+        <main data-cy="modal-content" className={modalStyles.content}>
+          {children}
+        </main>
       </div>
       <ModalOverlay onClose={onClose} />
     </div>,

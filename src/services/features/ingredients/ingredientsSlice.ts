@@ -1,7 +1,7 @@
 import {
   IIngredient,
   IIngredientResponse,
-} from "./../../../types/ingredient-types";
+} from "../../../types/ingredient-types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { request } from "../../../utils/requests";
 import { API } from "../../../utils/constants";
@@ -12,7 +12,7 @@ type TIngredientsState = {
   getIngredientsRequest: boolean;
 };
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   ingredients: [],
   getIngredientsRequest: false,
   getIngredientsFailed: false,

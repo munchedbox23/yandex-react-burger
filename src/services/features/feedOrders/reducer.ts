@@ -14,7 +14,7 @@ export type TFeedOrdersState = {
   orderResponse: IWsOrders | null;
 };
 
-const initialState: TFeedOrdersState = {
+export const initialState: TFeedOrdersState = {
   wsConnected: false,
   orders: [],
   orderResponse: null,

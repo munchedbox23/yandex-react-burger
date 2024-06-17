@@ -2,6 +2,7 @@ import { useAppSelector } from "../../services/store/hooks";
 import { Navigate, useLocation } from "react-router";
 import { ROUTE } from "../../utils/constants";
 import { FC, ReactElement } from "react";
+import { shallowEqual } from "react-redux";
 
 interface TProtectedProps {
   component: ReactElement;
@@ -9,10 +10,13 @@ interface TProtectedProps {
 }
 
 const Protected: FC<TProtectedProps> = ({ component, onlyUnAuth = false }) => {
-  const { isAuthChecked, user } = useAppSelector((store) => ({
-    isAuthChecked: store.user.isAuthChecked,
-    user: store.user.user,
-  }));
+  const { isAuthChecked, user } = useAppSelector(
+    (store) => ({
+      isAuthChecked: store.user.isAuthChecked,
+      user: store.user.user,
+    }),
+    shallowEqual
+  );
 
   const location = useLocation();
 

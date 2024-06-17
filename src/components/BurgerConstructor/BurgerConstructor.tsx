@@ -91,7 +91,7 @@ const BurgerConstructor = () => {
   return (
     <>
       <section className={`${styles.burgerConstructor} pt-25 pl-4 pr-4`}>
-        <div ref={dropRef} className={styles.constructorWrapper}>
+        <div data-cy="constructor" ref={dropRef} className={styles.constructorWrapper}>
           <SelectedBun
             ingredientType={ingredientType}
             isHover={isHover}
@@ -130,7 +130,7 @@ const BurgerConstructor = () => {
         </div>
         <div className={`${styles.total} mt-10 pb-2`}>
           <div className={styles.priceTotal}>
-            <span className="text text_type_digits-medium">{totalPrice}</span>
+            <span data-cy="total-price" className="text text_type_digits-medium">{totalPrice}</span>
             <CurrencyIcon type="primary" />
           </div>
           <Button
@@ -139,6 +139,7 @@ const BurgerConstructor = () => {
             type="primary"
             size="medium"
             disabled={!selectedBun}
+            data-cy="order-btn"
           >
             Офорить заказ
           </Button>

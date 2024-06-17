@@ -2,12 +2,16 @@ import styles from "./OrderStatistic.module.css";
 import { useAppSelector } from "../../services/store/hooks";
 import { useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { shallowEqual } from "react-redux";
 
 export const OrderStatistic = () => {
-  const { orders, orderResponse } = useAppSelector((store) => ({
-    orders: store.feedOrders.orders,
-    orderResponse: store.feedOrders.orderResponse,
-  }));
+  const { orders, orderResponse } = useAppSelector(
+    (store) => ({
+      orders: store.feedOrders.orders,
+      orderResponse: store.feedOrders.orderResponse,
+    }),
+    shallowEqual
+  );
 
   const { readyOrders, inProgressOrders } = useMemo(() => {
     const initialState = {
@@ -51,13 +55,13 @@ export const OrderStatistic = () => {
         </div>
       </div>
       <div className="mb-15">
-        <h2 className="text text_type_main-medium">Выполнено за всё время</h2>
+        <h2 className="text text_type_main-medium">Выполнено за всё время:</h2>
         <span className="text text_type_digits-large">
           {orderResponse?.total}
         </span>
       </div>
       <div>
-        <h2 className="text text_type_main-medium">Выполнено за всё время</h2>
+        <h2 className="text text_type_main-medium">Выполнено за cегодня:</h2>
         <span className="text text_type_digits-large">
           {orderResponse?.totalToday}
         </span>
