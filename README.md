@@ -56,4 +56,4 @@ Stellar Burger - это веб-приложение (SPA) космической
 - Проверку на валидность формы (выводить сообщение об ошибках)
 
 <i>Проект развернуть на [GitHub Pages](https://munchedbox23.github.io/yandex-react-burger/).</i>  
-<i>Проект развернуть на [Yandex Cloud](http://react-burger.students.nomorepartiesco.ru/)</i>
+<i>Проект развернуть на [Yandex Cloud](http://munch-burger.students.nomorepartiesco.ru/)</i>
