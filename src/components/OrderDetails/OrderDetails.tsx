@@ -1,5 +1,5 @@
 import styles from "./OrderDetails.module.css";
-import doneImage from "../../images/done.png";
+import doneImage from "../../assets/images/done.png";
 import { FC } from "react";
 
 type TOrderProps = {

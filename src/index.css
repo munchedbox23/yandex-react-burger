@@ -1,33 +1,33 @@
 @font-face {
   font-family: "JetBrainsMono";
-  src: url("./fonts/JetBrainsMono-Regular.woff") format("woff");
+  src: url("./assets/fonts/JetBrainsMono-Regular.woff") format("woff");
   font-style: normal;
   font-weight: 400;
 }
 
 @font-face {
   font-family: "JetBrainsMono";
-  src: url("./fonts/JetBrainsMono-Bold.woff") format("woff");
+  src: url("./assets/fonts/JetBrainsMono-Bold.woff") format("woff");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Iceland";
-  src: url("./fonts/iceland.woff") format("woff");
+  src: url("./assets/fonts/iceland.woff") format("woff");
   font-style: normal;
   font-weight: normal;
 }
 
 @font-face {
   font-family: "IBMPlexSans";
-  src: url("./fonts/IBMPlexSans.woff") format("woff");
+  src: url("./assets/fonts/IBMPlexSans.woff") format("woff");
   font-style: normal;
   font-weight: 400;
 }
 @font-face {
   font-family: "IBMPlexSans";
-  src: url("./fonts/IBMPlexSans-Bold.woff") format("woff");
+  src: url("./assets/fonts/IBMPlexSans-Bold.woff") format("woff");
   font-style: normal;
   font-weight: bold;
 }
