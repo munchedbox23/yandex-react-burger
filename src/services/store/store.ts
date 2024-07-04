@@ -1,5 +1,5 @@
+import { ingredientsApi } from "./../features/ingredients/ingredientsApi";
 import { configureStore } from "@reduxjs/toolkit";
-import ingredientsSlice from "../features/ingredients/ingredientsSlice";
 import modalIngredientSlice from "../features/modalIngredient/modalIngredientSlice";
 import burgerConstructorSlice from "../features/constructor/burgerConstructorSlice";
 import orderPostSlice from "../features/orderPost/orderPostSlice";
@@ -13,7 +13,7 @@ import {
 
 export const store = configureStore({
   reducer: {
-    ingredients: ingredientsSlice,
+    [ingredientsApi.reducerPath]: ingredientsApi.reducer,
     modalIngredient: modalIngredientSlice,
     burgerConstructor: burgerConstructorSlice,
     postOrder: orderPostSlice,
@@ -22,7 +22,11 @@ export const store = configureStore({
     userOrders: userOrdersReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(feedOrdersMiddleware, userOrdersMiddleware),
+    getDefaultMiddleware().concat(
+      ingredientsApi.middleware,
+      feedOrdersMiddleware,
+      userOrdersMiddleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -8,13 +8,20 @@ import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-component
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { IIngredient } from "../../types/ingredient-types";
 import { Preloader } from "../../ui/Preloader/Preloader";
+import { shallowEqual } from "react-redux";
+import { useGetIngredientsQuery } from "../../services/features/ingredients/ingredientsApi";
 
 export const OrderInfo: FC = () => {
   const { number } = useParams();
-  const feedOrder = useAppSelector((store) => store.feedOrders.orders);
-  const userOrder = useAppSelector((store) => store.userOrders.orders);
-  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
   const location = useLocation();
+  const { data: ingredients = [] } = useGetIngredientsQuery();
+  const { feedOrder, userOrder } = useAppSelector(
+    (store) => ({
+      feedOrder: store.feedOrders.orders,
+      userOrder: store.userOrders.orders,
+    }),
+    shallowEqual
+  );
 
   const orders = [...userOrder, ...feedOrder];
   const order = orders.find((item) => item._id === number);
