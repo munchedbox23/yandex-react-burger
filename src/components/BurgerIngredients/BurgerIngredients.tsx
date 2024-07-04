@@ -1,13 +1,13 @@
 import styles from "./BurgerIngredients.module.css";
-import { useState, useRef, FC, RefObject } from "react";
+import { useState, useRef, FC } from "react";
 import tabs from "../../utils/tabs";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "../IngredientCard/IngredientCard";
-import { useAppSelector } from "../../services/store/hooks";
+import { useGetIngredientsQuery } from "../../services/features/ingredients/ingredientsApi";
 
 const BurgerIngredients: FC = () => {
   const [current, setCurrent] = useState("one");
-  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const { data: ingredients = [] } = useGetIngredientsQuery();
   const contentRef = useRef<HTMLDivElement>(null);
   const tabsTitle: { [key: string]: React.RefObject<HTMLHeadingElement> } = {
     one: useRef<HTMLHeadingElement>(null),

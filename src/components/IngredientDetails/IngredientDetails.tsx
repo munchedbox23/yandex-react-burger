@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { setDetailIngredient } from "../../services/features/modalIngredient/modalIngredientSlice";
 import { IIngredientDetails } from "../../types/ingredient-types";
+import { useGetIngredientsQuery } from "../../services/features/ingredients/ingredientsApi";
 
 const IngredientDetails = () => {
   const { ingredientId } = useParams<string>();
-  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const { data: ingredients = [] } = useGetIngredientsQuery();
   const dispatch = useAppDispatch();
 
   useEffect(() => {

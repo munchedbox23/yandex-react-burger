@@ -5,9 +5,9 @@ import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-component
 import { IWsOrder } from "../../types/order-types";
 import { ORDER_STATUS } from "../../utils/constants";
 import cn from "classnames";
-import { useAppSelector } from "../../services/store/hooks";
 import { OrderIcons } from "./OrderIcons/OrderIcons";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useGetIngredientsQuery } from "../../services/features/ingredients/ingredientsApi";
 
 type TOrderCardProps = {
   order: IWsOrder;
@@ -15,7 +15,7 @@ type TOrderCardProps = {
 };
 
 export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
-  const ingredients = useAppSelector((store) => store.ingredients.ingredients);
+  const { data: ingredients = [] } = useGetIngredientsQuery();
   const location = useLocation();
 
   const { price, orderIcons } = useMemo(() => {
@@ -34,7 +34,7 @@ export const OrderCard: FC<TOrderCardProps> = ({ hasStatus, order }) => {
       }
       return acc;
     }, initialState);
-  }, [order]);
+  }, [order, ingredients]);
 
   return (
     <Link
